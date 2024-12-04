@@ -1,0 +1,39 @@
+# Connessione al DataBase MySQL - IdP_OAuth2_2FA (localhost)
+import mysql.connector
+dbConnection = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="IdP_OAuth2_2FA"
+)
+dbCursor = dbConnection.cursor()
+    # cursor.execute() - funzione del cursore per interagire con il Database
+
+class AutenticationServer:
+
+    def __init__(self) -> None:
+        pass
+
+    def login(self, jsonUsername):        
+        # Controllo esistenza utente
+        query = "SELECT PasswordHash FROM Users WHERE Username = %s"
+        dbCursor.execute(query, (jsonUsername,))
+        response = dbCursor.fetchall()
+
+        #TODO gestire caso di non utente
+        for row in response:
+            if row == None:
+                print("Luca è amaro")
+
+#TODO    def recoveryPassword(jsonUsername, jsonEmail):
+
+# Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), PasswordHash varchar(300), Email varchar(200))
+#TODO    def addUser(jsonName, jsonSurname, jsonUsername, jsonPassword, jsonEmail):
+        
+#TODO    def protocol2FA():
+
+#TODO    def getOTP():
+
+#TODO    def generateAccessoToken():
+
+#TODO    def generateRefreshToken():

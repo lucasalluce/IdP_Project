@@ -1,0 +1,50 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+
+def send_email(oggetto, body, to_email, path = " "):
+    '''
+        to_email prende anche liste di stringhe
+        se path non la passi non inserisce allegati, se passi il percorso inserice qualisasi allegato
+        PER ORA MANDA SOLO PDF
+
+        All paramentro body puoi passare anche html modifica l'attributo plain a riga 27 con html
+    '''
+    # Configurazione SMTP per Gmail
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_user = "tua_mail"
+    smtp_password = "password_per_app(confgura gmail)"   
+
+    # Componi il messaggio
+    msg = MIMEMultipart()
+    msg['From'] = smtp_user
+    msg['To'] = to_email
+    msg['Subject'] = oggetto
+
+    # Corpo del messaggio (può essere plain text o HTML)
+    msg.attach(MIMEText(body, 'plain'))  # Puoi usare 'html' per inviare email in formato HTML
+
+    if path != " ":
+        with open(path, 'rb') as pdf_file:
+            pdf_attachment = MIMEApplication(pdf_file.read(), _subtype='pdf')
+            pdf_attachment.add_header('Content-Disposition', 'attachment', filename='documento.pdf')  # Nome del file allegato
+            msg.attach(pdf_attachment) 
+
+    try:
+        # Connessione al server SMTP
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Avvia la connessione TLS (sicura)
+        server.login(smtp_user, smtp_password)
+
+        # Invio dell'email
+        server.sendmail(smtp_user, to_email, msg.as_string())
+
+        # Termina la connessione
+        server.quit()
+        return True
+
+    except Exception as e:
+        print(f"Errore durante l'invio dell'email: {e}")
+        return False

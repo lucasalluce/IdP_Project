@@ -1,0 +1,225 @@
+/* TUTTO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2f4f4f;
+}
+
+/* HOME */
+.wrapper {
+    width: 420px;
+    background-color: #8fbc8f;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+.wrapper h1{
+    font-size: 36 px;
+    text-align: center;
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box  input::placeholder {
+    color: #fff;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.wrapper .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #e6e6e6; /* Cambia colore del bottone al passaggio del mouse */
+}
+
+.wrapper .register-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.register-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
+
+.barraSuperiore {
+    position: fixed;           /* Mantiene la barra fissa nella parte superiore */
+    top: 0;                    /* Posizionata in alto */
+    left: 0;                   /* Allineata al bordo sinistro */
+    width: 100%;               /* Occupa tutta la larghezza della finestra */
+    background-color: #fff  ; /* Colore di sfondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1); /* Leggera ombra per effetto 3D */
+    display: flex;             /* Layout a griglia flessibile */
+    align-items: center;       /* Allinea elementi verticalmente */
+    justify-content: space-between; /* Spazio tra logo e bottone */
+    padding: 10px 20px;        /* Spazi interni */
+    z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
+}
+
+.barraSuperiore img {
+    height: 50px;              /* Altezza fissa del logo */
+    object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
+}
+
+.gruppo-text {
+    position: absolute;        /* Posiziona l'elemento rispetto al suo contenitore */
+    left: 50%;                 /* Posiziona l'elemento a metà larghezza */
+    transform: translateX(-50%); /* Sposta indietro l'elemento di metà della sua larghezza */
+    font-size: 25px;           /* Dimensione del testo */
+    font-weight: bold;         /* Grassetto */
+    color: #000000;          /* Colore del testo */
+}
+
+.about-us {
+    margin-right: 20px;        /* Margine destro per distanziare */
+}
+
+.btn-aboutUs {
+    background-color: #2f4f4f; /* Colore di sfondo blu */
+    color: white;              /* Colore del testo bianco */
+    border: none;              /* Rimuove bordi */
+    padding: 10px 15px;        /* Spazi interni del bottone */
+    border-radius: 5px;        /* Angoli arrotondati */
+    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
+    font-size: 16px;           /* Dimensione del testo */
+    transition: background-color 0.3s; /* Transizione morbida sul hover */
+    text-decoration: none; /* Rimuove la sottolineatura */
+}
+
+.btn-aboutUs:hover {
+    background-color: #406c6c; /* Cambia colore del bottone al passaggio del mouse */
+}
+
+/* ABOUT */
+.wrapper2 {
+    display: flex;
+    justify-content: center; /* Centra il contenuto orizzontalmente */
+    flex-direction: column; /* Dispone i contenuti in colonna */
+    align-items: flex-start; /* Allinea le persone a sinistra */
+    margin-top: 100px;
+}
+
+.person {
+    display: flex; /* Dispone gli elementi figli in fila */
+    align-items: center; /* Allinea verticalmente immagine e paragrafi */
+    gap: 10px; /* Distanza tra immagine e testo */
+    width: 100%;
+    padding: 10px;
+}
+
+.person img {
+    width: 300px; /* Regola la larghezza dell'immagine */
+    height: auto; /* Mantiene le proporzioni */
+    border-radius: 10%; /* Aggiunge un effetto cerchio, opzionale */
+    border: 2px solid black;
+}
+
+.info {
+    display: flex;
+    flex-direction: column; /* Dispone i paragrafi in colonna */
+    width: 100%;
+    font-size: 30px;
+}
+
+.wrapper2 p {
+    padding: 5px;
+}
+
+/*REGISTRAZIONE*/
+
+.wrapper .login-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.login-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link p a:hover {
+    text-decoration: underline;
+}
+
+
+/*FORGOT_PASSWORD*/
+
+
+
