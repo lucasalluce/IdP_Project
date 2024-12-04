@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();  // Evita il comportamento predefinito del form
+            e.preventDefault();  
 
             const username = loginForm.querySelector("input[type='text']").value;
             const password = loginForm.querySelector("input[type='password']").value;
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        window.location.href = "/dashboard"; // Redirigi se il login è successo
+                        window.location.href = "/dashboard"; // Riporta se il login è successo
                     } else {
                         alert("Credenziali errate. Riprova.");
                     }
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((data) => {
                     if (data.success) {
                         alert("Registrazione avvenuta con successo!");
-                        window.location.href = "home.html"; // Redirigi alla pagina di login
+                        window.location.href = "home.html"; // Riporta alla pagina di login
                     } else {
                         alert("Errore nella registrazione. Riprova.");
                     }
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((data) => {
                     if (data.success) {
                         alert("Controlla la tua email per il link di reset della password.");
-                        window.location.href = "home.html"; // Redirigi alla pagina di login
+                        window.location.href = "home.html"; // Riporta alla pagina di login
                     } else {
                         alert("Errore nel recupero password. Assicurati che l'email sia corretta.");
                     }
