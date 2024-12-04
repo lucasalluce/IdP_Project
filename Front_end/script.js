@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = loginForm.querySelector("input[type='text']").value;
             const password = loginForm.querySelector("input[type='password']").value;
 
+            //#TODO hashing password  
+
+
+
             fetch("/login", {
                 method: "POST",
                 headers: {
