@@ -7,11 +7,11 @@ CREATE TABLE Users (
     Name varchar(100),
     Surname varchar(100),
     Username varchar(100) UNIQUE,
-    HasedPassword varchar(300),
+    HashedPassword varchar(300),
     Email varchar(200) CHECK (Email LIKE '%_@_%.__%')
 );
 
-INSERT INTO Users (Name, Surname, Username, HasedPassword, Email) VALUES
+INSERT INTO Users (Name, Surname, Username, HashedPassword, Email) VALUES
     ('Luca', 'Salluce', 'l.salluce', 'Cifhbab', 'l.salluce@studenti.poliba.it'),
     ('Stefano', 'Troilo', 's.troilo', 'IIavyufiub', 's.troilo@studenti.poliba.it'),
     ('Federico', 'Raimondi', 'f.raimondi', 'fniahyUDAF', 'f.raimondi@studenti.poliba.it'),
