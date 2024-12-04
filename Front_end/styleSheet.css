@@ -220,6 +220,11 @@ body {
 
 
 /*FORGOT_PASSWORD*/
+.wrapper .intestazione {
+    text-align: center;
+}
 
-
+.wrapper h2 {
+    padding: 10px;
+}
 
