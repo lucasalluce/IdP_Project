@@ -3,10 +3,11 @@ Back - Fron
 
 Schede Front-end
 
-Home/Index
-    Registrazione utente/Nuovo Utente
-        Conferma Registrazione
-    Recupero credenziali
-        Conferma Recupero credenziali
-    Conferma OTP
-        Accesso completato
+Home/Index                              DONE!
+    Registrazione utente/Nuovo Utente   DONE!
+        Conferma Registrazione          DONE!
+    Recupero credenziali                DONE!
+        Conferma Recupero credenziali   DONE!
+    Conferma OTP                        DONE!
+        Accesso completato              DONE!
+About                                   DONE!

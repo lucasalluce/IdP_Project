@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Password Dimenticata - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <title>OTP - Progetto IdP con OAuth 2.0 e 2FA</title>
         <link rel="stylesheet" type="text/css" href="styleSheet.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
@@ -14,20 +14,14 @@
             <form id="forgot-password-form" action=""> <!-- per gestione js -->
                 
                 <div class="intestazione">
-                    <h2>Password Dimenticata</h2>
-                    <p>Inserisci il tuo indirizzo email per ricevere le istruzioni per reimpostare la password.</p>
+                    <h2>Inserire l'OTP ricevuto per email:</h2>
                 </div>
                 
                 <div class="input-box"> <!-- classe per email -->
-                    <input type="email" placeholder="Email" required>
-                    <i class='bx bxs-envelope'></i> <!-- icona email -->
+                    <input type="OTP" placeholder="OTP" required>
                 </div>
 
                 <button type="submit" class="btn">Invia Link</button> <!-- bottone per inviare il link -->
-
-                <div class="login-link"> <!-- classe per ritorno login -->
-                    <p>Hai ricordato la password? <a href="home.html">Accedi</a></p>
-                </div>
 
             </form>
         </div>
