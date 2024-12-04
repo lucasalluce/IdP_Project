@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
+
     // Gestione login
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
@@ -21,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        window.location.href = "/dashboard"; // Riporta se il login è successo
+                        window.location.href = "  "; // ISERIRE IL PERCORSO DOPO IL CORRETTO COLLEGAMENTO
                     } else {
                         alert("Credenziali errate. Riprova.");
                     }
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+    
     // Gestione password dimenticata
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
@@ -105,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     email: email,
                 }),
             })
+
+
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
