@@ -20,10 +20,7 @@ class AutenticationServer:
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
         
-        if dbReturn.count() == 1:
-            
-        else 
-
+        
         #TODO Test
         for row in dbReturn:
             if row == None: # Utente inesistente
