@@ -1,7 +1,45 @@
 import smtplib
-from email.mime.multipart import MIMEMultipart
+import random
+import time 
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+
+#Configurazione SMTP (modifica i valori con i dati personali)
+smtp_server = "smtp.gmail.com"
+smtp_port = 587
+smtp_user = "tua_mail"
+smtp_password = "password_per_app" 
+
+#Generatore Codice OTP
+def otp_generator(length=6):
+    return ''.join([str(random.randint(0,9)) for _ in range(length)])
+
+
+#Funzione per invio Codice
+def send_otp(to_email, otp):
+    try: 
+        #composizione del messaggio
+        msg = MIMEMultipart
+        msg['From'] = smtp_email
+        msg['To'] = to_email
+        msg['Subject'] = "il tuo codice OTP"
+        body = f"Il tuo codice OTP è: {otp}\n\nInserisci questo codice per completare l'autenticazione.\n\nGrazie!"
+        msg.attach(MIMEText(body, 'plain'))
+
+        #invia l'email
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()  
+        
+        # Avvia una connessione sicura
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.sendmail(SMTP_EMAIL, to_email, msg.as_string())
+        server.quit()
+
+        print("Email inviata con successo.")
+            except Exception as e:
+        print(f"Errore durante l'invio dell'email: {e}")
+
 
 def send_email(oggetto, body, to_email, path = " "):
     '''
@@ -12,10 +50,7 @@ def send_email(oggetto, body, to_email, path = " "):
         All paramentro body puoi passare anche html modifica l'attributo plain a riga 27 con html
     '''
     # Configurazione SMTP per Gmail
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
-    smtp_user = "tua_mail"
-    smtp_password = "password_per_app(confgura gmail)"   
+      
 
     # Componi il messaggio
     msg = MIMEMultipart()
@@ -48,3 +83,29 @@ def send_email(oggetto, body, to_email, path = " "):
     except Exception as e:
         print(f"Errore durante l'invio dell'email: {e}")
         return False
+
+def email_authentication(to_email):
+    otp=otp_generator()
+    send_otp(to_email, otp)
+
+    print("Un codice OTP è stato inviato alla tua email. ")
+    start_time=time.time() #inizia il timer
+    while True:
+        user_input=input("Inserisci il codice OTP o digita EXIT: ").strip()
+            if user_input.lower()=='exit': 
+                print("Autenticazione annullata")
+                break
+            
+            if user_input=otp:
+                print("Autenticazione avvenuta con successo")
+                break
+            else:
+                print("Codice OTP errato, riprova")
+
+            if time.time() - start_time > 120:
+                print("Il codice OTP è scaduto, genera un nuovo codice")
+                break
+
+if __name__== "__main__":
+    destinatario = input("Inserisci l'email del destinatario: ").strip()
+    email_authentication(destinatario)
