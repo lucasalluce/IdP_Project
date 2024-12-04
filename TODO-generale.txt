@@ -1,13 +1,13 @@
 ___Back-end___
 
-1. Creazione Environment
+1. Creazione Environment                DONE!
 >>> python -m venv IdP_Project
     click in basso dx per l'attivazione
 
-2. Installazione MySQL connection
+2. Installazione MySQL connection       DONE!
 >>> python -m pip install mysql-connector-python
 
-3. Installazione Flask
+TODO 3. Installazione Flask                  
 >>> 
 
 TODO Funzionalità di recupero password -> tabella dB password temporanee
