@@ -1,0 +1,12 @@
+Back - Fron
+- Sistema di passaggio 
+
+Schede Front-end
+
+Home/Index
+    Registrazione utente/Nuovo Utente
+        Conferma Registrazione
+    Recupero credenziali
+        Conferma Recupero credenziali
+    Conferma OTP
+        Accesso completato
