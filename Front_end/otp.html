@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+    <html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>OTP - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <link rel="stylesheet" type="text/css" href="styleSheet.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+    <body>
+
+        <div class="wrapper"> <!-- classe totale per Password Dimenticata -->
+            <form id="forgot-password-form" action=""> <!-- per gestione js -->
+                
+                <div class="intestazione">
+                    <h2>Inserire l'OTP ricevuto per email:</h2>
+                </div>
+                
+                <div class="input-box"> <!-- classe per email -->
+                    <input type="OTP" placeholder="OTP" required>
+                </div>
+
+                <button type="submit" class="btn">Invia Link</button> <!-- bottone per inviare il link -->
+
+            </form>
+        </div>
+
+        <div class="barraSuperiore"> <!-- barra superiore sito -->
+            <img src="immagini/logoPolitecnico.jpg"> <!-- Logo Politecnico -->
+
+            <div class="gruppo-text">GRUPPO 14</div>
+
+            <div class="about-us"> <!-- classe aboutUs -->
+                <a href="about.html" class="btn-aboutUs">Chi siamo</a> <!-- bottone Chi siamo -->
+                <a href="home.html" class="btn-aboutUs">Home</a>   <!-- bottone Home -->
+            </div>
+        </div>
+
+    </body>
+
+</html>

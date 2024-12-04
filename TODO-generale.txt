@@ -1,12 +1,25 @@
-Back - Fron
-- Sistema di passaggio 
+___Back-end___
 
-Schede Front-end
+1. Creazione Environment                DONE!
+>>> python -m venv IdP_Project
+    click in basso dx per l'attivazione
 
-Home/Index
-    Registrazione utente/Nuovo Utente
-        Conferma Registrazione
-    Recupero credenziali
-        Conferma Recupero credenziali
-    Conferma OTP
-        Accesso completato
+2. Installazione MySQL connection       DONE!
+>>> python -m pip install mysql-connector-python
+
+TODO 3. Installazione Flask                  
+>>> 
+
+TODO Funzionalità di recupero password -> tabella dB password temporanee
+TODO Funzionalità di hasing password
+
+___Schede Front-end___
+
+Home/Index                              DONE!
+    Registrazione utente/Nuovo Utente   DONE!
+        Conferma Registrazione          DONE!
+    Recupero credenziali                DONE!
+        Conferma Recupero credenziali   DONE!
+    Conferma OTP                        DONE!
+        Accesso completato              DONE!
+About                                   DONE!
