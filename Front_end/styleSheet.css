@@ -165,39 +165,60 @@ body {
     background-color: #406c6c; /* Cambia colore del bottone al passaggio del mouse */
 }
 
+
 /* ABOUT */
 .wrapper2 {
     display: flex;
     justify-content: center; /* Centra il contenuto orizzontalmente */
-    flex-direction: column; /* Dispone i contenuti in colonna */
+    flex-direction:row; /* Dispone i contenuti in colonna */
     align-items: flex-start; /* Allinea le persone a sinistra */
     margin-top: 100px;
-}
-
-.person {
-    display: flex; /* Dispone gli elementi figli in fila */
-    align-items: center; /* Allinea verticalmente immagine e paragrafi */
-    gap: 10px; /* Distanza tra immagine e testo */
-    width: 100%;
     padding: 10px;
 }
 
-.person img {
-    width: 300px; /* Regola la larghezza dell'immagine */
-    height: auto; /* Mantiene le proporzioni */
+.wrapper2 .contVert {
+    padding: 10px;
+    display: flex; /* Usa Flexbox */
+    flex-direction: column; /* Allinea gli elementi verticalmente */
+    align-items: center; /* Centra gli elementi orizzontalmente */
+    justify-content: center; /* Centra gli elementi verticalmente (opzionale) */
+}
+
+.wrapper2 .contOrizz {
+    display: flex; /* Usa Flexbox per disporre gli elementi orizzontalmente */
+    gap: 10px; /* Spaziatura tra i div figli */
+    justify-content: center; /* Centra gli elementi orizzontalmente */
+    flex-wrap: wrap; /* Permetti che gli elementi vadano a capo se necessario */
+    padding: 10px;
+}
+
+.wrapper2 .contVert .paragrafo {
+    padding: 10px;
+    text-align: center; /* Centra il testo nei paragrafi */
+    min-width: 100px; /* Larghezza minima */
+}
+
+.wrapper2 .contVert .paragrafo .info {
+    padding: 10px;
+}
+
+.wrapper2 .contVert .paragrafo img{
+    height: 230px; /* Regola la larghezza dell'immagine */
+    width: auto; /* Mantiene le proporzioni */
     border-radius: 10%; /* Aggiunge un effetto cerchio, opzionale */
-    border: 2px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
-.info {
-    display: flex;
-    flex-direction: column; /* Dispone i paragrafi in colonna */
-    width: 100%;
-    font-size: 30px;
+.wrapper2 .contVert h1 {
+    text-align: center; /* Centra il testo */
+    margin-bottom: 20px; /* Spaziatura tra l'h1 e il contenitore sottostante */
+    font-size: 40px;
+    color: white;
 }
 
-.wrapper2 p {
-    padding: 5px;
+.wrapper2 .contVert .contOrizz .paragrafo .info p {
+    font-size: 22px;
+    color: white;
 }
 
 /*REGISTRAZIONE*/
