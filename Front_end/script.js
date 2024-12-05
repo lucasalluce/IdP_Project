@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = loginForm.querySelector("input[type='text']").value;
             const password = loginForm.querySelector("input[type='password']").value;
 
-            //#TODO hashing password  
 
+            //#TODO hashing password  
 
 
             fetch("/login", {
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        window.location.href = "  "; // ISERIRE IL PERCORSO DOPO IL CORRETTO COLLEGAMENTO
+                        window.location.href = "/about3";  // ISERIRE IL PERCORSO DOPO IL CORRETTO COLLEGAMENTO
                     } else {
                         alert("Credenziali errate. Riprova.");
                     }
