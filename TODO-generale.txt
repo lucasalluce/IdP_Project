@@ -8,7 +8,7 @@ ___Back-end___
 >>> python -m pip install mysql-connector-python
 
 TODO 3. Installazione Flask                  
->>> 
+>>> python -m pip install Flask
 
 TODO Funzionalità di recupero password -> tabella dB password temporanee
 TODO Funzionalità di hasing password
