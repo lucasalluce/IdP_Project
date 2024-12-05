@@ -31,6 +31,7 @@ class AutenticationServer:
                 pass #TODO Comunicare errore _ Front-end
 
         dbCursor.reset()
+
     def addUser (self, jsonName, jsonSurname, jsonUsername, jsonHashedPassword, jsonEmail):
             # Controllo preesistenza Username
         query = "SELECT Email FROM Users WHERE Username = %s"
@@ -53,6 +54,6 @@ class AutenticationServer:
         dbCursor.reset()
 
 # TEST AREA
-server = AutenticationServer()
+#server = AutenticationServer()
 #server.login("l.salluce", "Cifhbab")
-server.addUser("Mario", "Rossi", "m.rossi", "fdgaffweX", "m.rossi@studenti.poliba.it")
+#server.addUser("Mario", "Rossi", "m.rossi", "fdgaffweX", "m.rossi@studenti.poliba.it")
