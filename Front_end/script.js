@@ -91,9 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-
     
     // Gestione password dimenticata
     const forgotPasswordForm = document.getElementById("forgot-password-form");

@@ -9,7 +9,14 @@ import string
 app = Flask(__name__)
 
 # Simulazione del database per gli utenti (in produzione, dovresti usare un vero database)
-users_db = {}
+# INSERIRE IL DATABASE EFFETTIVO
+def get_db_connection():
+    return mysql.connector.connect(
+        host="localhost",      # host del database
+        user="root",           # username MySQL
+        password="password",   # password MySQL
+        database="database"    # Nome database
+    )
 
 # Funzione per inviare email (per il recupero password)
 def send_reset_email(email, reset_token):
@@ -39,6 +46,8 @@ def send_reset_email(email, reset_token):
         print(f"Errore nell'invio dell'email: {e}")
         return False
 
+
+
 # Endpoint di login
 @app.route("/login", methods=["POST"])
 def login():
@@ -46,12 +55,22 @@ def login():
     username = data.get("username")
     password = data.get("password")
 
+    # Connettiti al database
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+
     # Controlla se l'utente esiste nel "database"
-    user = users_db.get(username)
+    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    user = cursor.fetchone()
+    connection.close()
+
     if user and check_password_hash(user["password"], password):
         return jsonify({"success": True, "message": "Login effettuato con successo!"})
     else:
         return jsonify({"success": False, "message": "Credenziali errate."})
+
+
+
 
 # Endpoint di registrazione
 @app.route("/register", methods=["POST"])
@@ -61,16 +80,31 @@ def register():
     email = data.get("email")
     password = data.get("password")
 
-    # Verifica se l'utente esiste già
-    if username in users_db:
-        return jsonify({"success": False, "message": "L'utente esiste già."})
+    # Connettiti al database
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
 
-    # Aggiungi l'utente al "database" (salva la password in formato hash)
-    users_db[username] = {
-        "email": email,
-        "password": generate_password_hash(password),
-    }
+    # Verifica se l'utente esiste già
+    cursor.execute("SELECT * FROM users WHERE username = %s OR email = %s", (username, email))
+    existing_user = cursor.fetchone()
+
+    if existing_user:
+        connection.close()
+        return jsonify({"success": False, "message": "L'utente o l'email esistono già."})
+
+    # Aggiungi il nuovo utente
+    hashed_password = generate_password_hash(password)
+    cursor.execute(
+        "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
+        (username, email, hashed_password)
+    )
+    connection.commit()
+    connection.close()
+
     return jsonify({"success": True, "message": "Registrazione avvenuta con successo!"})
+
+
+
 
 # Endpoint per il recupero password
 @app.route("/forgot-password", methods=["POST"])
@@ -78,24 +112,28 @@ def forgot_password():
     data = request.get_json()
     email = data.get("email")
 
-    # Controlla se l'email esiste nel "database"
-    user = None
-    for username, details in users_db.items():
-        if details["email"] == email:
-            user = username
-            break
+    # Connettiti al database
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+
+    # Cerca l'utente tramite email
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+    connection.close()
 
     if not user:
         return jsonify({"success": False, "message": "Email non trovata."})
 
-    # Crea un token di reset (per esempio, una stringa casuale)
+    # Genera un token di reset
     reset_token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
 
-    # Invia l'email con il link di reset
+    # Invia l'email
     if send_reset_email(email, reset_token):
         return jsonify({"success": True, "message": "Controlla la tua email per il link di reset della password."})
     else:
         return jsonify({"success": False, "message": "Errore nell'invio dell'email."})
+
+
 
 # Endpoint per il reset della password (simulato)
 @app.route("/reset-password/<reset_token>", methods=["GET", "POST"])
