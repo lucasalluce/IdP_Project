@@ -53,6 +53,18 @@ class AutenticationServer:
         #TODO Verifica di corretto inserimento della nuova tupla nella tabella
         dbCursor.reset()
 
+    def recoveryPassword(self, jsonEmail):
+        query = "SELECT Username, HashedPassword FROM Users WHERE Email = %s"
+        dbCursor.execute(query, (jsonEmail, ))
+        dbReturn = dbCursor.fetchall()
+
+        if len(dbReturn) == 0: # Caso - Utente inesistente / Errore inserimento mail
+            pass #TODO Comunicazione inesistenza utente/errore inserimento mail
+        elif len(dbReturn) == 1: # Caso - Utente trovato -> MailService
+            pass #TODO  
+        else: # Caso - Più utenti registrati con la stessa email
+            pass
+        
 # TEST AREA
 #server = AutenticationServer()
 #server.login("l.salluce", "Cifhbab")
