@@ -11,22 +11,31 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #2f4f4f;
+    background: url('Immagini/sfondo.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 /* HOME */
 .wrapper {
     width: 420px;
-    background-color: #8fbc8f;
+    background-color: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
     border-radius: 10px;
     padding: 30px 40px;
+    transition: transform 0.6s ease; /* Transizione più lenta */
 }
 
 .wrapper h1{
     font-size: 36 px;
     text-align: center;
+}
+
+.wrapper:hover {
+    transform: scale(1.1); /* Ingrandisce il riquadro del 10% */
 }
 
 .wrapper .input-box {
@@ -129,6 +138,18 @@ body {
     justify-content: space-between; /* Spazio tra logo e bottone */
     padding: 10px 20px;        /* Spazi interni */
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
+}
+
+.barraSuperiore .btn-aboutUs {
+    background-color: #193C6A;
+}
+
+.barraSuperiore .btn-aboutUs:hover {
+    background-color: #008096;
+}
+
+.barraSuperiore .gruppo-text {
+    color: #082750;
 }
 
 .barraSuperiore img {
