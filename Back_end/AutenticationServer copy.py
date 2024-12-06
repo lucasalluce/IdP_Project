@@ -1,6 +1,6 @@
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
 import mysql.connector
-from flask import Flask, request, jsonify
+from flask import Flask, app, request, jsonify
 import mysql.connector
 import hashlib
 
@@ -34,7 +34,12 @@ class AuthenticationServer:
             return {"success": False, "message": "Utente non trovato"}
         else:  # Caso - Utente esistente
             if dbReturn[0][0] == hashedPassword:  # Credenziali corrette
+
+
+                
                 # Puoi implementare qui il processo di 2FA se necessario
+                
+                
                 return {"success": True}
             else:  # Credenziali sbagliate
                 return {"success": False, "message": "Password errata"}
