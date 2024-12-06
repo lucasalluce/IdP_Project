@@ -195,7 +195,7 @@ body {
 .wrapper2 .contVert .paragrafo {
     padding: 10px;
     text-align: center; /* Centra il testo nei paragrafi */
-    min-width: 100px; /* Larghezza minima */
+    width: 350px;
 }
 
 .wrapper2 .contVert .paragrafo .info {
@@ -203,8 +203,8 @@ body {
 }
 
 .wrapper2 .contVert .paragrafo img{
-    height: 230px; /* Regola la larghezza dell'immagine */
-    width: auto; /* Mantiene le proporzioni */
+    height: auto; /* Regola la larghezza dell'immagine */
+    width: 330px; /* Mantiene le proporzioni */
     border-radius: 10%; /* Aggiunge un effetto cerchio, opzionale */
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
