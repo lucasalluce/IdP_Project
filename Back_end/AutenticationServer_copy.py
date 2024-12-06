@@ -1,10 +1,12 @@
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
 import mysql.connector
-from flask import Flask, app, request, jsonify
-
-
+from flask import Flask, request, jsonify
 import mysql.connector
 import hashlib
+
+app = Flask(__name__)
+CORS(app)
+
 
 
 dbConnection = mysql.connector.connect(
