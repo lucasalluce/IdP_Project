@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
            //#TODO hashing password  (da fare lato client o lato server, ma qui ci assumiamo che venga fatto lato server)
 
-           fetch("http://127.0.0.1:5500/Front_end/home.html", {
+           fetch("http://127.0.0.1:5000/login", {
                method: "POST",
                headers: {
                    "Content-Type": "application/json",
