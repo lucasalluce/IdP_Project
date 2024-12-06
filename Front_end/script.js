@@ -1,43 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
+// Gestione login
+   // Gestione login
+   const loginForm = document.getElementById("login-form");
+   if (loginForm) {
+       loginForm.addEventListener("submit", (e) => {
+           e.preventDefault();  
 
+           const username = loginForm.querySelector("input[type='text']").value;
+           const password = loginForm.querySelector("input[type='password']").value;
 
+           //#TODO hashing password  (da fare lato client o lato server, ma qui ci assumiamo che venga fatto lato server)
 
-    // Gestione login
-    const loginForm = document.getElementById("login-form");
-    if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();  
-
-            const username = loginForm.querySelector("input[type='text']").value;
-            const password = loginForm.querySelector("input[type='password']").value;
-
-
-            //#TODO hashing password  
-
-
-            fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        window.location.href = "/about3";  // ISERIRE IL PERCORSO DOPO IL CORRETTO COLLEGAMENTO
-                    } else {
-                        alert("Credenziali errate. Riprova.");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Errore:", error);
-                });
-        });
-    }
+           fetch("/login", {
+               method: "POST",
+               headers: {
+                   "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                   username: username,
+                   password: password,
+               }),
+           })
+               .then((response) => response.json())
+               .then((data) => {
+                   if (data.success) {
+                       window.location.href = "/about3";  // Reindirizza se login riuscito
+                   } else {
+                       alert("Credenziali errate. Riprova.");
+                   }
+               })
+               .catch((error) => {
+                   console.error("Errore:", error);
+               });
+       });
+   }
 
 
 
