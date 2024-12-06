@@ -12,10 +12,12 @@ dbConnection = mysql.connector.connect(
     database="IdP_OAuth2_2FA"
 )
 dbCursor = dbConnection.cursor()
+   
+   
+   
     # cursor.execute() - funzione del cursore per interagire con il database
 
 # Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), HashedPassword varchar(300), Email varchar(200))
-
 
 class AuthenticationServer:
     def __init__(self) -> None:
@@ -34,12 +36,6 @@ class AuthenticationServer:
             return {"success": False, "message": "Utente non trovato"}
         else:  # Caso - Utente esistente
             if dbReturn[0][0] == hashedPassword:  # Credenziali corrette
-
-
-                
-                # Puoi implementare qui il processo di 2FA se necessario
-                
-                
                 return {"success": True}
             else:  # Credenziali sbagliate
                 return {"success": False, "message": "Password errata"}
@@ -60,6 +56,9 @@ def login():
 if __name__ == "__main__":
     app.run(debug=True)
 
+
+
+#---------------------------------------------------------------------------------------------------------------------------------
 
 #GESTIONE PER ADDUSER
 
