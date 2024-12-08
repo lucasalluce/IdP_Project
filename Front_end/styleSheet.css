@@ -44,6 +44,7 @@ body {
 .wrapper h1{
     font-size: 36 px;
     text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 .wrapper:hover {
@@ -80,6 +81,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 .wrapper .remember-forgot {
@@ -87,6 +89,7 @@ body {
     justify-content: space-between;
     font-size: 14.5px;
     margin: -15px 0 15px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 .remember-forgot label input {
@@ -117,9 +120,10 @@ body {
     color: #333;
     font-weight: 600;
     transition: background-color 0.3s;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
-.btn:hover {
+.wrapper .btn:hover {
     background-color: #e6e6e6; /* Cambia colore del bottone al passaggio del mouse */
 }
 
@@ -127,6 +131,7 @@ body {
     font-size: 14.5px;
     text-align: center;
     margin: 20px 0 15px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 .register-link p a {
@@ -144,30 +149,33 @@ body {
     top: 0;                    /* Posizionata in alto */
     left: 0;                   /* Allineata al bordo sinistro */
     width: 100%;               /* Occupa tutta la larghezza della finestra */
-    background-color: #fff  ; /* Colore di sfondo */
+    background-color: transparent  ; /* Colore di sfondo */
     box-shadow: 0 2px 5px rgba(0, 0, 0, .1); /* Leggera ombra per effetto 3D */
     display: flex;             /* Layout a griglia flessibile */
     align-items: center;       /* Allinea elementi verticalmente */
     justify-content: space-between; /* Spazio tra logo e bottone */
     padding: 10px 20px;        /* Spazi interni */
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
+    backdrop-filter: blur(20px);
 }
 
 .barraSuperiore .btn-aboutUs {
-    background-color: #193C6A;
-}
-
-.barraSuperiore .btn-aboutUs:hover {
-    background-color: #008096;
-}
-
-.barraSuperiore .gruppo-text {
-    color: #082750;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;              /* Colore del testo bianco */
+    border: none;              /* Rimuove bordi */
+    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
+    text-decoration: none; /* Rimuove la sottolineatura */
+    margin-left: 30px;
 }
 
 .barraSuperiore img {
-    height: 50px;              /* Altezza fissa del logo */
+    height: 60px;              /* Altezza fissa del logo */
     object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
+    margin-left: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .gruppo-text {
@@ -181,22 +189,6 @@ body {
 
 .about-us {
     margin-right: 20px;        /* Margine destro per distanziare */
-}
-
-.btn-aboutUs {
-    background-color: #2f4f4f; /* Colore di sfondo blu */
-    color: white;              /* Colore del testo bianco */
-    border: none;              /* Rimuove bordi */
-    padding: 10px 15px;        /* Spazi interni del bottone */
-    border-radius: 5px;        /* Angoli arrotondati */
-    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
-    font-size: 16px;           /* Dimensione del testo */
-    transition: background-color 0.3s; /* Transizione morbida sul hover */
-    text-decoration: none; /* Rimuove la sottolineatura */
-}
-
-.btn-aboutUs:hover {
-    background-color: #406c6c; /* Cambia colore del bottone al passaggio del mouse */
 }
 
 
@@ -248,11 +240,13 @@ body {
     margin-bottom: 20px; /* Spaziatura tra l'h1 e il contenitore sottostante */
     font-size: 40px;
     color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 .wrapper2 .contVert .contOrizz .paragrafo .info p {
     font-size: 22px;
     color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
 /*REGISTRAZIONE*/
@@ -275,11 +269,25 @@ body {
 
 
 /*FORGOT_PASSWORD*/
+/*CONFIRM_REG*/
+/*OTP*/
+/*RECOVERY_CRED*/
+/*RECOVERY_OTP*/
 .wrapper .intestazione {
     text-align: center;
 }
 
-.wrapper h2 {
+.wrapper .intestazione h2 {
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
+    font-size: 28px;
+    font-weight: bold;    
     padding: 10px;
 }
+
+.wrapper .intestazione p {
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
 
