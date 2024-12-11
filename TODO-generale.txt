@@ -33,8 +33,12 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 **  Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed Flask-3.1.0 Jinja2-3.1.4 MarkupSafe-3.0.2 Werkzeug-3.1.3 blinker-1.9.0 click-8.1.7 itsdangerous-2.2.0
 
 ___Front-end___
+> Stefano
+
+> Federico
 
 ___Back-end___
+> Luca
 DONE Configurazione environment, MySQL e Flask
 
 TODO AutenticationServer
@@ -43,6 +47,14 @@ TODO AutenticationServer
     - recoveryPassword()
 
 TODO Hashing
-TODO MailService
 TODO OTP generator
 TODO Token generator
+
+> Gianluca
+TODO Configurazione environment, MySQL e Flask
+
+TODO MailService
+
+> Fede
+TODO Configurazione environment, MySQL e Flask
+
