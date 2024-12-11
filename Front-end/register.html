@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione - Progetto IdP con OAuth 2.0 e 2FA</title>
+    <link rel="stylesheet" type="text/css" href="styleSheet.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <div class="wrapper"> <!-- classe totale x Register -->
+
+        <form id="register-form" action=""> <!-- per js -->
+
+            <h1>Register</h1>
+
+            <div class="input-box"> <!-- classe per username -->
+                <input type="text" placeholder="Username" required>
+                <i class='bx bxs-user'></i> <!-- icona x Username -->
+            </div>
+
+            <div class="input-box"> <!-- classe per email -->
+                <input type="email" placeholder="Email" required>
+                <i class='bx bxs-envelope'></i> <!-- icona x Email -->
+            </div>
+
+            <div class="input-box"> <!-- classe per password -->
+                <input type="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i> <!-- icona x Password -->
+            </div>
+
+            <div class="input-box"> <!-- classe per conferma password -->
+                <input type="password" placeholder="Confirm Password" required>
+                <i class='bx bxs-lock'></i> <!-- icona x Confirm Password -->
+            </div>
+
+            <button type="submit" class="btn">Register</button> <!-- bottone Register -->
+
+            <div class="login-link"> <!-- classe per ritorno login -->
+                <p>Already have an account? <a  href="home.html">Login</a></p>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="barraSuperiore">    <!-- barra superirore sito -->
+        <a href="https://www.poliba.it/" target="_blank">
+            <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
+        </a>
+        
+        <div class="about-us">  <!-- classe aboutUs -->
+            <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a>   <!-- bottone AboutUs -->
+            <a href="home.html" class="btn-aboutUs">HOME</a>   <!-- bottone Home -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
