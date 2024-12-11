@@ -19,20 +19,20 @@ body {
 
 /* HOME */
 .wrapper {
-    margin: 0; /* Rimuove i margini della pagina */
-    padding: 0; /* Rimuove il padding della pagina */
+    margin: 0 auto; /* Rimuove i margini della pagina */
+    padding: 30px 40px;
     width: 420px;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
     border-radius: 10px;
-    padding: 30px 40px;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
     transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
     will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
     transition: transform 0.6s ease; /* Transizione più lenta */
+    margin-top: 80px;                 /* Sposta il wrapper sotto la barra */
 }
 
 .wrapper * {
@@ -156,7 +156,8 @@ body {
     justify-content: space-between; /* Spazio tra logo e bottone */
     padding: 10px 20px;        /* Spazi interni */
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(40px);
+    height: 80px;              /* Imposta un'altezza fissa */
 }
 
 .barraSuperiore .btn-aboutUs {
@@ -291,3 +292,118 @@ body {
 }
 
 
+/*CARTELLA SANITARIA*/
+
+.bodyCart {
+    background-image: none; /* Rimuove la foto */
+    background: url('Immagini/sfondo-ospedale.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Mantiene l'immagine fissa durante lo scroll */
+}
+
+.wrapper3 {
+    margin: 0 auto; /* Centra il wrapper orizzontalmente */
+    padding: 30px 40px;
+    width: 1150px;
+    background-color: #af9076;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
+    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
+    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
+    transition: transform 0.6s ease; /* Transizione più lenta */
+    min-height: calc(100vh - 80px);   /* Altezza minima del wrapper = altezza viewport - barra superiore */
+    margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
+}
+
+.wrapper3 * {
+    text-rendering: geometricPrecision; /* Migliora la nitidezza */
+    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
+    -font-smoothing: antialiased;
+}
+
+.wrapper3 h1{
+    font-size: 36 px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
+    padding-bottom: 5px;
+    border-bottom: 2px solid white;
+}
+
+.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità {
+    display: flex;
+    align-items: center; /* Allinea verticalmente al centro */
+    gap: 20px; /* Spaziatura tra gli elementi */
+}
+
+.wrapper3 h2, .wrapper3 p, .wrapper3 li, .wrapper3 table {
+    margin: 0;
+    font-size: 24px;
+}
+
+.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità {
+    margin-top: 20px;
+}
+
+.wrapper3 .patologie li {
+    margin-left: 20px;
+}
+
+.wrapper3 .risultatiEsami h2{
+    text-align: left; /* H2 allineato a sinistra (predefinito) */
+}
+
+.wrapper3 .risultatiEsami table, .wrapper3 .esamiPrenotati table {
+    width: 80%;
+    margin: 0 auto; /* Centra la tabella orizzontalmente */
+    border-collapse: collapse; /* Unisce i bordi delle celle */
+    margin-top: 5px;
+}
+
+.wrapper3 .risultatiEsami .esame {
+    width: 50%;
+}
+
+.wrapper3 .risultatiEsami .data, .wrapper3 .risultatiEsami .risultato {
+    width: 25%;
+}
+
+.wrapper3 .risultatiEsami table, .wrapper3 .risultatiEsami th, .wrapper3 .risultatiEsami tr,  .wrapper3 .risultatiEsami td, .wrapper3 .esamiPrenotati table, .wrapper3 .esamiPrenotati th, .wrapper3 .esamiPrenotati tr,  .wrapper3 .esamiPrenotati td {
+    border: 2px solid white;
+    padding: 5px;
+}
+
+.wrapper3 .esamiPrenotati .esame {
+    width: 50%;
+}
+
+.wrapper3 .esamiPrenotati .data {
+    width: 50%;
+}
+
+
+/*PROFILO*/
+.wrapper4 {
+    margin: 0; /* Rimuove i margini della pagina */
+    padding: 0; /* Rimuove il padding della pagina */
+    width: 60%;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+    transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
+    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
+    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
+    transition: transform 0.6s ease; /* Transizione più lenta */
+}
+
+.wrapper4 * {
+    text-rendering: geometricPrecision; /* Migliora la nitidezza */
+    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
+    -font-smoothing: antialiased;
+}
