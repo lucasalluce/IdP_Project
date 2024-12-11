@@ -1,25 +1,48 @@
-___Back-end___
+___Settings Python____
 
-1. Creazione Environment                DONE!
->>> python -m venv IdP_Project_Nome
-    click in basso dx per l'attivazione
+! NOTA IMPORTANTE !
+Tra MacOs e Windows i pattern delle directory differiscono nello slash, quelli mostrati sotto utilizzano
+la notazione di MacOs, quindi per Windows prestare attenzione agli \
 
-2. Installazione MySQL connection       DONE!
->>> pip install mysql-connector-python
+1. Creazione e configurazione environment
+-   Utilizzando il terminale, raggiungere la directory -> /Back-end/Environment
+!!  SOLO DOPO essere entrato nella directory corretta eseguire il seguente comando, indicando
+    il proprio nome - es. IdP_Project_Luca
+>>  python -m venv IdP_Project_Nome
+-   Eseguito il comando, raggiungere la directory appena creata -> /Back-end/Environment/IdP_Project_Nome
+!!  SOLO DOPO essere entrato nella directory corretta eseguire il seguete comando
+>>  source bin/activate
+**  Ci si accorge che tutto ha funzionato se la stringa del terminale che precede l'inserimento dei comandi
+    presenta - (IdP_Project_Nome)
 
-3. Installazione Flask                  
+:)  Ottimo lavoro, environment configurato con successo, WELL DONE !!!
+
+2. Installazione MySQL connection
+-   Dopo aver correttamente creato e configurato l'environment, procediamo con l'installazione di MySQL connection
+-   Eseguire il seguente comando nel terminale
+>>  pip install mysql-connector-python
+**  Ci si accorge che tutto ha funzionato se si visualizza come ultimo messaggio - Successfully installed mysql-connector-python-9.1.0
+!!  Potrebbere essere sollevato dal terminale, la possibilità di aggiornare il pip, in tal caso eseguire il seguente comando
+>>  pip install --upgrade pip
+**  Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed pip-24.3.1
+
+3. Installazione Flask
+-   Dopo aver correttamente creato e configurato l'environment, procediamo con l'installazione di Flask
+-   Eseguire il seguente comando nel terminale
 >>> pip install Flask
+**  Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed Flask-3.1.0 Jinja2-3.1.4 MarkupSafe-3.0.2 Werkzeug-3.1.3 blinker-1.9.0 click-8.1.7 itsdangerous-2.2.0
 
-TODO Funzionalità di recupero password -> tabella dB password temporanee
-TODO Funzionalità di hasing password
+___Front-end___
 
-___Schede Front-end___
+___Back-end___
+DONE Configurazione environment, MySQL e Flask
 
-Home/Index                              DONE!
-    Registrazione utente/Nuovo Utente   DONE!
-        Conferma Registrazione          DONE!
-    Recupero credenziali                DONE!
-        Conferma Recupero credenziali   DONE!
-    Conferma OTP                        DONE!
-        Accesso completato              DONE!
-About                                   DONE!+
+TODO AutenticationServer
+    - login()
+    - addUser()
+    - recoveryPassword()
+
+TODO Hashing
+TODO MailService
+TODO OTP generator
+TODO Token generator
