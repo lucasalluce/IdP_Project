@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>HOME - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <link rel="stylesheet" type="text/css" href="styleSheet.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+    <body>
+
+        <div class="wrapper">   <!-- classe totale x Login-->
+
+            <form id="login-form" action="">    <!-- per js -->
+
+                <h1>Login</h1>
+
+                <div class="input-box">     <!-- classe per username -->
+                    <input type="text"  placeholder="Username"
+                    required>
+                    <i class='bx bxs-user'></i>     <!-- icona x Username -->
+                </div>
+
+                <div class="input-box">     <!-- classe per password -->
+                    <input type="password"  placeholder="Password"
+                    required>
+                    <i class='bx bxs-lock-alt' ></i>    <!-- icona x Password -->
+                </div>
+
+                <div class="remember-forgot">   <!-- classe per password dimenticata -->
+                    <a href="forgotPassword.html">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn">Login</button>    <!-- bottone Login -->
+
+                <div class="register-link">     <!-- classe per registrazione -->
+                    <p>Don't have an account? <a  href="register.html">Register</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="barraSuperiore">    <!-- barra superirore sito -->
+            <a href="https://www.poliba.it/" target="_blank">
+                <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
+            </a>
+
+            <div class="about-us">  <!-- classe aboutUs -->
+                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a>   <!-- bottone AboutUs -->
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+
+    </body>
+</html>
