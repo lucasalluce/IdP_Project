@@ -47,19 +47,26 @@ TODO    1) password visibile nella registrazione/login
         3) nome e cognome registrazione
         4) pagina cartella sanitaria
         5) pagina profilo
-
-> Federico
+> Luca & Federico
+~ Javascript ~
+Done! passwordHashing           // TODO Test
+Done! login                     // TODO Test
+TODO registration
+TODO recoveryPassword
+TODO otpValidation
 
 ___Back-end___
-> Luca
-DONE Configurazione environment, MySQL e Flask
+> Luca & Federico & Gianluca
+Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluca //TODO 
 
-TODO AutenticationServer
-    - login()
-    - addUser()
-    - recoveryPassword()
+~ AutenticationServer ~
+TODO    - login()
+TODO    - addUser()
+TODO    - recoveryPassword()
 
-TODO Hashing
+~ MailService ~
+
+DONE Hashing
 TODO OTP generator
 TODO Token generator
 
