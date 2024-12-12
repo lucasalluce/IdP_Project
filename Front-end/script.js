@@ -11,18 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    // TODO OTP
-    const otpForm = document.getElementById("otp-form")
-    if (otpForm) {
-        otpForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            console.log("Modulo inviato");
-
-            const otpInput = document.getElementById("otp-input").value;
-        });
-    }
-
-    // Login
+    // Processo di login
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
@@ -50,21 +39,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then((response) => response.json())                        // Acqisizione file JSON di risposta
                 .then((data) => {                                           
-                    if (data.success) {
-                        localStorage.setItem("userEmail", data.email);
-                        window.location.href = "otp.html";
+                    if (data.success) {                                     // Verifica del corretto login
+                        localStorage.setItem("userEmail", data.email);      // Acquisizione dei dati nel file di risposta JSON
+                        window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
                     } else {
-                        alert("Credenziali errate!! Riprovare")
+                        alert("Credenziali errate!! Riprovare")             // Allert di errore nel login - Credenziali inserite non correte
                     }
                 })
                 .catch((error) => {
-                    console.error("Errore: ", error):
+                    console.error("Errore: ", error);
                 })
             });
         });
     }
 
-    // Gestione registrazione
+    // TODO Processo di verifica OTP
+    const otpForm = document.getElementById("otp-form")
+    if (otpForm) {
+        otpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("Modulo inviato");
+
+            const otpInput = document.getElementById("otp-input").value;
+        });
+    }
+
+    // TODO Processo di registrazione
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
@@ -106,11 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-
-
-
-    // Gestione password dimenticata
+    // TODO Processo di recupero password
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
@@ -143,4 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         });
     }
+
+    // TODO Processo di 
+
 });
