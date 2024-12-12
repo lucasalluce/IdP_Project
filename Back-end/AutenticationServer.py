@@ -9,7 +9,18 @@ dbConnection = mysql.connector.connect(
 dbCursor = dbConnection.cursor()
     # cursor.execute() - funzione del cursore per interagire con il database
 
+# Applicazione Flask - Server locale
+from flask import Flask
+from flask_cors import CORS
+app = Flask(__name__)
+CORS(app)
+
+
+
 # Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), HashedPassword varchar(300), Email varchar(200))
+
+
+
 
 class AutenticationServer:
     def __init__(self) -> None:
