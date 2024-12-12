@@ -1,6 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-// Gestione login
-   // Gestione login
+    // Hashing password
+        // IN clearPassword - password in chiaro acquisita dal form
+        // OUT hashHex - password cifrata con
+    async function hashPassword(clearPassword) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(clearPassword);                                             // Conversione in binario
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);                         // Calcolo dell'hash SHA-256
+        const hashArray = Array.from(new Uint8Array(hashBuffer));                               // Conversione in array
+        const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
+        return hashHex
+    }
+
+    // TODO OTP
+    const otpForm = document.getElementById("otp-form")
+    if (otpForm) {
+        otpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("Modulo inviato");
+            
+            const otpInput = document.getElementById("otp-input").value;
+        });
+    } 
+
+   // Login
    const loginForm = document.getElementById("login-form");
    if (loginForm) {
        loginForm.addEventListener("submit", (e) => {
