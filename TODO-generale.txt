@@ -12,7 +12,8 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 (mac)       >>  python3 -m venv IdP_Project_Nome
 -   Eseguito il comando, raggiungere la directory appena creata -> /Back-end/Environment/IdP_Project_Nome
 !!  SOLO DOPO essere entrato nella directory corretta eseguire il seguete comando
->>  source bin/activate
+(windows)   >>  .\Scripts\activate
+(mac)       >>  source bin/activate
 **  Ci si accorge che tutto ha funzionato se la stringa del terminale che precede l'inserimento dei comandi
     presenta - (IdP_Project_Nome)
 
