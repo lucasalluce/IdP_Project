@@ -1,18 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Funzione per fare l'hashing della password
-    async function hashPassword(password) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(password);                                                  // Conversione in binario
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data);                         // Calcolo dell'hash SHA-256
-        const hashArray = Array.from(new Uint8Array(hashBuffer));                               // Conversione in array
-        const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
-        return hashHex;
-    }
-
 
     // Gestione invio OTP
     const otpForm = document.getElementById("otp-form");
-
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -51,50 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.error("Errore nella richiesta:", error);
                     alert("Si è verificato un errore durante la verifica dell'OTP. Riprova.");
                 });
-        });
-    }
-
-
-
-    // Gestione login
-    const loginForm = document.getElementById("login-form");
-    if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            const username = loginForm.querySelector("input[type='text']").value;
-            const password = loginForm.querySelector("input[type='password']").value;
-
-            if (!username || !password) {
-                alert("Inserisci username e password!");
-                return;
-            }
-
-            // Esegui l'hashing della password prima di inviarla
-            hashPassword(password).then((hashedPassword) => {
-                fetch("http://127.0.0.1:5000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: hashedPassword,  // Passiamo la password hashata
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            localStorage.setItem("userEmail", data.email);
-                            window.location.href = "otp.html";  // Reindirizza se login riuscito
-                        } else {
-                            alert("Credenziali errate. Riprova.");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Errore:", error);
-                    });
-            });
         });
     }
 
