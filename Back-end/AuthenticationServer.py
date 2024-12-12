@@ -3,6 +3,9 @@
 # random - utile per la generazione dell'OTP
 import bcrypt, random
 
+# Modulo di MailService - utile per l'invio di mail agli utenti
+from MailService import MailService
+
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
 import mysql.connector
 dbConnection = mysql.connector.connect(
@@ -23,7 +26,10 @@ CORS(app)
 
 class AuthenticationServer:
     def __init__(self):
-        print("AuthenticationServer - Online, in attesa di richieste")
+        print("AuthenticationServer - Loading ...")
+        self.mailService = MailService()
+        print("AuthenticationServer - Online, in ascolto ...")
+        
     
     def otpGenerator (self):
         print("AuthenticationServer.login.2FA - Generazione OTP ...")
@@ -33,6 +39,8 @@ class AuthenticationServer:
         return otp
     
     def login (self, jsonUsername, jsonHashedPassword):
+        
+        
         print("AuthenticationServer - Inizio della procedura 'login'")
         
         print("AuthenticationServer.login - Interrogazione database ...")
@@ -55,7 +63,8 @@ class AuthenticationServer:
                 print("AuthenticationServer.login - Riscontro totale, utente autenticato")
                 print("AuthenticationServer.login - Inizio alla sotto-procedura '2FA'")
                 otp = self.otpGenerator()
-                # TODO decidere approccio MailService / funzione sendOtp(otp, dbEmail)
+                self.mailService.otpMail(otp, dbEmail)
+                
                 # TODO salvataggio corrispondenza mail-otp,timestamp
                     # Soluzione di Fede
                     #otp_data[email] = {
