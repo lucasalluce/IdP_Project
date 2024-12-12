@@ -1,6 +1,6 @@
 # Moduli utili
 # bcrypt - utile al confronto delle hashedPassword
-# random - 
+# random - utile per la generazione dell'OTP
 import bcrypt, random
 
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
@@ -21,39 +21,39 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-class AutenticationServer:
-    def __init__(self) -> None:
-        print("Server - Online, in attesa di richieste")
+class AuthenticationServer:
+    def __init__(self):
+        print("AuthenticationServer - Online, in attesa di richieste")
     
     def otpGenerator (self):
-        print("Server.2FA - Generazione OTP ...")
+        print("AuthenticationServer.login.2FA - Generazione OTP ...")
         # Generazione codice OTP a 6 cifre
         otp = random.randint(100000, 999999)
-        print("Server.2FA - OTP generato " + str(otp))
+        print("AuthenticationServer.login.2FA - OTP generato: " + str(otp))
         return otp
     
     def login (self, jsonUsername, jsonHashedPassword):
-        print("Server - Inizio della procedura 'login'")
+        print("AuthenticationServer - Inizio della procedura 'login'")
         
-        print("Server.login - Interrogazione database ...")
+        print("AuthenticationServer.login - Interrogazione database ...")
             # Acquisizione credenziali dal database
         query = "SELECT HashedPassword, Email FROM Users WHERE Username = %s;"
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
         dbCursor.reset()
-        print("Server.login - Dati acquisiti")
+        print("AuthenticationServer.login - Dati acquisiti")
 
         if len(dbReturn) == 0: # Caso - Username errato/Utente inseistente
-            print("Server.login - Nessun riscontro")
-            print("Server - Fine della procedura 'login'")
+            print("AuthenticationServer.login - Nessun riscontro, utente non autenticato")
+            print("AuthenticationServer - Fine della procedura 'login'")
             return {"success": False, "message": "Username errato/Utente inesistente"} # Risposta del server
         else: # Caso - Utente esistente
             dbHashedPassword = dbReturn[0][0]
             dbEmail = dbReturn[0][1]            
             dbReturn.clear()
             if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), dbHashedPassword.encode('utf-8')): # Caso - Credenziali corrette -> protocol2FA()
-                print("Server.login - Riscontro totale, utente autenticato")
-                print("Server.login - Passaggio alla procedura '2FA'")
+                print("AuthenticationServer.login - Riscontro totale, utente autenticato")
+                print("AuthenticationServer.login - Inizio alla sotto-procedura '2FA'")
                 otp = self.otpGenerator()
                 # TODO decidere approccio MailService / funzione sendOtp(otp, dbEmail)
                 # TODO salvataggio corrispondenza mail-otp,timestamp
@@ -65,7 +65,8 @@ class AutenticationServer:
                 
                 return {"success": True, "message": "Utente verificato, OTP inviato", "Email": dbEmail} # Risposta del server, in allegato mail dell'utente che ha fatto l'accesso (utile per la successiva verifica del codice OTP)
             else: # Caso - Credenziali sbagliate
-                
+                print("AuthenticationServer.login - Riscontro parziale, utente non autenticato")
+                print("AuthenticationServer - Fine della procedura 'login'")
                 return {"success": False, "message": "Password errata"} # Risposta del server
 
         
@@ -104,6 +105,6 @@ class AutenticationServer:
             pass
         
 # TEST AREA
-#server = AutenticationServer()
+#server = AuthenticationServer()
 #server.login("l.salluce", "Cifhbab")
 #server.addUser("Mario", "Rossi", "m.rossi", "fdgaffweX", "m.rossi@studenti.poliba.it")
