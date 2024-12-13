@@ -57,11 +57,11 @@ TODO    1) password visibile nella registrazione/login      DONE
         5) pagina profilo
 > Luca & Federico
 ~ Javascript ~
-Done! passwordHashing           // TODO Test
-Done! login                     // TODO Test
+√   passwordHashing           // TODO Test
+√   login                     // TODO Test
 TODO registration
 TODO recoveryPassword
-TODO otpValidation
+TODO verifyOTP
 
 ___Back-end___
 > Luca & Federico & Gianluca
@@ -69,23 +69,23 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 
 ~ AutenticationServer ~
 √   Connessione al database -> MySQL connector
-√   Comunicazione con il clinet -> Flask
+√   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
-Done!   - login() 
+√       - login()               // TODO Test
+    √       - otpGenerator()
+    √       - otpMail() -> MailService
+    √       + app Flask             
+        TODO    - otpValidator() 
+        TODO    + app Flask      
 TODO    - addUser()
 TODO    - recoveryPassword()
 
 ~ MailService ~
+√       - __init__
+√       - generateMessage()
+√       - sendMail()
+√       - otpMail()
+TODO    - registrationMail()
 
-TODO OTP generator
 TODO Token generator
-
-> Gianluca
-TODO Configurazione environment, MySQL e Flask
-
-TODO MailService
-
-> Fede
-TODO Configurazione environment, MySQL e Flask
-
