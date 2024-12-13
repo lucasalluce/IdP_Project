@@ -12,25 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    /*
-        // Seleziona l'input e l'icona per il LOGIN
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
 
-    // Aggiungi un evento di click all'icona
-    togglePassword.addEventListener('click', () => {
-        // Cambia il tipo di input tra password e text
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-
-        // Cambia l'icona tra 'bx-low-vision' e 'bx-show'
-        togglePassword.classList.toggle('bx-low-vision');
-        togglePassword.classList.toggle('bx-show');
-    });
-    */
-
-
-    
+    // Seleziona l'input e l'icona per il LOGIN
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
     
@@ -42,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
             togglePassword.classList.toggle('bx-show');
         });
     }
+
+
+    // Seleziona l'input e l'icona per la REGISTRAZIONE
 
     // Seleziona gli elementi specifici della pagina di registrazione
     const passwordRegister = document.getElementById("passwordRegister");
@@ -74,8 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-
-
 
     // Processo di login
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
@@ -141,20 +125,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // TODO Processo di registrazione
     const registerForm = document.getElementById("register-form");
+
     if (registerForm) {
+        const passwordField = registerForm.querySelector("#passwordRegister");
+        const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
+        const passwordError = document.getElementById("password-error");
+        const confirmPasswordError = document.getElementById("confirm-password-error");
+    
+        // Funzione per validare la password
+        const validatePassword = (password) => {
+            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
+            return passwordRegex.test(password);
+        };
+    
+        // Funzione per validare la conferma password
+        const validateConfirmPassword = () => {
+            return passwordField.value === confirmPasswordField.value;
+        };
+    
+        // Aggiungi un event listener per il campo password
+        passwordField.addEventListener("input", () => {
+            // Se la password non è valida, mostra l'errore
+            if (!validatePassword(passwordField.value)) {
+                passwordError.classList.add("error-visible");
+            } else {
+                // Se la password è valida, nascondi l'errore
+                passwordError.classList.remove("error-visible");
+            }
+        });
+    
+        // Aggiungi un event listener per il campo conferma password
+        confirmPasswordField.addEventListener("input", () => {
+            // Se la password e la conferma non corrispondono, mostra l'errore
+            if (!validateConfirmPassword()) {
+                confirmPasswordError.classList.add("error-visible");
+            } else {
+                confirmPasswordError.classList.remove("error-visible");
+            }
+        });
+    
+        // Ascolta l'invio del modulo
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
-
+    
             const username = registerForm.querySelector("input[type='text']").value;
             const email = registerForm.querySelector("input[type='email']").value;
-            const password = registerForm.querySelector("input[type='password']").value;
-            const confirmPassword = registerForm.querySelector("input[type='password']:nth-child(4)").value;
-
-            if (password !== confirmPassword) {
-                alert("Le password non corrispondono.");
+            const password = passwordField.value;
+            const confirmPassword = confirmPasswordField.value;
+    
+            // Verifica che la password soddisfi i requisiti
+            if (!validatePassword(password)) {
+                passwordError.classList.add("error-visible");
                 return;
+            } else {
+                passwordError.classList.remove("error-visible");
             }
-
+    
+            // Verifica che la password e la conferma coincidano
+            if (!validateConfirmPassword()) {
+                confirmPasswordError.classList.add("error-visible");
+                return;
+            } else {
+                confirmPasswordError.classList.remove("error-visible");
+            }
+    
+            // Invia la richiesta al server
             fetch("/register", {
                 method: "POST",
                 headers: {
@@ -166,18 +201,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     password: password,
                 }),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        alert("Registrazione avvenuta con successo!");
-                        window.location.href = "home.html"; // Riporta alla pagina di login
-                    } else {
-                        alert("Errore nella registrazione. Riprova.");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Errore:", error);
-                });
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Registrazione avvenuta con successo!");
+                    window.location.href = "home.html"; // Riporta alla pagina di login
+                } else {
+                    alert("Errore nella registrazione. Riprova.");
+                }
+            })
+            .catch((error) => {
+                console.error("Errore:", error);
+            });
         });
     }
 

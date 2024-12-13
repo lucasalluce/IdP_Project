@@ -15,23 +15,29 @@
             <h1>Register</h1>
     
             <div class="input-box"> <!-- classe per username -->
-                <input type="text" placeholder="Username" required>
+                <input type="text" id="username" placeholder="Username" required>
                 <i class='bx bxs-user'></i>
             </div>
     
             <div class="input-box"><!-- classe per email -->
-                <input type="email" placeholder="Email" required>
+                <input type="email" id="email" placeholder="Email" required>
                 <i class='bx bxs-envelope'></i>
             </div>
     
             <div class="input-box"> <!-- classe per password -->
                 <input type="password" id="passwordRegister" placeholder="Password" required>
                 <i class='bx bx-low-vision' id="togglePasswordRegister"></i>
+                <small id="password-error">
+                    La password deve contenere almeno 8 caratteri, una lettera maiuscola, un carattere speciale e 2 numeri.
+                </small>
             </div>
             
             <div class="input-box"> <!-- classe per conferma password -->
                 <input type="password" id="confirmPasswordRegister" placeholder="Confirm Password" required>
                 <i class='bx bx-low-vision' id="toggleConfirmPasswordRegister"></i>
+                <small id="confirm-password-error">
+                    Le password devono essere uguali.
+                </small>
             </div>
     
             <button type="submit" class="btn">Register</button><!-- bottone Register -->
@@ -54,7 +60,6 @@
     </div>
 
     <script src="script.js"></script>
-
 
 </body>
 </html>

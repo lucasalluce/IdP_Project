@@ -450,7 +450,39 @@ body {
     -font-smoothing: antialiased;
 }
 
+/*----------------------------------*/
+/*CSS FEDE*/
+/*TUTTO IN REGISTER*/
 
 .bx {
     cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
 }
+
+.input-box {
+    position: relative; /* Necessario per posizionare il messaggio sopra il campo */
+}
+
+small {
+    font-size: 0.9em;
+    color: red;
+    display: none; /* Messaggi nascosti di default */
+    position: absolute;
+    top: 40px; /* Spazio sopra il campo input */
+    left: 0;
+    background-color: #f8d7da;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: max-content;
+}
+
+/* Quando il messaggio è visibile */
+small.error-visible {
+    display: block;
+}
+
+/* Aggiungiamo un bordo rosso al campo quando c'è un errore */
+input:invalid {
+    border-color: red;
+}
+
