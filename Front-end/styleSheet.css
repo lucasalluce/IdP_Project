@@ -416,3 +416,8 @@ body {
     -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
     -font-smoothing: antialiased;
 }
+
+
+.bx {
+    cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
+}
