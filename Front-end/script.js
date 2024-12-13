@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    // Processo di login
+    // Processo di login utente
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Processo di 2FA
+    // Processo 2FA di login
     const otpForm = document.getElementById("otp-form");
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
@@ -188,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    // TODO Processo di recupero password
+    // TODO Processo di recupero password utente
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
