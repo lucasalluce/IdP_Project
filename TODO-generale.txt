@@ -55,14 +55,13 @@ TODO    1) password visibile nella registrazione/login      DONE
         3) nome e cognome registrazione
         4) pagina cartella sanitaria
         5) pagina profilo
-TODO    Rivedere schede register
 
 > Luca & Federico
 ~ Javascript ~
-√       login                     // TODO Test -> implementare registration
-    √       passwordHashing
-    √       verifyOTP
-√       registration
+√       login                       // TODO Test -> implementare registration
+    √       passwordHashing         √   Test
+    √       verifyOTP               // TODO Test
+√       registration                √   Test
 TODO    recoveryPassword
 
 TODO    modificare gli alert di risposta dal back-end -> utilizzare i message
@@ -76,22 +75,21 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 √   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
-√       - login()               // TODO Test -> implementare addUser()
-    √       - otpGenerator()
-    √       - otpMail() -> MailService
-    √       + app Flask             
-        √       - otpValidator() 
-        √       + app Flask      
-√       - addUser()
-    √       + app Flask
-
+√       - login()                       // TODO Test -> implementare addUser()
+    √       - otpGenerator()            √ Test
+    √       - otpMail() -> MailService  √ Test
+    √       + app Flask                 √ Test
+        √       - otpValidator()        // TODO Test
+        √       + app Flask             // TODO Test
+√       - addUser()                     √   Test
+    √       + app Flask                 √   Test
 TODO    - recoveryPassword()
 
 ~ MailService ~
 √       - __init__
-√       - generateMessage()
-√       - sendMail()
-√       - otpMail()
+√       - generateMessage()         √   Test
+√       - sendMail()                √   Test
+√       - otpMail()                 √   Test
 TODO    - registrationMail()
 
 TODO Token generator
