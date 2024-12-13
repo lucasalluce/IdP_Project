@@ -167,4 +167,6 @@ def addUser():
     server = AuthenticationServer()
     result = server.addUser(jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword)
     return jsonify(result)
-    
+
+if __name__ == "__main__":
+    app.run(debug=True)
