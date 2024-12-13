@@ -3,7 +3,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
 
-
 class MailService:
     def __init__(self):
         self.senderEmail = "idp.mailservice@gmail.com"
