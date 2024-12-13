@@ -389,6 +389,7 @@ input:invalid {
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
     backdrop-filter: blur(40px);
     height: 80px;              /* Imposta un'altezza fissa */
+    
 }
 
 .barraSuperiore2 .btn-aboutUs {
@@ -410,7 +411,7 @@ input:invalid {
     margin-bottom: 0px;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita {
+.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale {
     display: flex;
     align-items: center; /* Allinea verticalmente al centro */
     gap: 20px; /* Spaziatura tra gli elementi */
@@ -421,7 +422,7 @@ input:invalid {
     font-size: 24px;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita {
+.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale, .wrapper3 .interventiSubiti, .wrapper3 .interventiPrenotati {
     margin-top: 20px;
 }
 
@@ -433,14 +434,14 @@ input:invalid {
     text-align: left; /* H2 allineato a sinistra (predefinito) */
 }
 
-.wrapper3 .risultatiEsami table, .wrapper3 .esamiPrenotati table {
+.wrapper3 .risultatiEsami table, .wrapper3 .esamiPrenotati table, .wrapper3 .interventiSubiti table, .wrapper3 .interventiPrenotati table {
     width: 80%;
     margin: 0 auto; /* Centra la tabella orizzontalmente */
     border-collapse: collapse; /* Unisce i bordi delle celle */
     margin-top: 5px;
 }
 
-.wrapper3 .risultatiEsami .esame {
+.wrapper3 .risultatiEsami .esame, .wrapper3 .esamiPrenotati .esame, .wrapper3 .esamiPrenotati .data, .wrapper3 .interventiSubiti .intervento, .wrapper3 .interventiPrenotati .intervento {
     width: 50%;
 }
 
@@ -448,17 +449,9 @@ input:invalid {
     width: 25%;
 }
 
-.wrapper3 .risultatiEsami table, .wrapper3 .risultatiEsami th, .wrapper3 .risultatiEsami tr,  .wrapper3 .risultatiEsami td, .wrapper3 .esamiPrenotati table, .wrapper3 .esamiPrenotati th, .wrapper3 .esamiPrenotati tr,  .wrapper3 .esamiPrenotati td {
+.wrapper3 .risultatiEsami table, .wrapper3 .risultatiEsami th, .wrapper3 .risultatiEsami tr,  .wrapper3 .risultatiEsami td, .wrapper3 .esamiPrenotati table, .wrapper3 .esamiPrenotati th, .wrapper3 .esamiPrenotati tr,  .wrapper3 .esamiPrenotati td, .wrapper3 .interventiSubiti table, .wrapper3 .interventiSubiti th, .wrapper3 .interventiSubiti tr, .wrapper3 .interventiSubiti td, .wrapper3 .interventiPrenotati table, .wrapper3 .interventiPrenotati th, .wrapper3 .interventiPrenotati td, .wrapper3 .interventiPrenotati tr {
     border: 2px solid black;
     padding: 5px;
-}
-
-.wrapper3 .esamiPrenotati .esame {
-    width: 50%;
-}
-
-.wrapper3 .esamiPrenotati .data {
-    width: 50%;
 }
 
 
