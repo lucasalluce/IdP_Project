@@ -7,6 +7,6 @@ CREATE TABLE Users (
     Name varchar(100),
     Surname varchar(100),
     Username varchar(100) UNIQUE,
-    HashedPassword varchar(300),
-    Email varchar(200) CHECK (Email LIKE '%_@_%.__%')
+    Email varchar(200) CHECK (Email LIKE '%_@_%.__%'),
+    HashedPassword varchar(300)
 );

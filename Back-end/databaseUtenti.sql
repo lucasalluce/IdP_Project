@@ -7,8 +7,8 @@ CREATE TABLE Users (
     Name varchar(100),
     Surname varchar(100),
     Username varchar(100) UNIQUE,
+    Email varchar(200) CHECK (Email LIKE '%_@_%.__%'),
     HashedPassword varchar(300),
-    Email varchar(200) CHECK (Email LIKE '%_@_%.__%')
 );
 
 INSERT INTO Users (Name, Surname, Username, HashedPassword, Email) VALUES
