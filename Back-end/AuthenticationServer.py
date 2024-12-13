@@ -19,7 +19,7 @@ dbCursor = dbConnection.cursor()
     # cursor.execute() - funzione del cursore per interagire con il database
 
 # Applicazione Flask - Server locale
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -108,8 +108,13 @@ class AuthenticationServer:
             pass #TODO  
         else: # Caso - Più utenti registrati con la stessa email
             pass
-        
-# TEST AREA
-#server = AuthenticationServer()
-#server.login("l.salluce", "Cifhbab")
-#server.addUser("Mario", "Rossi", "m.rossi", "fdgaffweX", "m.rossi@studenti.poliba.it")
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    jsonUsername = data.get("username")
+    jsonHasedPassword = data.get("password")
+    server = AuthenticationServer()
+    result = server.login(jsonUsername, jsonHasedPassword)
+    return jsonify(result)
+    
