@@ -65,6 +65,8 @@ TODO    Rivedere schede register
 TODO    registration
 TODO    recoveryPassword
 
+TODO    modificare gli alert di risposta dal back-end -> utilizzare i message
+
 ___Back-end___
 > Luca & Federico & Gianluca
 Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluca //TODO 
