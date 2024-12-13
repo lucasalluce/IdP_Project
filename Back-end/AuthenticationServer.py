@@ -14,7 +14,7 @@ dbConnection = mysql.connector.connect(
     password="",
     database="IdP_OAuth2_2FA"
 )
-# Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), HashedPassword varchar(300), Email varchar(200))
+# Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), Email varchar(200), HashedPassword varchar(300))
 dbCursor = dbConnection.cursor()
     # cursor.execute() - funzione del cursore per interagire con il database
 
@@ -57,7 +57,7 @@ class AuthenticationServer:
             print("AuthenticationServer - Fine procedura 'login'")
             return {"success": False, "message": "Username errato/Utente inesistente"} # Risposta del server
         else:   # _Caso_ Utente esistente
-            dbHashedPassword = dbReturn[0][0]
+            dbHashedPassword = dbReturn[0][0]   # Con doppio hash
             dbEmail = dbReturn[0][1]            
             dbReturn.clear()
                 # _Caso_ Credenziali corrette -> 2FA
@@ -90,36 +90,41 @@ class AuthenticationServer:
                         print("AuthenticationServer.login.2FA - OTP valido, accesso completato")
                         index = otpData.index(element)
                         otpData.pop(index)
+                        print("AuthenticationServer.login.2FA - Fine della procedura 'login.2FA'")
                         return {"success": True, "message": "OTP verificato, accesso completato"}               # TODO Valutare il passaggio del Token in questo punto
                     else: # _Caso_ OTP scaduto
                         print("AuthenticationServer.login.2FA - OTP non valido, accesso negato")
                         index = otpData.index(element)
                         otpData.pop(index)
+                        print("AuthenticationServer.login.2FA - Fine della procedura 'login.2FA'")
                         return {"success": False, "message": "OTP scaduto"}
             # _Caso_ nessuna corrispondenza -> OTP errato
             print("AuthenticationServer.login.2FA - OTP non trovato")
+            print("AuthenticationServer.login.2FA - Fine della procedura 'login.2FA'")
             return {"success": False, "message": "OTP errato o già utilizzato"}
 
-    def addUser (self, jsonName, jsonSurname, jsonUsername, jsonHashedPassword, jsonEmail):
+    def addUser (self, jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword):
             # Controllo preesistenza Username
-        query = "SELECT Email FROM Users WHERE Username = %s"
+        query = "SELECT * FROM Users WHERE Username = %s"
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
 
-        if len(dbReturn) == 0: # Caso - Utente da aggiungere
-            query = "INSERT INTO Users (Name, Surname, Username, HashedPassword, Email) VALUES (%s, %s, %s, %s, %s)"
-            dbCursor.execute(query, (jsonName, jsonSurname, jsonUsername, jsonHashedPassword, jsonEmail, ))
+        if len(dbReturn) == 0: # Caso - Utente da aggiungere            
+            query = "INSERT INTO Users (Name, Surname, Username, Email, HashedPassword) VALUES (%s, %s, %s, %s, %s)"
+            hashedPassword = bcrypt.hashpw(jsonHashedPassword.encode('utf-8'), bcrypt.gensalt())
+            hashedPassword = hashedPassword.decode('utf-8')
+            dbCursor.execute(query, (jsonName, jsonSurname, jsonUsername, hashedPassword, jsonEmail, ))
             dbConnection.commit()
 
-            if dbCursor.rowcount > 0: # Caso - Inserimento di un nuovo utente completato
-                pass #TODO Comunicazione utente registrato -> MailService
+            if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
+                dbCursor.reset()
+                return {"success": True, "message": "Utente aggiunto al database con successo"}
             else: # Caso - Errore nell'inserimento
-                pass #TODO Comunicazione errore database - Front_end
+                dbCursor.reset()
+                return {"success": False, "message": "Errore nell'agggiunta del nuovo utente nel database"}
         else: # Caso - Username già utilizzato
-            pass #TODO Comunicazione errore _ Front-end
-                
-        #TODO Verifica di corretto inserimento della nuova tupla nella tabella
-        dbCursor.reset()
+            return {"success": False, "message": "Username già in uso"}
+        
 
     def recoveryPassword(self, jsonEmail):
         query = "SELECT Username, HashedPassword FROM Users WHERE Email = %s"
@@ -145,8 +150,21 @@ def login():
 @app.route("/otpValidation", methods=["POST"])
 def otpValidation():
     data = request.get_json()
-    jsonUserOTP = data.get("otp")
+    jsonUserOTP = int(data.get("otp"))
     jsonEmail = data.get("email")
     server = AuthenticationServer()
     result = server.otpValidator(jsonUserOTP, jsonEmail)
     return jsonify(result)
+
+@app.route("/addUser", methods=["POST"])
+def addUser():
+    data = request.get_json()
+    jsonName = data.get("name")
+    jsonSurname = data.get("surname")
+    jsonUsername = data.get("username")
+    jsonEmail = data.get("email")
+    jsonHashedPassword = data.get("hashedPassword")
+    server = AuthenticationServer()
+    result = server.addUser(jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword)
+    return jsonify(result)
+    
