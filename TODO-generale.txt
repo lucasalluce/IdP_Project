@@ -16,7 +16,6 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 (mac)       >>  source bin/activate
 **  Ci si accorge che tutto ha funzionato se la stringa del terminale che precede l'inserimento dei comandi
     presenta - (IdP_Project_Nome)
-
 :)  Ottimo lavoro, environment configurato con successo, WELL DONE !!!
 
 2. Installazione moduli Python
@@ -73,7 +72,7 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 √   Comunicazione con il clinet -> Flask
 √   Confronto string con hash -> bcrypt
 
-TODO    - login() 
+Done!   - login() 
 TODO    - addUser()
 TODO    - recoveryPassword()
 
