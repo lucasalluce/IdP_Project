@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function hashPassword(clearPassword) {
         const encoder = new TextEncoder();
         const data = encoder.encode(clearPassword);                                             // Conversione in binario
+        console.log("login.hashingPassword - ");
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);                         // Calcolo dell'hash SHA-256
         const hashArray = Array.from(new Uint8Array(hashBuffer));                               // Conversione in array
         const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
@@ -16,16 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
             e.preventDefault();                                     // Gestione annullamento dell'evento defautl
+            console.log("~ Inzio proceduta 'login'");
+            console.log("login - Acquisizione parametri login-form");
             // Acquisizione campi del login-form
             const formUsername = loginForm.querySelector("input[type='text']").value;
             const formPassword = loginForm.querySelector("input[type='password']").value;
             
+            console.log("login - Controllo esistenza parametri login-form");
             // Controllo riempimento campi login-form 
             if (!formUsername || !formPassword) {
                 alert("Inserire correttamente Username e Password");
                 return;
             }
 
+            console.log("login - Inizio procedura 'hashingPassword'");
             // Hasing password
             hashPassword(formPassword).then((hashedPassword) => {           // Acquisizione risposta funzione hashPassword - password cifrata con SHA-256
                 // Chiamata POST HTTP per la creazione del file JSON con i dati del login-forn
@@ -53,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // TODO Processo di verifica OTP
+    // 
     const otpForm = document.getElementById("otp-form")
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
@@ -61,6 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Modulo inviato");
 
             const otpInput = document.getElementById("otp-input").value;
+
+            const email = localStorage.getItem("userEmail");
+            if (!email) {
+                alert("Errore passaggio dati: email dell'utente non trovata ")
+            }
         });
     }
 
