@@ -61,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("~ Inzio proceduta 'login'");
             console.log("login - Acquisizione parametri login-form");
             // Acquisizione campi del login-form
-            const formUsername = loginForm.querySelector("input[type='text']").value;
-            const formPassword = loginForm.querySelector("input[type='password']").value;
+            const formUsername = loginForm.querySelector("input[id='username']").value;
+            const formPassword = loginForm.querySelector("input[id='password']").value;
             
             console.log("login - Controllo esistenza parametri login-form");
             // Controllo riempimento campi login-form 
@@ -99,14 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 
-    const otpForm = document.getElementById("otp-form")
+    // Processo di 2FA
+    const otpForm = document.getElementById("otp-form");
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            console.log("Modulo inviato");
 
-            const formOTP = document.getElementById("otp").value;
+            const formOTP = otpForm.querySelector("input[type='int']").value;
             const dataEmail = localStorage.getItem("userEmail");
             localStorage.removeItem("userEmail");
 
@@ -134,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("OTP valido");
                     window.location.href = "cartellaSanitaria.html"
                 } else {
+                    // TODO gestire casi False
                     alert(data.message)
                 }
             })
@@ -143,96 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // TODO Processo di registrazione
+    // TODO Processo di register
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
-        const passwordField = registerForm.querySelector("#passwordRegister");
-        const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
-        const passwordError = document.getElementById("password-error");
-        const confirmPasswordError = document.getElementById("confirm-password-error");
-    
-        // Funzione per validare la password
-        const validatePassword = (password) => {
-            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
-            return passwordRegex.test(password);
-        };
-    
-        // Funzione per validare la conferma password
-        const validateConfirmPassword = () => {
-            return passwordField.value === confirmPasswordField.value;
-        };
-    
-        // Aggiungi un event listener per il campo password
-        passwordField.addEventListener("input", () => {
-            // Se la password non è valida, mostra l'errore
-            if (!validatePassword(passwordField.value)) {
-                passwordError.classList.add("error-visible");
-            } else {
-                // Se la password è valida, nascondi l'errore
-                passwordError.classList.remove("error-visible");
-            }
-        });
-    
-        // Aggiungi un event listener per il campo conferma password
-        confirmPasswordField.addEventListener("input", () => {
-            // Se la password e la conferma non corrispondono, mostra l'errore
-            if (!validateConfirmPassword()) {
-                confirmPasswordError.classList.add("error-visible");
-            } else {
-                confirmPasswordError.classList.remove("error-visible");
-            }
-        });
-    
-        // Ascolta l'invio del modulo
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
-    
-            const username = registerForm.querySelector("input[type='text']").value;
-            const email = registerForm.querySelector("input[type='email']").value;
-            const password = passwordField.value;
-            const confirmPassword = confirmPasswordField.value;
-    
-            // Verifica che la password soddisfi i requisiti
-            if (!validatePassword(password)) {
-                passwordError.classList.add("error-visible");
-                return;
-            } else {
-                passwordError.classList.remove("error-visible");
-            }
-    
-            // Verifica che la password e la conferma coincidano
-            if (!validateConfirmPassword()) {
-                confirmPasswordError.classList.add("error-visible");
-                return;
-            } else {
-                confirmPasswordError.classList.remove("error-visible");
-            }
-    
-            // Invia la richiesta al server
-            fetch("/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: username,
-                    email: email,
-                    password: password,
-                }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert("Registrazione avvenuta con successo!");
-                    window.location.href = "home.html"; // Riporta alla pagina di login
-                } else {
-                    alert("Errore nella registrazione. Riprova.");
-                }
-            })
-            .catch((error) => {
-                console.error("Errore:", error);
-            });
-        });
+
+            const formName = registerForm.querySelector("imput[")
+        })
     }
 
     // TODO Processo di recupero password
@@ -268,7 +186,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         });
     }
-
-    // TODO Processo di 
 
 });
