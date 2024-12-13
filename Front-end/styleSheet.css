@@ -32,7 +32,7 @@ body {
     transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
     will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
     transition: transform 0.6s ease; /* Transizione più lenta */
-    margin-top: 80px;                 /* Sposta il wrapper sotto la barra */
+    margin-top: 90px;                 /* Sposta il wrapper sotto la barra */
     max-width: 70%;
 }
 
