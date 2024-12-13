@@ -59,9 +59,9 @@ TODO    1) password visibile nella registrazione/login      DONE
 ~ Javascript ~
 √   passwordHashing           // TODO Test
 √   login                     // TODO Test
+TODO verifyOTP
 TODO registration
 TODO recoveryPassword
-TODO verifyOTP
 
 ___Back-end___
 > Luca & Federico & Gianluca
@@ -76,7 +76,7 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
     √       - otpGenerator()
     √       - otpMail() -> MailService
     √       + app Flask             
-        TODO    - otpValidator() 
+        √       - otpValidator() 
         TODO    + app Flask      
 TODO    - addUser()
 TODO    - recoveryPassword()
