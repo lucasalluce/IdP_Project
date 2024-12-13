@@ -69,7 +69,7 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 
 ~ AutenticationServer ~
 √   Connessione al database -> MySQL connector
-√   Comunicazione con il clinet -> Flask, Flask-Cors
+√   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
 √       - login()               // TODO Test
