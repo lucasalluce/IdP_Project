@@ -10,26 +10,23 @@
 
     <body>
 
-        <div class="wrapper">   <!-- classe totale x Login-->
+        <div class="wrapper">   <!-- classe totale x Login -->
 
-            <form id="login-form" action="">    <!-- per js -->
-
-                <h1>Login</h1>
+            <form id="login-form">    <!-- per js -->
+                <h1>LOGIN</h1>
 
                 <div class="input-box">     <!-- classe per username -->
-                    <input type="text"  placeholder="Username"
-                    required>
+                    <input type="text" id="username" placeholder="Username" required>
                     <i class='bx bxs-user'></i>     <!-- icona x Username -->
                 </div>
 
                 <div class="input-box">     <!-- classe per password -->
-                    <input type="password"  placeholder="Password"
-                    required>
-                    <i class='bx bxs-lock-alt' ></i>    <!-- icona x Password -->
+                    <input type="password" id="password" placeholder="Password" required>
+                    <i class='bx bx-low-vision' id="togglePassword"></i> <!-- Icona per password -->
                 </div>
 
                 <div class="remember-forgot">   <!-- classe per password dimenticata -->
-                    <a href="forgotPassword.html">Forgot password?</a>
+                   <a href="forgotPassword.html">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn">Login</button>    <!-- bottone Login -->
@@ -51,6 +48,6 @@
         </div>
 
         <script src="script.js"></script>
-
+        <script src="script2.js"></script>
     </body>
 </html>
