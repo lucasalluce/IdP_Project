@@ -44,12 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // IN clearPassword - password in chiaro acquisita dal form
     // OUT hashHex - password cifrata con SHA-256
     async function hashPassword(clearPassword) {
+        console.log("login.hashingPassword - Acquisizione clearPassword: ", clearPassword);
         const encoder = new TextEncoder();
         const data = encoder.encode(clearPassword);                                             // Conversione in binario
-        console.log("login.hashingPassword - ");
+        console.log("login.hashingPassword - Encoding: ", data);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);                         // Calcolo dell'hash SHA-256
         const hashArray = Array.from(new Uint8Array(hashBuffer));                               // Conversione in array
         const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
+        console.log("login.hashingPassword - Hashing SHA-256: ", hashHex);
         return hashHex
     }
 
@@ -58,15 +60,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
             e.preventDefault();                                     // Gestione annullamento dell'evento defautl
+            
             console.log("~ Inzio proceduta 'login'");
             console.log("login - Acquisizione parametri login-form");
             // Acquisizione campi del login-form
             const formUsername = loginForm.querySelector("input[id='username']").value;
             const formPassword = loginForm.querySelector("input[id='password']").value;
-            
+
             console.log("login - Controllo esistenza parametri login-form");
             // Controllo riempimento campi login-form 
             if (!formUsername || !formPassword) {
+                console.log("login - Errore parametri login-form");
                 alert("Inserire correttamente Username e Password");
                 return;
             }
@@ -75,9 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // Hasing password
             hashPassword(formPassword).then((hashedPassword) => {           // Acquisizione risposta funzione hashPassword - password cifrata con SHA-256
                 // Chiamata POST HTTP per la creazione del file JSON con i dati del login-forn
+                console.log("login.hashingPassword - HashedPassword ", hashedPassword)
+                console.log("login.hashingPassword - Fine procedura 'hashingPassword'");
+                console.log("login - Richiesta server ...");
                 fetch("http://127.0.0.1:5000/login", {
                     method: "POST",
-                    headers: {"Contetn-Type": "application/json"},
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({                                  // Compilazione file JSON
                         username: formUsername,
                         password: hashedPassword,
@@ -85,9 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then((response) => response.json())                        // Acqisizione file JSON di risposta
                 .then((data) => {                                           
+                    console.log("login - Risposta server ricevuta");
                     if (data.success) {                                     // Verifica del corretto login
+                        console.log("login - Acquisizione dati di risposta");
                         localStorage.setItem("userEmail", data.email);      // Acquisizione dei dati nel file di risposta JSON
-                        window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
+                        console.log("login - Dati di risposta: ", localStorage.getItem("userEmail"));
+
+                        setTimeout(() => {
+                            window.location.href = "otp.html";                  
+                        }, 500);
+
+                        //window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
                     } else {
                         alert("Credenziali errate!! Riprovare")             // Allert di errore nel login - Credenziali inserite non correte
                     }
@@ -95,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .catch((error) => {
                     console.error("Errore: ", error);
                 })
+                console.log("login - Inzio proceduta '2FA'");
             });
         });
     }
@@ -104,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
-
+            console.log("login.2FA - Acquisizione parametro form ...");
             const formOTP = otpForm.querySelector("input[id='otp']").value;
             const dataEmail = localStorage.getItem("userEmail");
             localStorage.removeItem("userEmail");
@@ -121,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch("http://127.0.0.1:5000/otpValidation", {
                 method: "POST",
-                headers: {"Contetn-Type": "application/json"},
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({                                  // Compilazione file JSON
                     otp: formOTP,
                     email: dataEmail,
@@ -162,12 +178,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             hashPassword(formPassword).then((hashedPasswrod) => {
-                fetch("http://127.0.0.1:5000/addUser",  {
+                fetch("http://127.0.0.1:5000/addUser", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         name: formName,
-                        surnama: formSurname,
+                        surname: formSurname,
                         username: formUsername,
                         email: formEmail,
                         password: hashedPasswrod,

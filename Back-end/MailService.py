@@ -7,11 +7,6 @@ class MailService:
     def __init__(self):
         self.senderEmail = "idp.mailservice@gmail.com"
         self.senderPassword = "kohi grli ueyn rupb"
-        try:
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as self.smtpServer:
-                self.smtpServer.login(self.senderEmail, self.senderPassword)
-        except Exception as e:
-            print(f"Errore login riscontrato: {e}")
         print("MailService - Online")
     
     def generateMessage (self, reciverMail, subject, body):
@@ -26,9 +21,11 @@ class MailService:
     def sendMail (self, mailMessage, reciverMail):
         try:
             print("MailService - Invio mail ...")
-            self.smtpServer.sendmail(self.senderEmail, reciverMail, str(mailMessage))
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtpServer:
+                smtpServer.login(self.senderEmail, self.senderPassword)
+                smtpServer.sendmail(self.senderEmail, reciverMail, str(mailMessage))
         except Exception as e:
-            print(f"Errore invio mail riscontrato: {e}")
+            print(f"Errore login/invio mail riscontrato: {e}")
     
     def otpMail (self, otp, reciverMail):
         print("MailService - Dati ricevuti, inizio procedura otpMail ...")
