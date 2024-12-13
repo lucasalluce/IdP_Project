@@ -86,7 +86,7 @@ class AuthenticationServer:
             for element in otpData:
                 if element["email"] == jsonEmail and element["otp"] == jsonUserOTP: # _Caso_ corrispondenza trovata -> verifica del tempo di vita OTP
                     print("AuthenticationServer.login.2FA - OTP trovato, controllo validità ...")
-                    if time.time() - element["timestamp"] <= 120: # _Caso_ OTP valido
+                    if time.time() - element["timestamp"] <= 120: # _Caso_ OTP valido -> accesso completato
                         print("AuthenticationServer.login.2FA - OTP valido, accesso completato")
                         index = otpData.index(element)
                         otpData.pop(index)
@@ -96,6 +96,7 @@ class AuthenticationServer:
                         index = otpData.index(element)
                         otpData.pop(index)
                         return {"success": False, "message": "OTP scaduto"}
+            # _Caso_ nessuna corrispondenza -> OTP errato
             print("AuthenticationServer.login.2FA - OTP non trovato")
             return {"success": False, "message": "OTP errato o già utilizzato"}
 
@@ -140,5 +141,12 @@ def login():
     server = AuthenticationServer()
     result = server.login(jsonUsername, jsonHasedPassword)
     return jsonify(result)
-    
-# TODO verifyOTP FlaskApp
+
+@app.route("/otpValidation", methods=["POST"])
+def otpValidation():
+    data = request.get_json()
+    jsonUserOTP = data.get("otp")
+    jsonEmail = data.get("email")
+    server = AuthenticationServer()
+    result = server.otpValidator(jsonUserOTP, jsonEmail)
+    return jsonify(result)

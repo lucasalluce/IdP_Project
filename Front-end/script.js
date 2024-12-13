@@ -1,4 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Seleziona l'input e l'icona per il LOGIN
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');  
+    if (passwordInput && togglePassword) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('bx-low-vision');
+            togglePassword.classList.toggle('bx-show');
+        });
+    }
+
+    // Seleziona l'input e l'icona per la REGISTRAZIONE
+    // Seleziona gli elementi specifici della pagina di registrazione
+    const passwordRegister = document.getElementById("passwordRegister");
+    const togglePasswordRegister = document.getElementById("togglePasswordRegister");
+    const confirmPasswordRegister = document.getElementById("confirmPasswordRegister");
+    const toggleConfirmPasswordRegister = document.getElementById("toggleConfirmPasswordRegister");
+    // Funzione per cambiare il tipo di input (password <-> text) e gestire le icone
+    function togglePasswordVisibility(inputField, toggleIcon) {
+        if (inputField.type === "password") {
+            inputField.type = "text";
+            toggleIcon.classList.replace('bx-low-vision', 'bx-show'); // Cambia l'icona per "occhio aperto"
+        } else {
+            inputField.type = "password";
+            toggleIcon.classList.replace('bx-show', 'bx-low-vision'); // Cambia l'icona per "occhio chiuso"
+        }
+    }
+    // Aggiungi l'evento per la visibilità della password
+    if (togglePasswordRegister && passwordRegister) {
+        togglePasswordRegister.addEventListener("click", () => {
+            togglePasswordVisibility(passwordRegister, togglePasswordRegister);
+        });
+    }
+    // Aggiungi l'evento per la visibilità della conferma della password
+    if (toggleConfirmPasswordRegister && confirmPasswordRegister) {
+        toggleConfirmPasswordRegister.addEventListener("click", () => {
+            togglePasswordVisibility(confirmPasswordRegister, toggleConfirmPasswordRegister);
+        });
+    }
+    
     // Hashing password
     // IN clearPassword - password in chiaro acquisita dal form
     // OUT hashHex - password cifrata con SHA-256
@@ -11,55 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
         return hashHex
     }
-
-
-    // Seleziona l'input e l'icona per il LOGIN
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
-    
-    if (passwordInput && togglePassword) {
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.classList.toggle('bx-low-vision');
-            togglePassword.classList.toggle('bx-show');
-        });
-    }
-
-
-    // Seleziona l'input e l'icona per la REGISTRAZIONE
-
-    // Seleziona gli elementi specifici della pagina di registrazione
-    const passwordRegister = document.getElementById("passwordRegister");
-    const togglePasswordRegister = document.getElementById("togglePasswordRegister");
-    const confirmPasswordRegister = document.getElementById("confirmPasswordRegister");
-    const toggleConfirmPasswordRegister = document.getElementById("toggleConfirmPasswordRegister");
-
-    // Funzione per cambiare il tipo di input (password <-> text) e gestire le icone
-    function togglePasswordVisibility(inputField, toggleIcon) {
-        if (inputField.type === "password") {
-            inputField.type = "text";
-            toggleIcon.classList.replace('bx-low-vision', 'bx-show'); // Cambia l'icona per "occhio aperto"
-        } else {
-            inputField.type = "password";
-            toggleIcon.classList.replace('bx-show', 'bx-low-vision'); // Cambia l'icona per "occhio chiuso"
-        }
-    }
-
-    // Aggiungi l'evento per la visibilità della password
-    if (togglePasswordRegister && passwordRegister) {
-        togglePasswordRegister.addEventListener("click", () => {
-            togglePasswordVisibility(passwordRegister, togglePasswordRegister);
-        });
-    }
-
-    // Aggiungi l'evento per la visibilità della conferma della password
-    if (toggleConfirmPasswordRegister && confirmPasswordRegister) {
-        toggleConfirmPasswordRegister.addEventListener("click", () => {
-            togglePasswordVisibility(confirmPasswordRegister, toggleConfirmPasswordRegister);
-        });
-    }
-    
 
     // Processo di login
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
@@ -114,18 +106,45 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             console.log("Modulo inviato");
 
-            const otpInput = document.getElementById("otp-input").value;
+            const formOTP = document.getElementById("otp").value;
+            const dataEmail = localStorage.getItem("userEmail");
+            localStorage.removeItem("userEmail");
 
-            const email = localStorage.getItem("userEmail");
-            if (!email) {
-                alert("Errore passaggio dati: email dell'utente non trovata ")
+            if (!dataEmail) {
+                alert("Errore passaggio dati: email dell'utente non trovata ");
+                window.location.href = "home.html";
+                return
             }
+            if (!formInput) {
+                alert("Inserire codice OTP");
+                return;
+            }
+
+            fetch("http://127.0.0.1:5000/otpValidation", {
+                method: "POST",
+                headers: {"Contetn-Type": "application/json"},
+                body: JSON.stringify({                                  // Compilazione file JSON
+                    otp: formOTP,
+                    email: dataEmail,
+                })
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("OTP valido");
+                    window.location.href = "cartellaSanitaria.html"
+                } else {
+                    alert(data.message)
+                }
+            })
+            .catch((error) => {
+                console.error("Errore: ", error);
+            })
         });
     }
 
     // TODO Processo di registrazione
     const registerForm = document.getElementById("register-form");
-
     if (registerForm) {
         const passwordField = registerForm.querySelector("#passwordRegister");
         const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
