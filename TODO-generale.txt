@@ -62,7 +62,7 @@ TODO    Rivedere schede register
 √       login                     // TODO Test -> implementare registration
     √       passwordHashing
     √       verifyOTP
-TODO    registration
+√       registration
 TODO    recoveryPassword
 
 TODO    modificare gli alert di risposta dal back-end -> utilizzare i message
@@ -82,7 +82,8 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
     √       + app Flask             
         √       - otpValidator() 
         √       + app Flask      
-TODO    - addUser()
+√       - addUser()
+    √       + app Flask
 
 TODO    - recoveryPassword()
 
