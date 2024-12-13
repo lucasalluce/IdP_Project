@@ -55,6 +55,8 @@ TODO    1) password visibile nella registrazione/login      DONE
         3) nome e cognome registrazione
         4) pagina cartella sanitaria
         5) pagina profilo
+TODO    Rivedere schede register
+
 > Luca & Federico
 ~ Javascript ~
 √   passwordHashing           // TODO Test
