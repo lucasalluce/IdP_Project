@@ -135,6 +135,8 @@ body {
 
 .wrapper .btn:hover {
     background-color: #e6e6e6; /* Cambia colore del bottone al passaggio del mouse */
+    transform: scale(1.05);
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .wrapper .register-link {
@@ -269,14 +271,48 @@ body {
     margin: 20px 0 15px;
 }
 
-.login-link p a {
+.wrapper .login-link p a {
     color: #fff;
     text-decoration: none;
     font-weight: 600;
 }
 
-.login-link p a:hover {
+.wrapper .login-link p a:hover {
     text-decoration: underline;
+}
+
+.wrapper .input-box #togglePasswordRegister, .wrapper .input-box #toggleConfirmPasswordRegister {
+    cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
+}
+
+.input-box {
+    position: relative; /* Necessario per posizionare il messaggio sopra il campo */
+}
+
+small {
+    font-size: 0.9em;
+    color: black;
+    display: none; /* Messaggi nascosti di default */
+    position: absolute;
+    top: 50%;  /* Centra verticalmente rispetto al campo di input */
+    left: 105%;  /* Posiziona la nuvoletta a destra rispetto al campo di input */
+    transform: translateY(-50%);  /* Allinea verticalmente la nuvoletta al centro */
+    background-color: lightblue;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: max-content;
+    max-width: 230px; /* Limita la larghezza della nuvoletta */
+}
+
+/* Quando il messaggio è visibile */
+small.error-visible {
+    display: block;
+}
+
+/* Aggiungiamo un bordo rosso al campo quando c'è un errore */
+input:invalid {
+    border-color: red;
 }
 
 
@@ -449,40 +485,3 @@ body {
     -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
     -font-smoothing: antialiased;
 }
-
-/*----------------------------------*/
-/*CSS FEDE*/
-/*TUTTO IN REGISTER*/
-
-.bx {
-    cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
-}
-
-.input-box {
-    position: relative; /* Necessario per posizionare il messaggio sopra il campo */
-}
-
-small {
-    font-size: 0.9em;
-    color: red;
-    display: none; /* Messaggi nascosti di default */
-    position: absolute;
-    top: 40px; /* Spazio sopra il campo input */
-    left: 0;
-    background-color: #f8d7da;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    width: max-content;
-}
-
-/* Quando il messaggio è visibile */
-small.error-visible {
-    display: block;
-}
-
-/* Aggiungiamo un bordo rosso al campo quando c'è un errore */
-input:invalid {
-    border-color: red;
-}
-
