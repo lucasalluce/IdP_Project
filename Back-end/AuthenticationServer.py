@@ -32,7 +32,6 @@ class AuthenticationServer:
         print("AuthenticationServer - Loading ...")
         self.mailService = MailService()        # Inizializzaione MailService
         print("AuthenticationServer - Online, in ascolto ...")
-        
     
     def otpGenerator (self):
         print("AuthenticationServer.login.2FA - Generazione OTP ...")
@@ -43,6 +42,7 @@ class AuthenticationServer:
 
     def login (self, jsonUsername, jsonHashedPassword):
         print("AuthenticationServer - Inizio procedura 'login'")
+        print("AuthenticationServer.login - Acquisizione userUsername, userHashedPassword ...")
         print("AuthenticationServer.login - Interrogazione database ...")
             # Acquisizione possibili risconti dal database
         query = "SELECT HashedPassword, Email FROM Users WHERE Username = %s;"
@@ -70,11 +70,34 @@ class AuthenticationServer:
                 self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
                 print("AuthenticationServer.login.2FA - In ascolto per la verifica dell'OTP ...")
                 otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
-                return {"success": True, "message": "Utente verificato, OTP inviato", "email": dbEmail} # Risposta del server, in allegato email dell'utente che ha fatto l'accesso (utile per la successiva verifica del codice OTP)
+                return {"success": True, "message": "Utente verificato, OTP inviato", "email": dbEmail} # Risposta del server, in allegato email dell'utente che ha fatto l'accesso (utile per il successivo verifyOTP())
             else:   # Caso - Credenziali sbagliate
                 print("AuthenticationServer.login - Riscontro parziale, utente non autenticato")
                 print("AuthenticationServer - Fine della procedura 'login'")
                 return {"success": False, "message": "Password errata"} # Risposta del server
+
+    def otpValidator (self, jsonUserOTP, jsonEmail):
+        print("AuthenticationServer.login.2FA - Acquisizione userOTP ...")
+        print("AuthenticationServer.login.2FA - Controllo validità OTP")
+        if otpData.count() == 0: # _Caso_ otpData vuoto -> nessun OTP da controllarre
+            print("AuthenticationServer.login.2FA - Nessun elemento di confronto, accesso negato")
+            return {"success": False, "message": "OTP già utilizzato"}
+        else: # _Caso_ otpData non vuoto -> ricerca OTP da confrontare
+            for element in otpData:
+                if element["email"] == jsonEmail and element["otp"] == jsonUserOTP: # _Caso_ corrispondenza trovata -> verifica del tempo di vita OTP
+                    print("AuthenticationServer.login.2FA - OTP trovato, controllo validità ...")
+                    if time.time() - element["timestamp"] <= 120: # _Caso_ OTP valido
+                        print("AuthenticationServer.login.2FA - OTP valido, accesso completato")
+                        index = otpData.index(element)
+                        otpData.pop(index)
+                        return {"success": True, "message": "OTP verificato, accesso completato"}               # TODO Valutare il passaggio del Token in questo punto
+                    else: # _Caso_ OTP scaduto
+                        print("AuthenticationServer.login.2FA - OTP non valido, accesso negato")
+                        index = otpData.index(element)
+                        otpData.pop(index)
+                        return {"success": False, "message": "OTP scaduto"}
+            print("AuthenticationServer.login.2FA - OTP non trovato")
+            return {"success": False, "message": "OTP errato o già utilizzato"}
 
     def addUser (self, jsonName, jsonSurname, jsonUsername, jsonHashedPassword, jsonEmail):
             # Controllo preesistenza Username
@@ -118,3 +141,4 @@ def login():
     result = server.login(jsonUsername, jsonHasedPassword)
     return jsonify(result)
     
+# TODO verifyOTP FlaskApp
