@@ -50,7 +50,7 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 
 ___Front-end___
 > Stefano
-TODO    1) password visibile nella registrazione/login
+TODO    1) password visibile nella registrazione/login      DONE
         2) icona info password registrazione
         3) nome e cognome registrazione
         4) pagina cartella sanitaria

@@ -11,37 +11,34 @@
 <body>
 
     <div class="wrapper"> <!-- classe totale x Register -->
-
         <form id="register-form" action=""> <!-- per js -->
-
             <h1>Register</h1>
-
+    
             <div class="input-box"> <!-- classe per username -->
                 <input type="text" placeholder="Username" required>
-                <i class='bx bxs-user'></i> <!-- icona x Username -->
+                <i class='bx bxs-user'></i>
             </div>
-
-            <div class="input-box"> <!-- classe per email -->
+    
+            <div class="input-box"><!-- classe per email -->
                 <input type="email" placeholder="Email" required>
-                <i class='bx bxs-envelope'></i> <!-- icona x Email -->
+                <i class='bx bxs-envelope'></i>
             </div>
-
+    
             <div class="input-box"> <!-- classe per password -->
-                <input type="password" placeholder="Password" required>
-                <i class='bx bxs-lock-alt'></i> <!-- icona x Password -->
+                <input type="password" id="passwordRegister" placeholder="Password" required>
+                <i class='bx bx-low-vision' id="togglePasswordRegister"></i>
             </div>
-
+            
             <div class="input-box"> <!-- classe per conferma password -->
-                <input type="password" placeholder="Confirm Password" required>
-                <i class='bx bxs-lock'></i> <!-- icona x Confirm Password -->
+                <input type="password" id="confirmPasswordRegister" placeholder="Confirm Password" required>
+                <i class='bx bx-low-vision' id="toggleConfirmPasswordRegister"></i>
             </div>
-
-            <button type="submit" class="btn">Register</button> <!-- bottone Register -->
-
-            <div class="login-link"> <!-- classe per ritorno login -->
-                <p>Already have an account? <a  href="home.html">Login</a></p>
+    
+            <button type="submit" class="btn">Register</button><!-- bottone Register -->
+    
+            <div class="login-link"><!-- classe per ritorno login -->
+                <p>Already have an account? <a href="home.html">Login</a></p>
             </div>
-
         </form>
     </div>
 

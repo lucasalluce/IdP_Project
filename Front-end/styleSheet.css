@@ -33,6 +33,7 @@ body {
     will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
     transition: transform 0.6s ease; /* Transizione più lenta */
     margin-top: 80px;                 /* Sposta il wrapper sotto la barra */
+    max-width: 70%;
 }
 
 .wrapper * {
@@ -210,6 +211,7 @@ body {
     align-items: flex-start; /* Allinea le persone a sinistra */
     margin-top: 100px;
     padding: 10px;
+    max-width: 90%;
 }
 
 .wrapper2 .contVert {
@@ -305,25 +307,21 @@ body {
 
 .bodyCart {
     background-image: none; /* Rimuove la foto */
-    background: url('Immagini/sfondo-ospedale.jpg') no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Mantiene l'immagine fissa durante lo scroll */
+    background-color: lightskyblue;
 }
 
 .wrapper3 {
     margin: 0 auto; /* Centra il wrapper orizzontalmente */
     padding: 30px 40px;
     width: 1150px;
-    background-color: #af9076;
+    max-width: 80%;
+    background-color: lightgoldenrodyellow;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: #fff;
-    border-radius: 10px;
+    color: black;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
     transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
     will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
     transition: transform 0.6s ease; /* Transizione più lenta */
-    min-height: calc(100vh - 80px);   /* Altezza minima del wrapper = altezza viewport - barra superiore */
     margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
 }
 
@@ -338,10 +336,45 @@ body {
     text-align: center;
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
     padding-bottom: 5px;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid black;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità {
+.barraSuperiore2 {
+    position: fixed;           /* Mantiene la barra fissa nella parte superiore */
+    top: 0;                    /* Posizionata in alto */
+    left: 0;                   /* Allineata al bordo sinistro */
+    width: 100%;               /* Occupa tutta la larghezza della finestra */
+    background-color: white; /* Colore di sfondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1); /* Leggera ombra per effetto 3D */
+    display: flex;             /* Layout a griglia flessibile */
+    align-items: center;       /* Allinea elementi verticalmente */
+    justify-content: space-between; /* Spazio tra logo e bottone */
+    padding: 10px 20px;        /* Spazi interni */
+    z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
+    backdrop-filter: blur(40px);
+    height: 80px;              /* Imposta un'altezza fissa */
+}
+
+.barraSuperiore2 .btn-aboutUs {
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;              /* Colore del testo bianco */
+    border: none;              /* Rimuove bordi */
+    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
+    text-decoration: none; /* Rimuove la sottolineatura */
+    margin-left: 30px;
+}
+
+.barraSuperiore2 img {
+    height: 60px;              /* Altezza fissa del logo */
+    object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
+    margin-left: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita {
     display: flex;
     align-items: center; /* Allinea verticalmente al centro */
     gap: 20px; /* Spaziatura tra gli elementi */
@@ -352,7 +385,7 @@ body {
     font-size: 24px;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità {
+.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita {
     margin-top: 20px;
 }
 
@@ -380,7 +413,7 @@ body {
 }
 
 .wrapper3 .risultatiEsami table, .wrapper3 .risultatiEsami th, .wrapper3 .risultatiEsami tr,  .wrapper3 .risultatiEsami td, .wrapper3 .esamiPrenotati table, .wrapper3 .esamiPrenotati th, .wrapper3 .esamiPrenotati tr,  .wrapper3 .esamiPrenotati td {
-    border: 2px solid white;
+    border: 2px solid black;
     padding: 5px;
 }
 
@@ -415,4 +448,9 @@ body {
     text-rendering: geometricPrecision; /* Migliora la nitidezza */
     -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
     -font-smoothing: antialiased;
+}
+
+
+.bx {
+    cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
 }

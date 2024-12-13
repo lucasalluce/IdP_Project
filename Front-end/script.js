@@ -12,6 +12,71 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
+    /*
+        // Seleziona l'input e l'icona per il LOGIN
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+
+    // Aggiungi un evento di click all'icona
+    togglePassword.addEventListener('click', () => {
+        // Cambia il tipo di input tra password e text
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Cambia l'icona tra 'bx-low-vision' e 'bx-show'
+        togglePassword.classList.toggle('bx-low-vision');
+        togglePassword.classList.toggle('bx-show');
+    });
+    */
+
+
+    
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    
+    if (passwordInput && togglePassword) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('bx-low-vision');
+            togglePassword.classList.toggle('bx-show');
+        });
+    }
+
+    // Seleziona gli elementi specifici della pagina di registrazione
+    const passwordRegister = document.getElementById("passwordRegister");
+    const togglePasswordRegister = document.getElementById("togglePasswordRegister");
+    const confirmPasswordRegister = document.getElementById("confirmPasswordRegister");
+    const toggleConfirmPasswordRegister = document.getElementById("toggleConfirmPasswordRegister");
+
+    // Funzione per cambiare il tipo di input (password <-> text) e gestire le icone
+    function togglePasswordVisibility(inputField, toggleIcon) {
+        if (inputField.type === "password") {
+            inputField.type = "text";
+            toggleIcon.classList.replace('bx-low-vision', 'bx-show'); // Cambia l'icona per "occhio aperto"
+        } else {
+            inputField.type = "password";
+            toggleIcon.classList.replace('bx-show', 'bx-low-vision'); // Cambia l'icona per "occhio chiuso"
+        }
+    }
+
+    // Aggiungi l'evento per la visibilità della password
+    if (togglePasswordRegister && passwordRegister) {
+        togglePasswordRegister.addEventListener("click", () => {
+            togglePasswordVisibility(passwordRegister, togglePasswordRegister);
+        });
+    }
+
+    // Aggiungi l'evento per la visibilità della conferma della password
+    if (toggleConfirmPasswordRegister && confirmPasswordRegister) {
+        toggleConfirmPasswordRegister.addEventListener("click", () => {
+            togglePasswordVisibility(confirmPasswordRegister, toggleConfirmPasswordRegister);
+        });
+    }
+    
+
+
+
     // Processo di login
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
     if (loginForm) {
