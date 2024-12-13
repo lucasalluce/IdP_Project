@@ -59,11 +59,11 @@ TODO    Rivedere schede register
 
 > Luca & Federico
 ~ Javascript ~
-√   passwordHashing           // TODO Test
-√   login                     // TODO Test
-TODO verifyOTP
-TODO registration
-TODO recoveryPassword
+√       login                     // TODO Test -> implementare registration
+    √       passwordHashing
+    √       verifyOTP
+TODO    registration
+TODO    recoveryPassword
 
 ___Back-end___
 > Luca & Federico & Gianluca
@@ -74,13 +74,14 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 √   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
-√       - login()               // TODO Test
+√       - login()               // TODO Test -> implementare addUser()
     √       - otpGenerator()
     √       - otpMail() -> MailService
     √       + app Flask             
         √       - otpValidator() 
-        TODO    + app Flask      
+        √       + app Flask      
 TODO    - addUser()
+
 TODO    - recoveryPassword()
 
 ~ MailService ~
