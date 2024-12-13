@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const formOTP = otpForm.querySelector("input[type='int']").value;
+            const formOTP = otpForm.querySelector("input[id='otp']").value;
             const dataEmail = localStorage.getItem("userEmail");
             localStorage.removeItem("userEmail");
 
@@ -143,13 +143,48 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // TODO Processo di register
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const formName = registerForm.querySelector("imput[")
+            const formName = registerForm.querySelector("input[id='name'").value;
+            const formSurname = registerForm.querySelector("input[id='surname'").value;
+            const formUsername = registerForm.querySelector("input[id='username'").value;
+            const formEmail = registerForm.querySelector("input[id='email'").value;
+            const formPassword = registerForm.querySelector("input[id='passwordRegister'").value;
+            const formConfirmPassword = registerForm.querySelector("input[id='confirmPasswordRegister'").value;
+
+            if (formPassword !== formConfirmPassword) {
+                alert("Le password inserite non corrispondono");
+                return;
+            }
+
+            hashPassword(formPassword).then((hashedPasswrod) => {
+                fetch("http://127.0.0.1:5000/addUser",  {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        name: formName,
+                        surnama: formSurname,
+                        username: formUsername,
+                        email: formEmail,
+                        password: hashedPasswrod,
+                    })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert("Registrazione avvenuta con successo!");
+                        window.location.href = "home.html";
+                    } else {
+                        alert("Errore nella registrazione. Riprova.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Errore: ", error);
+                })
+            })
         })
     }
 
