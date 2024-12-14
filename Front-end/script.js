@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");
-    if (registerForm) {
+if (registerForm) {
             // ~ Gestione verifiche sulle password ~
         const formPassword = registerForm.querySelector("input[id='registerPassword'");
         const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'");
@@ -177,11 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 formErrorPassword.classList.remove("error-visible");
             }
         });
-        formConfirmPassword.addEventListener("imput", () => {
+        formConfirmPassword.addEventListener("input", () => {
             if (!validateConfirmPassword()) {
-                formErrorConfirmPassword.classList.add("error-visibile");
+                formErrorConfirmPassword.classList.add("error-visible");
             } else {
-                formErrorConfirmPassword.classList.remove("error-visibile");
+                formErrorConfirmPassword.classList.remove("error-visible");
             }
         });
     

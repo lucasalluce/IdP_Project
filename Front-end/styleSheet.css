@@ -289,7 +289,7 @@ body {
     position: relative; /* Necessario per posizionare il messaggio sopra il campo */
 }
 
-small {
+.wrapper .input-box #errorConfirmPassword, .wrapper .input-box #errorPassword {
     font-size: 0.9em;
     color: black;
     display: none; /* Messaggi nascosti di default */
@@ -306,7 +306,7 @@ small {
 }
 
 /* Quando il messaggio è visibile */
-small.error-visible {
+.wrapper .input-box #errorConfirmPassword.error-visible, .wrapper .input-box #errorPassword.error-visible {
     display: block;
 }
 
