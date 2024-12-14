@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
         // register.html
-    const registerPassword = document.getElementById("registerPassowrd");
-    const toggleRegisterPassword = document.getElementById("toggleRegisterPassowrd");
-    const registerConfirmPassword = document.getElementById("registerConfirmPassowrd");
-    const toggleRegisterConfirmPassword = document.getElementById("toggleRegisterConfirmPassowrd");
+    const registerPassword = document.getElementById("registerPassword");
+    const toggleRegisterPassword = document.getElementById("toggleRegisterPassword");
+    const registerConfirmPassword = document.getElementById("registerConfirmPassword");
+    const toggleRegisterConfirmPassword = document.getElementById("toggleRegisterConfirmPassword");
     if (toggleRegisterPassword && registerPassword) {
         toggleRegisterPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
             togglePasswordVisibility(registerPassword, toggleRegisterPassword);     // Funzione togglePasswordVisibility()
@@ -157,7 +157,48 @@ document.addEventListener("DOMContentLoaded", () => {
         // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
+        const formPassword = registerForm.querySelector("input[id='registerPassword'").value;
+        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'").value;
+
         
+        // Inizio copyValidatePassword
+        const passwordField = registerForm.querySelector("#passwordRegister");
+        const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
+        const passwordError = document.getElementById("password-error");
+        const confirmPasswordError = document.getElementById("confirm-password-error");
+    
+        // Funzione per validare la password
+        const validatePassword = (password) => {
+            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
+            return passwordRegex.test(password);
+        };
+    
+        // Funzione per validare la conferma password
+        const validateConfirmPassword = () => {
+            return passwordField.value === confirmPasswordField.value;
+        };
+    
+        // Aggiungi un event listener per il campo password
+        passwordField.addEventListener("input", () => {
+            // Se la password non è valida, mostra l'errore
+            if (!validatePassword(passwordField.value)) {
+                passwordError.classList.add("error-visible");
+            } else {
+                // Se la password è valida, nascondi l'errore
+                passwordError.classList.remove("error-visible");
+            }
+        });
+    
+        // Aggiungi un event listener per il campo conferma password
+        confirmPasswordField.addEventListener("input", () => {
+            // Se la password e la conferma non corrispondono, mostra l'errore
+            if (!validateConfirmPassword()) {
+                confirmPasswordError.classList.add("error-visible");
+            } else {
+                confirmPasswordError.classList.remove("error-visible");
+            }
+        });
+        // Fine copyValidatePassword
 
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
