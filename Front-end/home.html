@@ -3,47 +3,47 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>HOME - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <title>Home - Progetto IdP con OAuth 2.0 e 2FA</title>
         <link rel="stylesheet" type="text/css" href="styleSheet.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
 
-        <div class="wrapper"> <!-- classe totale x Login -->
+        <div class="wrapper"> <!-- classe generale scheda home.html -->
 
-            <form id="login-form"> <!-- per js -->
+            <form id="login-form"> <!-- form per l'acquisizione dei dati dell'utente -->
                 <h1>LOGIN</h1>
 
-                <div class="input-box"> <!-- classe per username -->
+                <div class="input-box"> <!-- Username -->
                     <input type="text" id="username" placeholder="Username" required>
-                    <i class='bx bxs-user'></i> <!-- icona x Username -->
+                    <i class='bx bxs-user'></i> <!-- icona -->
                 </div>
 
-                <div class="input-box"> <!-- classe per password -->
+                <div class="input-box"> <!-- Password -->
                     <input type="password" id="password" placeholder="Password" required>
-                    <i class='bx bx-low-vision' id="togglePassword"></i> <!-- Icona per password -->
+                    <i class='bx bx-low-vision' id="togglePassword"></i> <!-- icona <-> funzione di visualizzaione -->
                 </div>
 
-                <div class="remember-forgot"> <!-- classe per password dimenticata -->
-                    <a href="forgotPassword.html">Forgot password?</a>
+                <div class="remember-forgot">
+                    <a href="forgotPassword.html">Forgot password?</a> <!-- collegamento forgotPassword.html -->
                 </div>
 
-                <button type="submit" class="btn">Login</button> <!-- bottone Login -->
+                <button type="submit" class="btn">Login</button> <!-- bottone -> processo di login utente -->
 
-                <div class="register-link"> <!-- classe per registrazione -->
-                    <p>Don't have an account? <a href="register.html">Register</a></p>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="register.html">Register</a></p> <!-- collegamento register.html -->
                 </div>
             </form>
         </div>
 
-        <div class="barraSuperiore"> <!-- barra superirore sito -->
-            <a href="https://www.poliba.it/" target="_blank">
+        <div class="barraSuperiore"> <!-- nav-bar -->
+            <a href="https://www.poliba.it/" target="_blank"> <!-- collegamento poliba.it -->
                 <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
             </a>
 
-            <div class="about-us"> <!-- classe aboutUs -->
-                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a> <!-- bottone AboutUs -->
+            <div class="about-us">
+                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a> <!-- collegamento about3.html -->
             </div>
         </div>
 

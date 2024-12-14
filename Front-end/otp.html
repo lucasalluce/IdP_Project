@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="it">
 
-<head>
-    <meta charset="UTF-8">
-    <title>OTP - Progetto IdP con OAuth 2.0 e 2FA</title>
-    <link rel="stylesheet" type="text/css" href="styleSheet.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>OTP - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <link rel="stylesheet" type="text/css" href="styleSheet.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
 
-<body>
+    <body>
 
-    <div class="wrapper"> <!-- classe totale per Password Dimenticata -->
-       
-        <form id="otp-form"> <!-- per gestione js -->
+        <div class="wrapper"> <!-- classe generale scheda otp.html -->
+        
+            <form id="otp-form"> <!-- form per l'acquisizione dei dati dell'otp -->
 
-            <div class="intestazione">
-                <h2>Inserire l'OTP ricevuto per email:</h2>
-            </div>
+                <div class="intestazione">
+                    <h2>Inserire l'OTP ricevuto per email:</h2>
+                </div>
 
-            <div class="input-box"> <!-- classe per email -->
-                <input type="number" id="otp" placeholder="OTP" min="100000" max="999999" required>
-            </div>
+                <div class="input-box"> <!-- OTP -->
+                    <input type="number" id="otp" placeholder="OTP" min="100000" max="999999" required>
+                </div>
 
-            <button type="submit" class="btn">Invia Link</button> <!-- bottone per inviare il link -->
+                <button type="submit" class="btn">Invia Link</button> <!-- bottone -> processo 2FA di login -->
 
-        </form>
-    </div>
-
-    <div class="barraSuperiore"> <!-- barra superirore sito -->
-        <a href="https://www.poliba.it/" target="_blank">
-            <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
-        </a>
-
-        <div class="about-us"> <!-- classe aboutUs -->
-            <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a> <!-- bottone AboutUs -->
-            <a href="home.html" class="btn-aboutUs">HOME</a> <!-- bottone Home -->
+            </form>
         </div>
-    </div>
 
-</body>
+        <div class="barraSuperiore"> <!-- nav-bar -->
+            <a href="https://www.poliba.it/" target="_blank"> <!-- collegamento poliba.it -->
+                <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
+            </a>
+
+            <div class="about-us">
+                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a> <!-- collegamento about3.html -->
+                <a href="home.html" class="btn-aboutUs">HOME</a> <!-- collegamento home.html -->
+            </div>
+        </div>
+
+    </body>
 
 </html>

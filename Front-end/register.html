@@ -10,62 +10,63 @@
 
     <body>
 
-        <div class="wrapper"> <!-- classe totale x Register -->
-            <form id="register-form"> <!-- per js -->
-                <h1>Register</h1>
+        <div class="wrapper"> <!-- classe generale scheda register.html -->
+            
+            <form id="register-form"> <!-- form per l'acquisizione dei dati del nuovo utente -->
+                <h1>REGISTER</h1>
 
-                <div class="input-box">
+                <div class="input-box"> <!-- Nome -->
                     <input type="text" id="name" placeholder="Name" required>
-                    <i class='bx bxs-user-detail'></i> <!-- icona per Nome -->
+                    <i class='bx bxs-user-detail'></i> <!-- icona -->
                 </div>
     
-                <div class="input-box">
+                <div class="input-box"> <!-- Cognome -->
                     <input type="text" id="surname" placeholder="Surname" required>
-                    <i class='bx bxs-user-detail'></i> <!-- icona per Cognome -->
+                    <i class='bx bxs-user-detail'></i> <!-- icona -->
                 </div>
         
-                <div class="input-box"> <!-- classe per username -->
+                <div class="input-box"> <!-- Username -->
                     <input type="text" id="username" placeholder="Username" required>
-                    <i class='bx bxs-user'></i>
+                    <i class='bx bxs-user'></i> <!-- icona -->
                 </div>
         
-                <div class="input-box"><!-- classe per email -->
+                <div class="input-box"> <!-- Email -->
                     <input type="email" id="email" placeholder="Email" required>
-                    <i class='bx bxs-envelope'></i>
+                    <i class='bx bxs-envelope'></i> <!-- icona -->
                 </div>
         
-                <div class="input-box"> <!-- classe per password -->
+                <div class="input-box"> <!-- Password -->
                     <input type="password" id="passwordRegister" placeholder="Password" required>
-                    <i class='bx bx-low-vision' id="togglePasswordRegister"></i>
-                    <small id="passwordError">
+                    <i class='bx bx-low-vision' id="togglePasswordRegister"></i> <!-- icona <-> funzione di visualizzaione -->
+                    <small id="passwordError"> <!-- info box -->
                         La password deve essere di almeno 8 caratteri di cui: almeno una lettera maiuscola, una minuscola, un carattere speciale ed un numero.
                     </small>
                 </div>
                 
-                <div class="input-box"> <!-- classe per conferma password -->
+                <div class="input-box"> <!-- Conferma password -->
                     <input type="password" id="confirmPasswordRegister" placeholder="Confirm Password" required>
-                    <i class='bx bx-low-vision' id="toggleConfirmPasswordRegister"></i>
-                    <small id="confirmPasswordError">
+                    <i class='bx bx-low-vision' id="toggleConfirmPasswordRegister"></i> <!-- icona <-> funzione di visualizzaizone -->
+                    <small id="confirmPasswordError"> <!-- info box -->
                         Le password non corrispondono.
                     </small>
                 </div>
         
-                <button type="submit" class="btn">Register</button><!-- bottone Register -->
+                <button type="submit" class="btn">Register</button> <!-- bottone -> processo di registrazione nuovo utente -->
         
-                <div class="login-link"><!-- classe per ritorno login -->
-                    <p>Already have an account? <a href="home.html">Login</a></p>
+                <div class="login-link">
+                    <p>Already have an account? <a href="home.html">Login</a></p> <!-- collegamento home.html -->
                 </div>
             </form>
         </div>
 
-        <div class="barraSuperiore">    <!-- barra superirore sito -->
-            <a href="https://www.poliba.it/" target="_blank">
+        <div class="barraSuperiore"> <!-- nav-bar -->
+            <a href="https://www.poliba.it/" target="_blank"> <!-- collegamento poliba.it -->
                 <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
             </a>
             
-            <div class="about-us">  <!-- classe aboutUs -->
-                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a>   <!-- bottone AboutUs -->
-                <a href="home.html" class="btn-aboutUs">HOME</a>   <!-- bottone Home -->
+            <div class="about-us">
+                <a href="about3.html" class="btn-aboutUs">CHI SIAMO</a> <!-- collegamento about3.html -->
+                <a href="home.html" class="btn-aboutUs">HOME</a> <!-- collegamento home.html -->
             </div>
         </div>
 
