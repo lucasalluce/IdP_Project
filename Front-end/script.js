@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formPassword.type = "password";
             toggleIcon.classList.replace('bx-show', 'bx-low-vision');
         }
-    }  
+    }
         // login.html
     const loginPassword = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
