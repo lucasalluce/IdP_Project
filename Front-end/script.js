@@ -157,8 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("register-form");
 if (registerForm) {
             // ~ Gestione verifiche sulle password ~
-        const formPassword = registerForm.querySelector("input[id='registerPassword'");
-        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'");
+        const formPassword = registerForm.querySelector("input[id='registerPassword']");
+        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']");
         const formErrorPassword = document.getElementById("errorPassword");
         const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
         
@@ -188,12 +188,12 @@ if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const formName = registerForm.querySelector("input[id='name'").value;
-            const formSurname = registerForm.querySelector("input[id='surname'").value;
-            const formUsername = registerForm.querySelector("input[id='username'").value;
-            const formEmail = registerForm.querySelector("input[id='email'").value;
-            formPassword = registerForm.querySelector("input[id='registerPassword'").value;
-            formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'").value;
+            const formName = registerForm.querySelector("input[id='name']").value;
+            const formSurname = registerForm.querySelector("input[id='surname']").value;
+            const formUsername = registerForm.querySelector("input[id='username']").value;
+            const formEmail = registerForm.querySelector("input[id='email']").value;
+            formPassword = registerForm.querySelector("input[id='registerPassword']").value;
+            formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']").value;
 
             if (formPassword !== formConfirmPassword) {
                 alert("Le password inserite non corrispondono");
