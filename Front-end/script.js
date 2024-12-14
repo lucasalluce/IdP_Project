@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
         // register.html
-    const registerPassword = document.getElementById("passwordRegister");
-    const toggleRegisterPassword = document.getElementById("togglePasswordRegister");
-    const registerConfirmPassword = document.getElementById("confirmPasswordRegister");
-    const toggleRegisterConfirmPassword = document.getElementById("toggleConfirmPasswordRegister");
+    const registerPassword = document.getElementById("registerPassowrd");
+    const toggleRegisterPassword = document.getElementById("toggleRegisterPassowrd");
+    const registerConfirmPassword = document.getElementById("registerConfirmPassowrd");
+    const toggleRegisterConfirmPassword = document.getElementById("toggleRegisterConfirmPassowrd");
     if (toggleRegisterPassword && registerPassword) {
         toggleRegisterPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
             togglePasswordVisibility(registerPassword, toggleRegisterPassword);     // Funzione togglePasswordVisibility()
@@ -91,7 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.log("login - Acquisizione dati di risposta");
                         localStorage.setItem("userEmail", data.email);      // Acquisizione dei dati nel file di risposta JSON
                         console.log("login - Dati di risposta: ", localStorage.getItem("userEmail"));
-
+                        
+                        // TODO Errore in questo punto
                         setTimeout(() => {
                             window.location.href = "otp.html";                  
                         }, 500);
@@ -156,48 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
-        const formPassword = registerForm.querySelector("input[id='passwordRegister'").value;
-        const formConfirmPassword = registerForm.querySelector("input[id='confirmPasswordRegister'").value;
-
         
-        // Inizio copyValidatePassword
-        const passwordField = registerForm.querySelector("#passwordRegister");
-        const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
-        const passwordError = document.getElementById("password-error");
-        const confirmPasswordError = document.getElementById("confirm-password-error");
-    
-        // Funzione per validare la password
-        const validatePassword = (password) => {
-            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
-            return passwordRegex.test(password);
-        };
-    
-        // Funzione per validare la conferma password
-        const validateConfirmPassword = () => {
-            return passwordField.value === confirmPasswordField.value;
-        };
-    
-        // Aggiungi un event listener per il campo password
-        passwordField.addEventListener("input", () => {
-            // Se la password non è valida, mostra l'errore
-            if (!validatePassword(passwordField.value)) {
-                passwordError.classList.add("error-visible");
-            } else {
-                // Se la password è valida, nascondi l'errore
-                passwordError.classList.remove("error-visible");
-            }
-        });
-    
-        // Aggiungi un event listener per il campo conferma password
-        confirmPasswordField.addEventListener("input", () => {
-            // Se la password e la conferma non corrispondono, mostra l'errore
-            if (!validateConfirmPassword()) {
-                confirmPasswordError.classList.add("error-visible");
-            } else {
-                confirmPasswordError.classList.remove("error-visible");
-            }
-        });
-        // Fine copyValidatePassword
 
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -206,8 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const formSurname = registerForm.querySelector("input[id='surname'").value;
             const formUsername = registerForm.querySelector("input[id='username'").value;
             const formEmail = registerForm.querySelector("input[id='email'").value;
-            const formPassword = registerForm.querySelector("input[id='passwordRegister'").value;
-            const formConfirmPassword = registerForm.querySelector("input[id='confirmPasswordRegister'").value;
+            const formPassword = registerForm.querySelector("input[id='registerPassword'").value;
+            const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'").value;
 
             // TODO Validate password
 
