@@ -1,48 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Seleziona l'input e l'icona per il LOGIN
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');  
-    if (passwordInput && togglePassword) {
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.classList.toggle('bx-low-vision');
-            togglePassword.classList.toggle('bx-show');
+    // ~ Gestione visibilità campi password schede home.html, register.html ~
+        // Funzione per il cambiare del tipo (password <-> text)
+    async function togglePasswordVisibility (formPassword, toggleIcon) {
+        if (formPassword.type === "password") {
+            formPassword.type = "text";
+            toggleIcon.classList.replace('bx-low-vision', 'bx-show');
+        } else {
+            formPassword.type = "password";
+            toggleIcon.classList.replace('bx-show', 'bx-low-vision');
+        }
+    }  
+        // login.html
+    const loginPassword = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    if (loginPassword && togglePassword) {
+        togglePassword.addEventListener('click', () => {                // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(loginPassword, togglePassword)     // Funzione togglePasswordVisibility()
         });
     }
 
-    // Seleziona l'input e l'icona per la REGISTRAZIONE
-    // Seleziona gli elementi specifici della pagina di registrazione
-    const passwordRegister = document.getElementById("passwordRegister");
-    const togglePasswordRegister = document.getElementById("togglePasswordRegister");
-    const confirmPasswordRegister = document.getElementById("confirmPasswordRegister");
-    const toggleConfirmPasswordRegister = document.getElementById("toggleConfirmPasswordRegister");
-    // Funzione per cambiare il tipo di input (password <-> text) e gestire le icone
-    function togglePasswordVisibility(inputField, toggleIcon) {
-        if (inputField.type === "password") {
-            inputField.type = "text";
-            toggleIcon.classList.replace('bx-low-vision', 'bx-show'); // Cambia l'icona per "occhio aperto"
-        } else {
-            inputField.type = "password";
-            toggleIcon.classList.replace('bx-show', 'bx-low-vision'); // Cambia l'icona per "occhio chiuso"
-        }
-    }
-    // Aggiungi l'evento per la visibilità della password
-    if (togglePasswordRegister && passwordRegister) {
-        togglePasswordRegister.addEventListener("click", () => {
-            togglePasswordVisibility(passwordRegister, togglePasswordRegister);
+        // register.html
+    const registerPassword = document.getElementById("passwordRegister");
+    const toggleRegisterPassword = document.getElementById("togglePasswordRegister");
+    const registerConfirmPassword = document.getElementById("confirmPasswordRegister");
+    const toggleRegisterConfirmPassword = document.getElementById("toggleConfirmPasswordRegister");
+    if (toggleRegisterPassword && registerPassword) {
+        toggleRegisterPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(registerPassword, toggleRegisterPassword);     // Funzione togglePasswordVisibility()
         });
     }
-    // Aggiungi l'evento per la visibilità della conferma della password
-    if (toggleConfirmPasswordRegister && confirmPasswordRegister) {
-        toggleConfirmPasswordRegister.addEventListener("click", () => {
-            togglePasswordVisibility(confirmPasswordRegister, toggleConfirmPasswordRegister);
+    if (toggleRegisterConfirmPassword && registerConfirmPassword) {
+        toggleRegisterConfirmPassword.addEventListener("click", () => {                             // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(registerConfirmPassword, toggleRegisterConfirmPassword);       // Funzione togglePasswordVisibility()
         });
     }
     
-    // Hashing password
-    // IN clearPassword - password in chiaro acquisita dal form
-    // OUT hashHex - password cifrata con SHA-256
+    // ~ Gestione hashing password ~
     async function hashPassword(clearPassword) {
         console.log("login.hashingPassword - Acquisizione clearPassword: ", clearPassword);
         const encoder = new TextEncoder();
@@ -55,7 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    // Processo di login utente
+    // ~ Gestione funzionalità ~
+        // Processo di login utente
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
@@ -115,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Processo 2FA di login
+        // Processo 2FA di login
     const otpForm = document.getElementById("otp-form");
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
@@ -159,9 +153,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Processo di registrazione nuovo utente
+        // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
+        const formPassword = registerForm.querySelector("input[id='passwordRegister'").value;
+        const formConfirmPassword = registerForm.querySelector("input[id='confirmPasswordRegister'").value;
+
+        
+        // Inizio copyValidatePassword
+        const passwordField = registerForm.querySelector("#passwordRegister");
+        const confirmPasswordField = registerForm.querySelector("#confirmPasswordRegister");
+        const passwordError = document.getElementById("password-error");
+        const confirmPasswordError = document.getElementById("confirm-password-error");
+    
+        // Funzione per validare la password
+        const validatePassword = (password) => {
+            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
+            return passwordRegex.test(password);
+        };
+    
+        // Funzione per validare la conferma password
+        const validateConfirmPassword = () => {
+            return passwordField.value === confirmPasswordField.value;
+        };
+    
+        // Aggiungi un event listener per il campo password
+        passwordField.addEventListener("input", () => {
+            // Se la password non è valida, mostra l'errore
+            if (!validatePassword(passwordField.value)) {
+                passwordError.classList.add("error-visible");
+            } else {
+                // Se la password è valida, nascondi l'errore
+                passwordError.classList.remove("error-visible");
+            }
+        });
+    
+        // Aggiungi un event listener per il campo conferma password
+        confirmPasswordField.addEventListener("input", () => {
+            // Se la password e la conferma non corrispondono, mostra l'errore
+            if (!validateConfirmPassword()) {
+                confirmPasswordError.classList.add("error-visible");
+            } else {
+                confirmPasswordError.classList.remove("error-visible");
+            }
+        });
+        // Fine copyValidatePassword
+
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
@@ -171,6 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const formEmail = registerForm.querySelector("input[id='email'").value;
             const formPassword = registerForm.querySelector("input[id='passwordRegister'").value;
             const formConfirmPassword = registerForm.querySelector("input[id='confirmPasswordRegister'").value;
+
+            // TODO Validate password
 
             if (formPassword !== formConfirmPassword) {
                 alert("Le password inserite non corrispondono");
@@ -205,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    // TODO Processo di recupero password utente
+        // TODO Processo di recupero password utente
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
