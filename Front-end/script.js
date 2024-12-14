@@ -159,11 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // ~ Gestione verifiche sulle password ~
         const formPassword = registerForm.querySelector("input[id='registerPassword'");
         const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'");
-        const formErrorPassword = document.getElementById("errorPassword"); //registerForm.querySelector("input[id='errorPassword'").value;
-        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword"); //registerForm.querySelector("input[id='errorConfirmPassword'").value;
+        const formErrorPassword = document.getElementById("errorPassword");
+        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
         
         const validatedPassword = (password) => {
-            const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
             return passwordRegex.test(password);
         }
         const validateConfirmPassword = () => {
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!validateConfirmPassword()) {
                 formErrorConfirmPassword.classList.add("error-visibile");
             } else {
-                formErrorConfirmPassword.classList.add("error-visibile");
+                formErrorConfirmPassword.classList.remove("error-visibile");
             }
         });
     
