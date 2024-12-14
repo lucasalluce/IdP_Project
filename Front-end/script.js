@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             togglePasswordVisibility(registerConfirmPassword, toggleRegisterConfirmPassword);       // Funzione togglePasswordVisibility()
         });
     }
-    
+
     // ~ Gestione hashing password ~
     async function hashPassword(clearPassword) {
         console.log("login.hashingPassword - Acquisizione clearPassword: ", clearPassword);
@@ -157,21 +157,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
             // ~ Gestione verifiche sulle password ~
-        const formPassword = registerForm.querySelector("input[id='registerPassword'").value;
-        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'").value;
-        const formErrorPassword = registerForm.querySelector("input[id='errorPassword'").value;                 // Federico ha messo non registerForm. ma document.getElementById
-        const formErrorConfirmPassword = registerForm.querySelector("input[id='errorConfirmPassword'").value;   // Federico ha messo non registerForm. ma document.getElementById
+        const formPassword = registerForm.querySelector("input[id='registerPassword'");
+        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword'");
+        const formErrorPassword = document.getElementById("errorPassword"); //registerForm.querySelector("input[id='errorPassword'").value;
+        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword"); //registerForm.querySelector("input[id='errorConfirmPassword'").value;
         
         const validatedPassword = (password) => {
             const passwordRegex = /^(?=(.*[A-Z]))(?=(.*[\W_]))(?=(.*\d.*\d))[\w\W]{8,}$/;
             return passwordRegex.test(password);
         }
         const validateConfirmPassword = () => {
-            return formPassword === formConfirmPassword;
+            return formPassword.value === formConfirmPassword.value;
         }
 
         formPassword.addEventListener("input", () => {
-            if(!validatedPassword(formPassword)) {
+            if(!validatedPassword(formPassword.value)) {
                 formErrorPassword.classList.add("error-visible");
             } else {
                 formErrorPassword.classList.remove("error-visible");
