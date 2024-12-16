@@ -60,9 +60,9 @@ ___Front-end___
 > Luca & Federico
 ~ Javascript ~
 √       login                       √ Test -> implementare registration
-    √       passwordHashing         √   Test
+    √       passwordHashing         √ Test
     √       verifyOTP               √ Test
-√       registration                √   Test
+√       registration                √ Test
 TODO    recoveryPassword
 
 TODO    modificare gli alert di risposta dal back-end -> utilizzare i message
@@ -76,22 +76,22 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 √   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
-√       - login()                       √ Test -> implementare addUser()
-    √       - otpGenerator()            √ Test
-    √       - otpMail() -> MailService  √ Test
-    √       + app Flask                 √ Test
-        √       - otpValidator()        √ Test
-        √       + app Flask             √ Test
-√       - addUser()                     √   Test
-    TODO    - addUserMail() -> MailService
-    √       + app Flask                 √   Test
+√       - login()                           √ Test -> implementare addUser()
+    √       - otpGenerator()                √ Test
+    √       - otpMail() -> MailService      √ Test
+    √       + app Flask                     √ Test
+        √       - otpValidator()            √ Test
+        √       + app Flask                 √ Test
+√       - addUser()                         √ Test
+    √       - addUserMail() -> MailService  √ Test
+    √       + app Flask                     √ Test
 TODO    - recoveryPassword()
 
 ~ MailService ~
 √       - __init__
-√       - generateMessage()         √   Test
-√       - sendMail()                √   Test
-√       - otpMail()                 √   Test
+√       - generateMessage()                 √ Test
+√       - sendMail()                        √ Test
+√       - otpMail()                         √ Test
 TODO    - registrationMail()
 
 TODO Token generator

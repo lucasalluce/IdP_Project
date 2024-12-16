@@ -125,7 +125,7 @@ class AuthenticationServer:
             
             if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
                 print("AuthenticationServer.addUser - Invio dati al MailService ...")
-                self.mailService.assUserMail(data)                                                               # Invio addUserMail - MailService
+                self.mailService.addUserMail(data)                                                               # Invio addUserMail - MailService
                 dbCursor.reset()
                 print("AuthenticationServer.addUser - Nuovo utente aggiunto con successo")
                 print("AuthenticationServer - Fine procedura 'addUser'")
