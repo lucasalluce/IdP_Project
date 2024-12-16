@@ -27,11 +27,22 @@ class MailService:
         except Exception as e:
             print(f"Errore login/invio mail riscontrato: {e}")
     
-    def otpMail (self, otp, reciverMail):
+    def otpMail (self, otp, userEmail):
         print("MailService - Dati ricevuti, inizio procedura otpMail ...")
         body = f"Ecco il tuo personale codice OTP per completare l'accesso: {otp}. Il codice scadrà tra 2 minuti." 
-        mailMessage = self.generateMessage(reciverMail, "2FA protocoll", body)
+        mailMessage = self.generateMessage(userEmail, "2FA protocoll", body)
         print("MailService - otpMail pronta per l'invio")
-        self.sendMail(mailMessage, reciverMail)
-        print("MailService - otpMail inviata con successo")
+        self.sendMail(mailMessage, userEmail)
+        print("MailService - otpMail inviata")
         
+    def addUserMail (self, data):
+        print("MailService - Dati ricevuti, inzio procedura addUserMail ...")
+        userName = data[0]
+        userSurname = data[1]
+        userUsername = data[2]
+        userEmail = data[3]
+        body = f"Benvenuto/a\nLa registrazione è stata completata con successo, ora puoi accedere nella home inserendo Username e Password\n\n\tI tuoi dati:\n{userName} {userSurname}\nUsername: {userUsername}\n\nA presto!"
+        mailMessage = self.generateMessage(userEmail, "Registrazione effettuata con successo", body)
+        print("MailService - addUserMail pronta per l'invio")
+        self.sendMail(mailMessage, userEmail)
+        print("MailService - addUserMail inviata")
