@@ -2,8 +2,9 @@
 # bcrypt - utile al confronto delle hashedPassword
 # random - utile per la generazione dell'OTP
 # time - utile per la validazione dell'OTP
+# string - utile per la generazione della tmpPassword
 # MailService - utile per l'invio di mail agli utenti
-import bcrypt, random, time
+import bcrypt, random, time, string
 from MailService import MailService
 
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
@@ -26,6 +27,7 @@ CORS(app)
 
 # Gestione OTP
 otpData = []
+tmpPasswordData = []
 
 class AuthenticationServer:
     def __init__(self):
@@ -39,6 +41,20 @@ class AuthenticationServer:
         otp = random.randint(100000, 999999)
         print("AuthenticationServer.login.2FA - OTP generato: " + str(otp))
         return otp
+
+    def tmpPasswordGenerator (self):
+        lenght = 12                                                                 # Lunghezza minima della password
+        lowChar = random.choice(string.ascii_lowercase)
+        uppChar = random.choice(string.ascii_uppercase)
+        nr = random.choice(string.digits)
+        specialChar = random.choice("!@#$%^&*()-_=+[]{}|;:',.<>?/")
+        fill = ''.join(random.choices(
+            string.ascii_letters + string.digits + "!@#$%^&*()-_=+[]{}|;:',.<>?/",
+            k = lenght - 4
+        ))
+        tmpPass = list(uppChar + lowChar + nr + specialChar + fill)
+        random.shuffle(tmpPass)
+        return ''.join(tmpPass)
 
     def login (self, jsonUsername, jsonHashedPassword):
         print("AuthenticationServer.login - Interrogazione database ...")
@@ -55,7 +71,7 @@ class AuthenticationServer:
             print("AuthenticationServer - Fine procedura 'login'")
             return {"success": False, "message": "Username errato/Utente inesistente"} # Risposta del server
         else:   # _Caso_ Utente esistente
-            dbHashedPassword = dbReturn[0][0]   # Con doppio hash
+            dbHashedPassword = dbReturn[0][0]
             dbEmail = dbReturn[0][1]            
             dbReturn.clear()
                 # _Caso_ Credenziali corrette -> 2FA
@@ -111,6 +127,7 @@ class AuthenticationServer:
         query = "SELECT * FROM Users WHERE Username = %s"
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
+        dbCursor.reset()
         print("AuthenticationServer.addUser - Interrogazione terminata")
 
         if len(dbReturn) == 0: # Caso - Utente da aggiungere            
@@ -138,20 +155,40 @@ class AuthenticationServer:
         else: # Caso - Username già utilizzato
             print("AuthenticationServer.addUser - Username già registrato")
             print("AuthenticationServer - Fine procedura 'addUser'")
-            return {"success": False, "message": "Username già in uso"}
-        
+            return {"success": False, "message": "Username già in uso"} 
 
-    def recoveryPassword(self, jsonEmail):
-        query = "SELECT Username, HashedPassword FROM Users WHERE Email = %s"
-        dbCursor.execute(query, (jsonEmail, ))
+    def recoveryPassword(self, jsonUsername):
+        print("AuthenticationServer.recoveryPassword - Interrogazione database ...")
+        query = "SELECT Name, Surname, Email, HashedPassword FROM Users WHERE Username = %s"
+        dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
-
-        if len(dbReturn) == 0: # Caso - Utente inesistente / Errore inserimento mail
-            pass #TODO Comunicazione inesistenza utente/errore inserimento mail
-        elif len(dbReturn) == 1: # Caso - Utente trovato -> MailService
-            pass #TODO  
-        else: # Caso - Più utenti registrati con la stessa email
-            pass
+        dbCursor.reset()
+        print("AuthenticationServer.recoveryPassword - Interrogazione terminata")
+        
+        if len(dbReturn) == 0: # Caso - Utente inesistente / Errore inserimento username
+            print("AuthenticationServer.recoveryPassword - Nessun riscontro dal database")
+            return {"success": False, "message": "Utente non trovato, nessuna corrispondenza con l'Username fornito"}
+        else: # Caso - Utente trovato -> MailService
+            print("AuthenticationServer.recoveryPassword - Utente identificato")
+            dbName = dbReturn[0][0]
+            dbSurname = dbReturn[0][1]
+            dbEmail = dbReturn[0][2]
+            dbHashedPassword = dbReturn[0][3]   # Con doppio hash
+            dbReturn.clear()
+            
+            print("AuthenticationServer.recoveryPassword - Inizio sotto-procedura '2FA'")
+            otp = self.otpGenerator()                                                               # Generazioni OTP
+            print("AuthenticationServer.recoveryPassword.2FA - Invio dati al MailService ...")
+            self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
+            otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
+            print("AuthenticationServer.login.2FA - OTP salvato per la verifica")
+            print("OTP salvati: ", otpData)
+            
+            print("AuthenticationServer.recoveryPassword.2FA - Invio dati al MailService ...")
+            tmpPassword = self.tmpPasswordGenerator()
+            tmpPasswordData.append({"email": dbEmail, "tmpPassword": tmpPassword})
+            
+            return #{"success": True, "message": ""}
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -165,7 +202,7 @@ def login():
     result = server.login(jsonUsername, jsonHasedPassword)
     return jsonify(result)
 
-@app.route("/otpValidation", methods=["POST"])
+@app.route("/otpValidationLogin", methods=["POST"])
 def otpValidation():
     print("AuthenticationServer.login.2FA - Inizio procedura 'otpValidation'")
     print("AuthenticationServer.login.2FA.otpValidation - Acquisizione dati ...")
@@ -190,6 +227,17 @@ def addUser():
     print("AuthenticationServer.addUser - Dati acquisiti")
     server = AuthenticationServer()
     result = server.addUser(jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword)
+    return jsonify(result)
+
+@app.route("/recoveryPassword", methods=["POST"])
+def recoveryPassword():
+    print("AuthenticationServer - Inizio procedura 'recoveryPassword'")
+    print("AuthenticationServer.recoveryPassword - Acquisizione dati ...")
+    data = request.get_json()
+    jsonUsername = data.get("username")
+    print("AuthenticationServer.recoveryPassword - Dati acquisiti")
+    server = AuthenticationServer()
+    result = server.recoveryPassword(jsonUsername)
     return jsonify(result)
 
 if __name__ == "__main__":
