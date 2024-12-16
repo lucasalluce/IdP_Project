@@ -68,6 +68,7 @@ class AuthenticationServer:
                 self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
                 otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
                 print("AuthenticationServer.login.2FA - OTP salvato per la verifica")
+                print("OTP salvati: ", otpData)
                 return {"success": True, "message": "Utente verificato, OTP inviato", "email": dbEmail} # Risposta del server, in allegato email dell'utente che ha fatto l'accesso (utile per il successivo verifyOTP())
             else:   # Caso - Credenziali sbagliate
                 print("AuthenticationServer.login - Riscontro parziale, utente non autenticato")
@@ -76,7 +77,7 @@ class AuthenticationServer:
 
     def otpValidator (self, jsonUserOTP, jsonEmail):
         print("AuthenticationServer.login.2FA.otpValidation - Inizio controllo OTP ...")
-        if otpData.count() == 0: # _Caso_ otpData vuoto -> nessun OTP da controllarre
+        if len(otpData) == 0: # _Caso_ otpData vuoto -> nessun OTP da controllarre
             print("AuthenticationServer.login.2FA.otpValidation - Nessun elemento di confronto -> accesso negato")
             return {"success": False, "message": "OTP già utilizzato"}
         else: # _Caso_ otpData non vuoto -> ricerca OTP da confrontare
@@ -87,12 +88,16 @@ class AuthenticationServer:
                         print("AuthenticationServer.login.2FA.otpValidation - OTP valido -> accesso completato")
                         index = otpData.index(element)
                         otpData.pop(index)
+                        print("AuthenticationServer.login.2FA.otpValidation - Cancellazione OTP verificato")
+                        print("OTP salvati: ", otpData)
                         print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
                         return {"success": True, "message": "OTP verificato, accesso completato"}               # TODO Valutare il passaggio del Token in questo punto
                     else: # _Caso_ OTP scaduto
                         print("AuthenticationServer.login.2FA.otpValidation - OTP non valido, accesso negato")
                         index = otpData.index(element)
                         otpData.pop(index)
+                        print("AuthenticationServer.login.2FA.otpValidation - Cancellazione OTP scaduto")
+                        print("OTP salvati: ", otpData)
                         print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
                         return {"success": False, "message": "OTP scaduto"}
             # _Caso_ nessuna corrispondenza -> OTP errato
@@ -113,11 +118,15 @@ class AuthenticationServer:
             query = "INSERT INTO Users (Name, Surname, Username, Email, HashedPassword) VALUES (%s, %s, %s, %s, %s)"
             hashedPassword = bcrypt.hashpw(jsonHashedPassword.encode('utf-8'), bcrypt.gensalt())
             hashedPassword = hashedPassword.decode('utf-8')
-            dbCursor.execute(query, (jsonName, jsonSurname, jsonUsername, jsonEmail, hashedPassword, ))
+            data = (jsonName, jsonSurname, jsonUsername, jsonEmail, hashedPassword, )
+            dbCursor.execute(query, data)
             dbConnection.commit()
             print("AuthenticationServer.addUser - Query inviata")
             
             if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
+                # TODO Mail di conferma -> MailService
+                #self.mailService.otpMail(data)
+                
                 dbCursor.reset()
                 print("AuthenticationServer.addUser - Nuovo utente aggiunto con successo")
                 print("AuthenticationServer - Fine procedura 'addUser'")
