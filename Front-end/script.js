@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "home.html";
                 return
             }
-            if (!formInput) {
+            if (!formOTP) {
                 alert("Inserire codice OTP");
                 return;
             }
@@ -192,8 +192,8 @@ if (registerForm) {
             const formSurname = registerForm.querySelector("input[id='surname']").value;
             const formUsername = registerForm.querySelector("input[id='username']").value;
             const formEmail = registerForm.querySelector("input[id='email']").value;
-            formPassword = registerForm.querySelector("input[id='registerPassword']").value;
-            formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']").value;
+            const formPassword = registerForm.querySelector("input[id='registerPassword']").value;
+            const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']").value;
 
             if (formPassword !== formConfirmPassword) {
                 alert("Le password inserite non corrispondono");
