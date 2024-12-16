@@ -343,7 +343,47 @@ input:invalid {
 
 .bodyCart {
     background-image: none; /* Rimuove la foto */
-    background-color: lightskyblue;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Per garantire che la pagina riempia almeno l'altezza dello schermo */
+    background: linear-gradient(to bottom, #f0f0f0, #d9d9d9); /* Sfondo visibile sotto il wrapper */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente il contenuto */
+    align-items: flex-start; /* Allinea al top, così che si "appoggi" */
+    overflow-x: hidden; /* Evita scorrimento orizzontale */
+    position: relative;
+    background: linear-gradient(180deg, #f8a3a3, #ff3535); /* Gradient red background */
+}
+
+.bodyCart .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bodyCart .bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3); /* Bolle semi-trasparenti */
+    border-radius: 50%;
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px) translateX(calc(50vw - 50px));
+        opacity: 0;
+    }
 }
 
 .wrapper3 {
@@ -354,17 +394,8 @@ input:invalid {
     background-color: lightgoldenrodyellow;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: black;
-    transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
-    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
-    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
-    transition: transform 0.6s ease; /* Transizione più lenta */
     margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
-}
-
-.wrapper3 * {
-    text-rendering: geometricPrecision; /* Migliora la nitidezza */
-    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
-    -font-smoothing: antialiased;
+    margin-bottom: 20px;
 }
 
 .wrapper3 h1{
