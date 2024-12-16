@@ -86,6 +86,25 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
     √       - addUserMail() -> MailService  √ Test
     √       + app Flask                     √ Test
 TODO    - recoveryPassword()
+            - otpGenerator()
+            - otpMail() -> MailService
+            - tmpPasswordGenerator()
+            - tmpPasswordMail() -> MailService
+
+    ~~Steps recupero password~~
+1. Selezione funzionalità (home.html)
+2. Acquisizione Username (forgot-password.html)
+3. Controllo esistenza utente nel database (AuthenticationServer.py)
+4. Sotto-protocollo 2FA (AuthenticationServer.py)
+    - Generazione e salvataggio OTP (AuthenticationServer.py)
+    - otpMail() (MailService.py)
+    - Autenticazione OTP (?.html + AuthenticationServer.py)         ? nuova scheda html + funzione ed app Flask
+5. Sotto-protocollo tmpPassword (AutenticationServer.py)
+    - Generazione e salvataggio password temporanea (AuthenticationServer.py)
+    - tmpPasswordMail() (MailService.py)
+6. Accesso con tmpPassword (home.html)
+7. Acquisizione nuova Password (cambio-password-html)
+8. Modifica dati database (AuthenticationServer.py)
 
 ~ MailService ~
 √       - __init__
