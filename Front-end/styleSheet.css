@@ -346,7 +346,6 @@ input:invalid {
     margin: 0;
     padding: 0;
     min-height: 100vh; /* Per garantire che la pagina riempia almeno l'altezza dello schermo */
-    background: linear-gradient(to bottom, #f0f0f0, #d9d9d9); /* Sfondo visibile sotto il wrapper */
     display: flex;
     justify-content: center; /* Centra orizzontalmente il contenuto */
     align-items: flex-start; /* Allinea al top, così che si "appoggi" */
@@ -361,27 +360,106 @@ input:invalid {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -1; /* Lo sfondo rimane dietro */
     overflow: hidden;
 }
 
-.bodyCart .bubble {
+/* Bolle */
+.bubble {
     position: absolute;
-    background: rgba(255, 255, 255, 0.3); /* Bolle semi-trasparenti */
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    animation: float 10s infinite ease-in-out;
+    animation: float 15s infinite ease-in-out;
+    opacity: 0.7;
 }
 
+/* Stili delle bolle con pseudo-casualità */
+.bubble:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    top: 100%;
+    left: 5%;
+    animation-duration: 12s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(2) {
+    width: 40px;
+    height: 40px;
+    top: 100%;
+    left: 15%;
+    animation-duration: 14s;
+    animation-delay: 3s;
+}
+
+.bubble:nth-child(3) {
+    width: 50px;
+    height: 50px;
+    top: 100%;
+    left: 80%;
+    animation-duration: 10s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(4) {
+    width: 60px;
+    height: 60px;
+    top: 100%;
+    left: 95%;
+    animation-duration: 18s;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(5) {
+    width: 20px;
+    height: 20px;
+    top: 100%;
+    left: 50%;
+    animation-duration: 9s;
+    animation-delay: 4s;
+}
+
+.bubble:nth-child(6) {
+    width: 25px;
+    height: 25px;
+    top: 100%;
+    left: 90%;
+    animation-duration: 13s;
+    animation-delay: 5s;
+}
+
+.bubble:nth-child(7) {
+    width: 100px;
+    height: 100px;
+    top: 100%;
+    left: 5%;
+    animation-duration: 20s;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(8) {
+    width: 60px;
+    height: 60px;
+    top: 100%;
+    left: 85%;
+    animation-duration: 8s;
+    animation-delay: 8s;
+}
+
+/* ... aggiungere altre regole per creare più bolle con configurazioni diverse */
+
+/* Animazione */
 @keyframes float {
     0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 0;
+        transform: translateY(0) translateX(0);
+        opacity: 0.7;
     }
     50% {
+        transform: translateY(-300px) translateX(10px); /* Ridotto da 20px */
         opacity: 1;
     }
     100% {
-        transform: translateY(-50px) translateX(calc(50vw - 50px));
+        transform: translateY(-100vh) translateX(-20px); /* Ridotto da -50px */
         opacity: 0;
     }
 }
