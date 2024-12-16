@@ -54,14 +54,14 @@ ___Front-end___
     2) icona info password registrazione                √
     3) nome e cognome registrazione                     √
         Rivedere bordo !!
-    4) pagina cartella sanitaria                        //TODO
-    5) pagina profilo                                   //TODO
+    4) pagina cartella sanitaria                        // TODO
+    5) pagina profilo                                   // TODO
 
 > Luca & Federico
 ~ Javascript ~
-√       login                       // TODO Test -> implementare registration
+√       login                       √ Test -> implementare registration
     √       passwordHashing         √   Test
-    √       verifyOTP               // TODO Test
+    √       verifyOTP               √ Test
 √       registration                √   Test
 TODO    recoveryPassword
 
@@ -76,13 +76,14 @@ Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluc
 √   Comunicazione con il clinet -> Flask, Flask Cors
 √   Confronto string con hash -> bcrypt
 
-√       - login()                       // TODO Test -> implementare addUser()
+√       - login()                       √ Test -> implementare addUser()
     √       - otpGenerator()            √ Test
     √       - otpMail() -> MailService  √ Test
     √       + app Flask                 √ Test
-        √       - otpValidator()        // TODO Test
-        √       + app Flask             // TODO Test
+        √       - otpValidator()        √ Test
+        √       + app Flask             √ Test
 √       - addUser()                     √   Test
+    TODO    - addUserMail() -> MailService
     √       + app Flask                 √   Test
 TODO    - recoveryPassword()
 
