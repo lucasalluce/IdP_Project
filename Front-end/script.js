@@ -90,13 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.log("login - Acquisizione dati di risposta");
                         localStorage.setItem("userEmail", data.email);      // Acquisizione dei dati nel file di risposta JSON
                         console.log("login - Dati di risposta: ", localStorage.getItem("userEmail"));
-                        
-                        // TODO Errore in questo punto
-                        setTimeout(() => {
-                            window.location.href = "otp.html";                  
-                        }, 500);
 
-                        //window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
+                        window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
                     } else {
                         alert("Credenziali errate!! Riprovare")             // Allert di errore nel login - Credenziali inserite non correte
                     }
