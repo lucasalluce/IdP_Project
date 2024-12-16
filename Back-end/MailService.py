@@ -41,7 +41,7 @@ class MailService:
         userSurname = data[1]
         userUsername = data[2]
         userEmail = data[3]
-        body = f"Benvenuto/a\nLa registrazione è stata completata con successo, ora puoi accedere nella home inserendo Username e Password\n\n\tI tuoi dati:\n{userName} {userSurname}\nUsername: {userUsername}\n\nA presto!"
+        body = f"Benvenuto/a\nLa registrazione è stata completata con successo, ora puoi accedere nella home inserendo Username e Password\n\nI tuoi dati:\n{userName} {userSurname}\nUsername: {userUsername}\n\nA presto!"
         mailMessage = self.generateMessage(userEmail, "Registrazione effettuata con successo", body)
         print("MailService - addUserMail pronta per l'invio")
         self.sendMail(mailMessage, userEmail)
