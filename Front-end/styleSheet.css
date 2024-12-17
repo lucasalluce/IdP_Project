@@ -464,11 +464,14 @@ input:invalid {
     padding: 30px 40px;
     width: 1150px;
     max-width: 80%;
-    background-color: lightgoldenrodyellow;
+    min-width: 600px;
+    background-color: #ffb6b69f;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: black;
     margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
     margin-bottom: 20px;
+    border-radius: 20px;
+    border: none;
 }
 
 .wrapper3 h1{
