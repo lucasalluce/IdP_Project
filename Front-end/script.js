@@ -110,26 +110,27 @@ document.addEventListener("DOMContentLoaded", () => {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
             console.log("login.2FA - Acquisizione parametro form ...");
+
             const formOTP = otpForm.querySelector("input[id='otp']").value;
             const dataEmail = localStorage.getItem("userEmail");
-            localStorage.removeItem("userEmail");
 
             if (!formOTP) {
                 console.log("login - Errore parametri otp-form");
                 alert("Inserire correttamente OTP");
-                return
+                return;
             }
             if (!dataEmail) {
-                console.log("login - Errore parametro localStorage")
+                console.log("login - Errore parametro localStorage");
                 alert("Errore dati: email utente non trovata nel localStorage");
                 window.location.href = "home.html";
-                return
+                return;
             }
 
+            // Chiamata al server Flask per verificare OTP
             fetch("http://127.0.0.1:5000/otpValidationLogin", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({                                  // Compilazione file JSON
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
                     otp: formOTP,
                     email: dataEmail
                 })
@@ -137,18 +138,70 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    alert("Accesso avvenuto con successo!")
-                    window.location.href = "cartellaSanitaria.html"
+                    console.log("login.2FA - OTP verificato con successo!");
+
+                    // Recupero dati utente dopo verifica OTP
+                    fetch("http://127.0.0.1:5000/getUserData", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: dataEmail })
+                    })
+                    .then((response) => response.json())
+                    .then((userData) => {
+                        if (userData.success) {
+                            console.log("login.2FA - Dati utente ricevuti:", userData);
+
+                            // Salvataggio dati nel localStorage per utilizzarli nella cartella sanitaria
+                            localStorage.setItem("userName", userData.name);
+                            localStorage.setItem("userSurname", userData.surname);
+                            localStorage.setItem("userUsername", userData.username);
+                            localStorage.setItem("userEmail", userData.email);
+
+                            // Reindirizzamento alla cartella sanitaria
+                            alert("Accesso avvenuto con successo!");
+                            window.location.href = "cartellaSanitaria.html";
+                        } else {
+                            console.error("Errore nel recupero dei dati utente:", userData.message);
+                            alert("Errore nel caricamento dei dati utente!");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Errore nella richiesta dati utente:", error);
+                    });
                 } else {
-                    // TODO gestire casi False
-                    alert(data.message)
+                    console.log("login.2FA - Errore OTP");
+                    alert(data.message);
                 }
             })
             .catch((error) => {
-                console.error("Errore: ", error);
-            })
+                console.error("Errore nella verifica OTP:", error);
+            });
         });
     }
+
+// Caricamento dei dati utente nella cartella sanitaria
+if (window.location.href.includes("cartellaSanitaria.html")) {
+    console.log("Cartella Sanitaria - Caricamento dati utente...");
+
+    // Recupero dati dal localStorage
+    const userName = localStorage.getItem("userName");
+    const userSurname = localStorage.getItem("userSurname");
+    const userUsername = localStorage.getItem("userUsername");
+    const userEmail = localStorage.getItem("userEmail");
+
+    if (userName && userSurname && userUsername && userEmail) {
+        // Inserimento dei dati nei campi HTML
+        document.querySelector(".cognome p").textContent = userSurname;
+        document.querySelector(".nome p").textContent = userName;
+        document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
+        document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
+    } else {
+        console.error("Dati utente non trovati nel localStorage!");
+        alert("Errore: Accesso non autorizzato!");
+        window.location.href = "home.html";
+    }
+}
+
 
         // Processo di registrazione nuovo utente
     const registerForm = document.getElementById("register-form");

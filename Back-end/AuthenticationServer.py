@@ -187,6 +187,32 @@ def otpValidation():
     result = server.otpValidator(jsonUserOTP, jsonEmail)
     return jsonify(result)
 
+
+@app.route("/getUserData", methods=["POST"])
+def getUserData():
+    print("AuthenticationServer.getUserData - Inizio procedura recupero dati utente")
+    data = request.get_json()
+    jsonEmail = data.get("email")  # Riceve l'email dal frontend
+    print("AuthenticationServer.getUserData - Email ricevuta:", jsonEmail)
+    
+    # Query per recuperare i dati utente dal DB
+    query = "SELECT Name, Surname, Username, Email FROM Users WHERE Email = %s;"
+    dbCursor.execute(query, (jsonEmail,))
+    userData = dbCursor.fetchone()
+    
+    if userData:
+        print("AuthenticationServer.getUserData - Dati utente trovati:", userData)
+        return jsonify({
+            "success": True,
+            "name": userData[0],
+            "surname": userData[1],
+            "username": userData[2],
+            "email": userData[3]
+        })
+    else:
+        print("AuthenticationServer.getUserData - Nessun utente trovato")
+        return jsonify({"success": False, "message": "Utente non trovato"})
+
 @app.route("/addUser", methods=["POST"])
 def addUser():
     print("AuthenticationServer - Inizio procedura 'addUser'")
