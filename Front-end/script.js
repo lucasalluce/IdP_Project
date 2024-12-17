@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!formUsername || !formPassword) {
                 console.log("login - Errore parametri login-form");
                 alert("Inserire correttamente Username e Password");
-                return;
+                return
             }
 
             console.log("login - Inizio procedura 'hashingPassword'");
@@ -114,8 +114,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const dataEmail = localStorage.getItem("userEmail");
             localStorage.removeItem("userEmail");
 
+            if (!formOTP) {
+                console.log("login - Errore parametri otp-form");
+                alert("Inserire correttamente OTP");
+                return
+            }
             if (!dataEmail) {
-                alert("Errore passaggio dati: email dell'utente non trovata ");
+                console.log("login - Errore parametro localStorage")
+                alert("Errore dati: email utente non trovata nel localStorage");
                 window.location.href = "home.html";
                 return
             }
@@ -223,7 +229,14 @@ if (registerForm) {
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
-            // TODO
+            e.preventDefault();
+
+            const formUsername = forgotPasswordForm.querySelector("input[id='username']").value;
+
+            if (!formUsername) {
+                alert("Username non inserito!");
+                return;
+            }
         });
     }
 });
