@@ -553,7 +553,7 @@ input:invalid {
     border-radius: 5px;
     animation: slide-down 0.3s ease; /* Effetto scorrimento */
     padding: 10px;
-    background-color: rgb(248, 199, 199, 0.9);
+    background-color: rgb(248, 199, 199);
 }
 
 .dropdown-menu a {
