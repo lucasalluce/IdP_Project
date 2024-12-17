@@ -464,11 +464,14 @@ input:invalid {
     padding: 30px 40px;
     width: 1150px;
     max-width: 80%;
-    background-color: lightgoldenrodyellow;
+    min-width: 600px;
+    background-color: #ffb6b69f;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: black;
     margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
     margin-bottom: 20px;
+    border-radius: 20px;
+    border: none;
 }
 
 .wrapper3 h1{
@@ -550,7 +553,7 @@ input:invalid {
     border-radius: 5px;
     animation: slide-down 0.3s ease; /* Effetto scorrimento */
     padding: 10px;
-    background-color: rgb(248, 199, 199, 0.9);
+    background-color: rgb(248, 199, 199);
 }
 
 .dropdown-menu a {
