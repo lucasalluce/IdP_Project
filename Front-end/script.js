@@ -223,30 +223,7 @@ if (registerForm) {
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            const formUsername = forgotPasswordForm.querySelector("input[type='username']").value;
-
-            fetch("http://127.0.0.1:5000/recoveryPassword", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    username: formUsername
-                }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert("Controlla la tua email per il link di reset della password.");
-                    window.location.href = "home.html"; // Riporta alla pagina di login
-                } else {
-                    alert("Errore nel recupero password. Assicurati che l'email sia corretta.");
-                }
-            })
-            .catch((error) => {
-                console.error("Errore:", error);
-            });
+            // TODO
         });
     }
-
 });
