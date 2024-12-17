@@ -69,7 +69,7 @@ TODO    modificare gli alert di risposta dal back-end -> utilizzare i message
 
 ___Back-end___
 > Luca & Federico & Gianluca
-Configurazione environment, MySQL e Flask - Luca Done!, Federico //TODO, Gianluca //TODO 
+Configurazione environment, MySQL e flask
 
 ~ AutenticationServer ~
 √   Connessione al database -> MySQL connector
@@ -112,6 +112,3 @@ TODO    - recoveryPassword()
 √       - sendMail()                        √ Test
 √       - otpMail()                         √ Test
 TODO    - registrationMail()
-
-TODO Token generator
-TODO pulizia otpData ogni tot, possibile limite del sistema
