@@ -364,8 +364,7 @@ input:invalid {
     overflow: hidden;
 }
 
-/* Bolle */
-.bubble {
+.bubble {   /* Bolle */
     position: absolute;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -373,7 +372,6 @@ input:invalid {
     opacity: 0.7;
 }
 
-/* Stili delle bolle con pseudo-casualità */
 .bubble:nth-child(1) {
     width: 30px;
     height: 30px;
@@ -446,21 +444,14 @@ input:invalid {
     animation-delay: 8s;
 }
 
-/* ... aggiungere altre regole per creare più bolle con configurazioni diverse */
-
-/* Animazione */
-@keyframes float {
+@keyframes float {  /* Animazione */
     0% {
         transform: translateY(0) translateX(0);
         opacity: 0.7;
     }
-    50% {
-        transform: translateY(-300px) translateX(10px); /* Ridotto da 20px */
-        opacity: 1;
-    }
     100% {
         transform: translateY(-100vh) translateX(-20px); /* Ridotto da -50px */
-        opacity: 0;
+        opacity: 0.2;
     }
 }
 
@@ -494,18 +485,17 @@ input:invalid {
     display: flex;             /* Layout a griglia flessibile */
     align-items: center;       /* Allinea elementi verticalmente */
     justify-content: space-between; /* Spazio tra logo e bottone */
-    padding: 10px 20px;        /* Spazi interni */
+    padding: 10px;        /* Spazi interni */
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
     backdrop-filter: blur(40px);
     height: 80px;              /* Imposta un'altezza fissa */
-    
 }
 
 .barraSuperiore2 .btn-aboutUs {
     background-color: transparent;
     font-weight: bold;
     font-size: 20px;
-    color: black;              /* Colore del testo bianco */
+    color: black;              
     border: none;              /* Rimuove bordi */
     cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
     text-decoration: none; /* Rimuove la sottolineatura */
@@ -518,6 +508,28 @@ input:invalid {
     margin-left: 20px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.barraSuperiore2 i {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    font-size: 40px;
+    transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
+    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
+    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
+    transition: transform 0.6s ease; /* Transizione più lenta */
+}
+
+.barraSuperiore2 i* {
+    text-rendering: geometricPrecision; /* Migliora la nitidezza */
+    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
+    -font-smoothing: antialiased;
+}
+
+.barraSuperiore2 i:hover {
+    cursor: pointer;
+    transform: scale(1.2) translateZ(0); /* Ingrandisce il riquadro del 10% */
 }
 
 .wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale {
