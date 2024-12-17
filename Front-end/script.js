@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({                                  // Compilazione file JSON
                         username: formUsername,
-                        password: hashedPassword,
+                        password: hashedPassword
                     })
                 })
                 .then((response) => response.json())                        // Acqisizione file JSON di risposta
@@ -119,24 +119,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "home.html";
                 return
             }
-            if (!formOTP) {
-                alert("Inserire codice OTP");
-                return;
-            }
 
             fetch("http://127.0.0.1:5000/otpValidation", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({                                  // Compilazione file JSON
                     otp: formOTP,
-                    email: dataEmail,
+                    email: dataEmail
                 })
             })
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    alert("OTP valido");
-                    window.location.href = "cartellaSanitaria.html"
+                    window.location.href = "verificatedOTP.html"
+                    setTimeout(() => {
+                        window.location.href = "cartellaSanitaria.html"
+                    }, 3000); // 3 secondi di attesa
                 } else {
                     // TODO gestire casi False
                     alert(data.message)
@@ -204,7 +202,7 @@ if (registerForm) {
                         surname: formSurname,
                         username: formUsername,
                         email: formEmail,
-                        password: hashedPasswrod,
+                        password: hashedPasswrod
                     })
                 })
                 .then((response) => response.json())
@@ -229,31 +227,27 @@ if (registerForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const email = forgotPasswordForm.querySelector("input[type='email']").value;
+            const formUsername = forgotPasswordForm.querySelector("input[type='username']").value;
 
-            fetch("/forgot-password", {
+            fetch("http://127.0.0.1:5000/recoveryPassword", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    email: email,
+                    username: formUsername
                 }),
             })
-
-
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        alert("Controlla la tua email per il link di reset della password.");
-                        window.location.href = "home.html"; // Riporta alla pagina di login
-                    } else {
-                        alert("Errore nel recupero password. Assicurati che l'email sia corretta.");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Errore:", error);
-                });
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Controlla la tua email per il link di reset della password.");
+                    window.location.href = "home.html"; // Riporta alla pagina di login
+                } else {
+                    alert("Errore nel recupero password. Assicurati che l'email sia corretta.");
+                }
+            })
+            .catch((error) => {
+                console.error("Errore:", error);
+            });
         });
     }
 
