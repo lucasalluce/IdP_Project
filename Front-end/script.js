@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return
             }
 
-            fetch("http://127.0.0.1:5000/otpValidation", {
+            fetch("http://127.0.0.1:5000/otpValidationLogin", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({                                  // Compilazione file JSON
@@ -131,10 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    window.location.href = "verificatedOTP.html"
-                    setTimeout(() => {
-                        window.location.href = "cartellaSanitaria.html"
-                    }, 3000); // 3 secondi di attesa
+                    alert("Accesso avvenuto con successo!")
+                    window.location.href = "cartellaSanitaria.html"
                 } else {
                     // TODO gestire casi False
                     alert(data.message)
