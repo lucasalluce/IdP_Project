@@ -31,9 +31,7 @@ tmpPasswordData = []
 
 class AuthenticationServer:
     def __init__(self):
-        print("AuthenticationServer - Loading ...")
         self.mailService = MailService()        # Inizializzaione MailService
-        print("AuthenticationServer - Online, in ascolto ...")
     
     def otpGenerator (self):
         print("AuthenticationServer.login.2FA - Generazione OTP ...")
@@ -109,6 +107,8 @@ class AuthenticationServer:
                         print("AuthenticationServer.login.2FA.otpValidation - Cancellazione OTP verificato")
                         print("OTP salvati: ", otpData)
                         print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
+                        
+                        # TODO Acquisizione e passaggio userData
                         return {"success": True, "message": "OTP verificato, accesso completato"}               # TODO Valutare il passaggio del Token in questo punto
                     else: # _Caso_ OTP scaduto
                         print("AuthenticationServer.login.2FA.otpValidation - OTP non valido, accesso negato")
@@ -125,43 +125,46 @@ class AuthenticationServer:
 
     def addUser (self, jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword):
             # Controllo preesistenza Username
+        print("AuthenticationServer.addUser - Controllo esistenza utente con stesso Username")
         print("AuthenticationServer.addUser - Interrogazione database ...")
         query = "SELECT * FROM Users WHERE Username = %s"
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
         dbCursor.reset()
-        print("AuthenticationServer.addUser - Interrogazione terminata")
 
         if len(dbReturn) == 0: # Caso - Utente da aggiungere            
-            print("AuthenticationServer.addUser - Nessun riscontro -> inserimento nuovo utente")
+            print("AuthenticationServer.addUser - Nessun riscontro -> Creazione nuovo utente ...")
             query = "INSERT INTO Users (Name, Surname, Username, Email, HashedPassword) VALUES (%s, %s, %s, %s, %s)"
             hashedPassword = bcrypt.hashpw(jsonHashedPassword.encode('utf-8'), bcrypt.gensalt())
             hashedPassword = hashedPassword.decode('utf-8')
             data = (jsonName, jsonSurname, jsonUsername, jsonEmail, hashedPassword, )
             dbCursor.execute(query, data)
             dbConnection.commit()
-            print("AuthenticationServer.addUser - Query inviata")
+            print("AuthenticationServer.addUser - Invio query ...")
             
             if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
+                print("AuthenticationServer.addUser - Nessun riscontro -> Creazione utente completata")
                 print("AuthenticationServer.addUser - Invio dati al MailService ...")
                 self.mailService.addUserMail(data)                                                               # Invio addUserMail - MailService
                 dbCursor.reset()
-                print("AuthenticationServer.addUser - Nuovo utente aggiunto con successo")
-                print("AuthenticationServer - Fine procedura 'addUser'")
-                return {"success": True, "message": "Utente aggiunto al database con successo"}
+                print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+                return {"success": True, "message": "User successfully created and added to database"}
             else: # Caso - Errore nell'inserimento
+                print("AuthenticationServer.addUser - Creazione utente non completata")
                 dbCursor.reset()
-                print("AuthenticationServer.addUser - Nuovo utente non aggiunto, errore database")
-                print("AuthenticationServer - Fine procedura 'addUser'")
-                return {"success": False, "message": "Errore nell'agggiunta del nuovo utente nel database"}
+                print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+                return {"success": False, "message": "Error, user creation and database addition not completed"}
         else: # Caso - Username già utilizzato
             print("AuthenticationServer.addUser - Username già registrato")
-            print("AuthenticationServer - Fine procedura 'addUser'")
-            return {"success": False, "message": "Username già in uso"} 
+            print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+            return {"success": False, "message": "Error, Username already in use"} 
 
     # TODO
     def recoveryPassword(self, jsonUsername):
         pass
+
+print("AuthenticationServer - Loading ...")
+print("AuthenticationServer - Online, in attesa di richieste ...~")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -187,7 +190,7 @@ def otpValidation():
     result = server.otpValidator(jsonUserOTP, jsonEmail)
     return jsonify(result)
 
-
+# TODO Edit
 @app.route("/getUserData", methods=["POST"])
 def getUserData():
     print("AuthenticationServer.getUserData - Inizio procedura recupero dati utente")
@@ -215,7 +218,7 @@ def getUserData():
 
 @app.route("/addUser", methods=["POST"])
 def addUser():
-    print("AuthenticationServer - Inizio procedura 'addUser'")
+    print("AuthenticationServer - Richiesta ricevuta :'addUser', inizio procedura")
     print("AuthenticationServer.addUser - Acquisizione dati ...")
     data = request.get_json()
     jsonName = data.get("name")
@@ -223,7 +226,7 @@ def addUser():
     jsonUsername = data.get("username")
     jsonEmail = data.get("email")
     jsonHashedPassword = data.get("password")
-    print("AuthenticationServer.addUser - Dati acquisiti")
+    print("AuthenticationServer.addUser - Acquisizione dati completata")
     server = AuthenticationServer()
     result = server.addUser(jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword)
     return jsonify(result)

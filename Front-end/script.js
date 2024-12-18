@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ~ Gestione visibilità campi password schede home.html, register.html ~
-        // Funzione per il cambiare del tipo (password <-> text)
+    // ~~ Gestione visibilità campi password (home.html, register.html) ~~
+        // Funzione per cambiare tipo (password <-> text)
     async function togglePasswordVisibility (formPassword, toggleIcon) {
         if (formPassword.type === "password") {
             formPassword.type = "text";
@@ -34,20 +34,51 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ~ Gestione hashing password ~
+    // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
+    const formPassword = document.getElementById("registerPassword");
+    const formConfirmPassword = document.getElementById("registerConfirmPassword");
+    const formErrorPassword = document.getElementById("errorPassword");
+    const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
+
+    const validatedPassword = (password) => {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+        return passwordRegex.test(password);
+    }
+    const validateConfirmPassword = () => {
+        return formPassword.value === formConfirmPassword.value;
+    }
+        // Visualizzaione finestra informativa - password
+    formPassword.addEventListener("input", () => {
+        if(!validatedPassword(formPassword.value)) {
+            formErrorPassword.classList.add("error-visible");
+        } else {
+            formErrorPassword.classList.remove("error-visible");
+        }
+    });
+        // Visualizzaione finestra informativa - confermaPassword
+    formConfirmPassword.addEventListener("input", () => {
+        if (!validateConfirmPassword()) {
+            formErrorConfirmPassword.classList.add("error-visible");
+        } else {
+            formErrorConfirmPassword.classList.remove("error-visible");
+        }
+    });
+
+    // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
-        console.log("login.hashingPassword - Acquisizione clearPassword: ", clearPassword);
+        console.log("\thashingPassword - Acquisizione clearPassword: ", clearPassword);
         const encoder = new TextEncoder();
         const data = encoder.encode(clearPassword);                                             // Conversione in binario
-        console.log("login.hashingPassword - Encoding: ", data);
+        console.log("\thashingPassword - Encoding: ", data);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);                         // Calcolo dell'hash SHA-256
         const hashArray = Array.from(new Uint8Array(hashBuffer));                               // Conversione in array
         const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');     // Conversione in esadecimale
-        console.log("login.hashingPassword - Hashing SHA-256: ", hashHex);
+        console.log("\thashingPassword - Hashing SHA-256: ", hashHex);
+        console.log("\thashingPassword - Terminazione sotto-processo");
         return hashHex
     }
 
-    // ~ Gestione funzionalità principali ~
+    // ~~ Funzionalità principali ~~
         // Processo di login utente
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
     if (loginForm) {
@@ -60,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formUsername = loginForm.querySelector("input[id='username']").value;
             const formPassword = loginForm.querySelector("input[id='password']").value;
 
-            console.log("login - Controllo esistenza parametri login-form");
+            console.log("login - Controllo effettivo inserimento dati login-form");
             // Controllo riempimento campi login-form 
             if (!formUsername || !formPassword) {
                 console.log("login - Errore parametri login-form");
@@ -140,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.success) {
                     console.log("login.2FA - OTP verificato con successo!");
 
+                    // TODO Edit
                     // Recupero dati utente dopo verifica OTP
                     fetch("http://127.0.0.1:5000/getUserData", {
                         method: "POST",
@@ -179,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+// TODO Edit
 // Caricamento dei dati utente nella cartella sanitaria
 if (window.location.href.includes("cartellaSanitaria.html")) {
     console.log("Cartella Sanitaria - Caricamento dati utente...");
@@ -203,76 +236,68 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
 }
 
 
-        // Processo di registrazione nuovo utente
-    const registerForm = document.getElementById("register-form");
-if (registerForm) {
-            // ~ Gestione verifiche sulle password ~
-        const formPassword = registerForm.querySelector("input[id='registerPassword']");
-        const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']");
-        const formErrorPassword = document.getElementById("errorPassword");
-        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
-        
-        const validatedPassword = (password) => {
-            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-            return passwordRegex.test(password);
-        }
-        const validateConfirmPassword = () => {
-            return formPassword.value === formConfirmPassword.value;
-        }
-
-        formPassword.addEventListener("input", () => {
-            if(!validatedPassword(formPassword.value)) {
-                formErrorPassword.classList.add("error-visible");
-            } else {
-                formErrorPassword.classList.remove("error-visible");
-            }
-        });
-        formConfirmPassword.addEventListener("input", () => {
-            if (!validateConfirmPassword()) {
-                formErrorConfirmPassword.classList.add("error-visible");
-            } else {
-                formErrorConfirmPassword.classList.remove("error-visible");
-            }
-        });
-    
+        // Processo - Registrazione nuovo utente
+    const registerForm = document.getElementById("register-form"); // Acquisizione register-form
+    if (registerForm) {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
+            console.log("\t~Inizio processo 'addUser'~");
+            console.log("addUser - Acquisizione dati register-form ...");
+                // Collegamento ai campi del register-fotm al submit
+            const formName = registerForm.querySelector("input[id='name']");
+            const formSurname = registerForm.querySelector("input[id='surname']");
+            const formUsername = registerForm.querySelector("input[id='username']");
+            const formEmail = registerForm.querySelector("input[id='email']");
+            const formPassword = registerForm.querySelector("input[id='registerPassword']");
+            const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']")
+            console.log("addUser - Acquisizione dati completata");
 
-            const formName = registerForm.querySelector("input[id='name']").value;
-            const formSurname = registerForm.querySelector("input[id='surname']").value;
-            const formUsername = registerForm.querySelector("input[id='username']").value;
-            const formEmail = registerForm.querySelector("input[id='email']").value;
-            const formPassword = registerForm.querySelector("input[id='registerPassword']").value;
-            const formConfirmPassword = registerForm.querySelector("input[id='registerConfirmPassword']").value;
-
-            if (formPassword !== formConfirmPassword) {
-                alert("Le password inserite non corrispondono");
+            console.log("addUser - Controllo corrispondenza password e confirmPassword ...");
+                // Allert - password e confirmPassword non corrispondenti
+            if (formPassword.value !== formConfirmPassword.value) {
+                console.log("addUser - Errore nel controllo");
+                console.log("addUser - Terminazione processo");
+                formConfirmPassword.value = "";
+                alert("Password and confimPassword do not match, check them!");
                 return;
             }
-
-            hashPassword(formPassword).then((hashedPasswrod) => {
+            console.log("addUser - Controllo completato")
+        
+            console.log("addUser - Inizio sotto-processo 'hashingPassword'")
+                // Hashing formPassword    
+            hashPassword(formPassword.value).then((hashedPasswrod) => {
+                console.log("addUser - Invio richiesta all'AuthenticationServer.addUser() ...")
+                    // Chiamata http -> AuthenticationServer.addUser()
                 fetch("http://127.0.0.1:5000/addUser", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        name: formName,
-                        surname: formSurname,
-                        username: formUsername,
-                        email: formEmail,
+                    body: JSON.stringify({                              // Compilazione Json
+                        name: formName.value,
+                        surname: formSurname.value,
+                        username: formUsername.value,
+                        email: formEmail.value,
                         password: hashedPasswrod
                     })
                 })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        alert("Registrazione avvenuta con successo!");
+                .then((response) => {
+                    // Acquisizione risposta AuthenticationServer.addUser()
+                    console.log("addUser - Ricezione risposta dell'AuthenticationServer.addUser() ...");
+                    response.json();
+                })
+                .then((data) => {                                       // Analisi risposta
+                    console.log("addUser - Risposta ricevuta, analisi ...");
+                    if (data.success) {     // Caso - True, registrazione avvenuta
+                        console.log("addUser - Risposta positiva, messaggio: ", data.message);
+                        alert(data.message);
                         window.location.href = "home.html";
-                    } else {
-                        alert("Errore nella registrazione. Riprova.");
+                    } else {                // Caso - False, registrazione non avvenuta / errore
+                        console.log("addUser - Risposta negativa, messaggio: ", data.message);
+                        alert(data.message);
+                        formUsername.value = "";
                     }
                 })
                 .catch((error) => {
-                    console.error("Errore: ", error);
+                    console.error("Errore - ", error);
                 })
             })
         })
@@ -284,12 +309,37 @@ if (registerForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
+            console.log("~ Inzio proceduta 'forgotPassword'");
+            console.log("forgotPassword - Acquisizione parametri forgot-password-form");
             const formUsername = forgotPasswordForm.querySelector("input[id='username']").value;
 
+            console.log("forgorPassword - Controllo effettivo inserimento dati forgot-password-form")
             if (!formUsername) {
-                alert("Username non inserito!");
+                alert("Campo username non inserito!");
                 return;
             }
+
+            console.log("forgorPassword - Inzio richiesta AuthenticationServer")
+            fetch("http://127.0.0.1:5000/recoveryPassword", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({                                  // Compilazione file JSON
+                    username: formUsername
+                })
+            })
+            .then((response) => response.json())                        // Acqisizione file JSON di risposta
+            .then((data) => {                                           
+                console.log("forgorPassword - Ricezione risposta AuthenticationServer");
+                if (data.success) {                                     // Verifica
+                    // TODO
+                    window.location.href = "";                          // Reindirizzamento
+                } else {
+                    alert("Credenziali errate!! Riprovare")             // Allert di errore
+                }
+            })
+            .catch((error) => {
+                console.error("Errore: ", error);
+            })
         });
     }
 });
