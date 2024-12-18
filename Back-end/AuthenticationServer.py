@@ -31,15 +31,15 @@ tmpPasswordData = []
 
 class AuthenticationServer:
     def __init__(self):
-        self.mailService = MailService()        # Inizializzaione MailService
+        self.mailService = MailService() # Inizializzaione MailService
     
     def otpGenerator (self):
-        print("AuthenticationServer.login.2FA - Generazione OTP ...")
-        # Generazione codice OTP a 6 cifre
-        otp = random.randint(100000, 999999)
-        print("AuthenticationServer.login.2FA - OTP generato: " + str(otp))
+        print("\t2FA - Generazione OTP ...")
+        otp = random.randint(100000, 999999)    # Generazione codice OTP a 6 cifre
+        print("\t2FA - OTP generato: " + str(otp))
         return otp
 
+    # TODO
     def tmpPasswordGenerator (self):
         print("AuthenticationServer.recoveryPassword.tmpPasswordGeneration - Generazione password temporanea ...")
         lenght = 12                                                                 # Lunghezza minima della password
@@ -57,74 +57,85 @@ class AuthenticationServer:
         return ''.join(tmpPass)
 
     def login (self, jsonUsername, jsonHashedPassword):
+            # Acquisizione risconti Username - database
         print("AuthenticationServer.login - Interrogazione database ...")
-            # Acquisizione possibili risconti dal database
         query = "SELECT HashedPassword, Email FROM Users WHERE Username = %s;"
         dbCursor.execute(query, (jsonUsername, ))
         dbReturn = dbCursor.fetchall()
         dbCursor.reset()
-        print("AuthenticationServer.login - Interrogazione terminata")
 
-        # Controllo credenziali
-        if len(dbReturn) == 0:  # _Caso_ Username errato/Utente inseistente
-            print("AuthenticationServer.login - Nessun riscontro, utente non autenticato")
-            print("AuthenticationServer - Fine procedura 'login'")
-            return {"success": False, "message": "Username errato/Utente inesistente"} # Risposta del server
-        else:   # _Caso_ Utente esistente
+            # Controllo riscontri
+        if len(dbReturn) == 0: # Caso - Nessun riscontro
+            print("AuthenticationServer.login - Nessun riscontro trovato per questo Username")
+            print("AuthenticationServer.login - Terminazione procedura")
+            return {"success": False, "message": "Wrong username/unregistered user"}
+        else: # Caso - Utente esistente
+            print("AuthenticationServer.login - Riscontro trovato per questo Username")
             dbHashedPassword = dbReturn[0][0]
             dbEmail = dbReturn[0][1]            
             dbReturn.clear()
-                # _Caso_ Credenziali corrette -> 2FA
-            if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), dbHashedPassword.encode('utf-8')):    # Controllo corrispondenza password
-                print("AuthenticationServer.login - Riscontro totale, utente autenticato")              
+                # Controllo credenziali
+            if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), dbHashedPassword.encode('utf-8')): # Caso - Credenziali corrette
+                print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato")              
                 print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
                 otp = self.otpGenerator()                                                               # Generazioni OTP
                 
-                print("AuthenticationServer.login.2FA - Invio dati al MailService ...")
+                print("\t2FA - Invio dati al MailService ...")
                 self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
                 otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
-                print("AuthenticationServer.login.2FA - OTP salvato per la verifica")
-                print("OTP salvati: ", otpData)
-                return {"success": True, "message": "Utente verificato, OTP inviato", "email": dbEmail} # Risposta del server, in allegato email dell'utente che ha fatto l'accesso (utile per il successivo verifyOTP())
-            else:   # Caso - Credenziali sbagliate
-                print("AuthenticationServer.login - Riscontro parziale, utente non autenticato")
-                print("AuthenticationServer - Fine procedura 'login'")
-                return {"success": False, "message": "Password errata"} # Risposta del server
+                print("\t2FA - OTP salvato per la verifica")
+                return {"success": True, "message": "Verified user, OTP submitted", "email": dbEmail}
+            else: # Caso - Credenziali sbagliate
+                print("AuthenticationServer.login - Riscontro parziale, account utente non autenticato")
+                print("AuthenticationServer.login - Terminazione procedura")
+                return {"success": False, "message": "Wrong password"}
 
     def otpValidator (self, jsonUserOTP, jsonEmail):
-        print("AuthenticationServer.login.2FA.otpValidation - Inizio controllo OTP ...")
-        if len(otpData) == 0: # _Caso_ otpData vuoto -> nessun OTP da controllarre
-            print("AuthenticationServer.login.2FA.otpValidation - Nessun elemento di confronto -> accesso negato")
-            return {"success": False, "message": "OTP già utilizzato"}
-        else: # _Caso_ otpData non vuoto -> ricerca OTP da confrontare
+        print("\t\totpValidation - Controllo corrispondeza OTP ...")
+            # Verifica esistenza OTP in attesa di controllo
+        if len(otpData) == 0: # Caso - otpData vuoto -> nessun OTP da controllarre
+            print("\t\totpValidation - Nessun elemento di confronto, accesso negato")
+            print("\t\totpValidation - Terminazione sotto-procedura")
+            print("\t2FA - Terminazione sotto-procedura")
+            print("AuthenticationServer.login - Terminazione procedura")
+            return {"success": False, "message": "OTP already used", "case": 0}
+        else: # Caso - otpData non vuoto -> ricerca OTP da confrontare
+                # Scorrimento OTP in attesa di controllo
             for element in otpData:
-                if element["email"] == jsonEmail and element["otp"] == jsonUserOTP: # _Caso_ corrispondenza trovata -> verifica del tempo di vita OTP
-                    print("AuthenticationServer.login.2FA.otpValidation - OTP trovato -> controllo validità ...")
-                    if time.time() - element["timestamp"] <= 120: # _Caso_ OTP valido -> accesso completato
-                        print("AuthenticationServer.login.2FA.otpValidation - OTP valido -> accesso completato")
+                    # Controllo corrispondenza email-OTP
+                if element["email"] == jsonEmail and element["otp"] == jsonUserOTP: # Corrispondenza totale
+                    print("\t\totpValidation - OTP trovato, controllo validità ...")
+                        # Verifica del tempo di vita OTP
+                    if time.time() - element["timestamp"] <= 120: # Caso - OTP valido, accesso completato
+                        print("\t\totpValidation - OTP valido, accesso completato")
+                        print("\t\totpValidation - Aggiornamento otpData")
                         index = otpData.index(element)
                         otpData.pop(index)
-                        print("AuthenticationServer.login.2FA.otpValidation - Cancellazione OTP verificato")
-                        print("OTP salvati: ", otpData)
-                        print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
+                        print("\t\totpValidation - Terminazione sotto-procedura")
+                        print("\t2FA - Terminazione sotto-procedura")
+                        print("AuthenticationServer.login - Terminazione procedura")
                         
-                        # TODO Acquisizione e passaggio userData
-                        return {"success": True, "message": "OTP verificato, accesso completato"}               # TODO Valutare il passaggio del Token in questo punto
-                    else: # _Caso_ OTP scaduto
-                        print("AuthenticationServer.login.2FA.otpValidation - OTP non valido, accesso negato")
+                        # TODO Recupero dati utente per cartella sanitaria
+                        
+                        return {"success": True, "message": "OTP verified, login completed"}
+                    else: # Caso - OTP scaduto, accesso negato
+                        print("\t\totpValidation - OTP non valido, accesso negato")
+                        print("\t\totpValidation - Aggiornamento otpData")
                         index = otpData.index(element)
                         otpData.pop(index)
-                        print("AuthenticationServer.login.2FA.otpValidation - Cancellazione OTP scaduto")
-                        print("OTP salvati: ", otpData)
-                        print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
-                        return {"success": False, "message": "OTP scaduto"}
-            # _Caso_ nessuna corrispondenza -> OTP errato
-            print("AuthenticationServer.login.2FA.otpValidation - OTP non trovato")
-            print("AuthenticationServer.login.2FA.otpValidation - Fine procedura 'login.2FA.otpValidation'")
-            return {"success": False, "message": "OTP errato o già utilizzato"}
+                        print("\t\totpValidation - Terminazione sotto-procedura")
+                        print("\t2FA - Terminazione sotto-procedura")
+                        print("AuthenticationServer.login - Terminazione procedura")
+                        return {"success": False, "message": "Expired OTP", "case": 0}
+            # Caso - Nessuna corrispondenza, OTP errato
+            print("\t\totpValidation - OTP non trovato")
+            print("\t\totpValidation - Terminazione sotto-procedura")
+            print("\t2FA - Terminazione sotto-procedura")
+            print("AuthenticationServer.login - Terminazione procedura")
+            return {"success": False, "message": "Wrong OTP", "case": 1}
 
     def addUser (self, jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword):
-            # Controllo preesistenza Username
+            # Acquisizione riscontri Username - database
         print("AuthenticationServer.addUser - Controllo esistenza utente con stesso Username")
         print("AuthenticationServer.addUser - Interrogazione database ...")
         query = "SELECT * FROM Users WHERE Username = %s"
@@ -132,10 +143,11 @@ class AuthenticationServer:
         dbReturn = dbCursor.fetchall()
         dbCursor.reset()
 
+        # Controllo preesistenza Username
         if len(dbReturn) == 0: # Caso - Utente da aggiungere            
             print("AuthenticationServer.addUser - Nessun riscontro -> Creazione nuovo utente ...")
             query = "INSERT INTO Users (Name, Surname, Username, Email, HashedPassword) VALUES (%s, %s, %s, %s, %s)"
-            hashedPassword = bcrypt.hashpw(jsonHashedPassword.encode('utf-8'), bcrypt.gensalt())
+            hashedPassword = bcrypt.hashpw(jsonHashedPassword.encode('utf-8'), bcrypt.gensalt())    # Hashing password (secondo)
             hashedPassword = hashedPassword.decode('utf-8')
             data = (jsonName, jsonSurname, jsonUsername, jsonEmail, hashedPassword, )
             dbCursor.execute(query, data)
@@ -145,19 +157,19 @@ class AuthenticationServer:
             if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
                 print("AuthenticationServer.addUser - Nessun riscontro -> Creazione utente completata")
                 print("AuthenticationServer.addUser - Invio dati al MailService ...")
-                self.mailService.addUserMail(data)                                                               # Invio addUserMail - MailService
+                self.mailService.addUserMail(data)                                                  # Invio addUserMail - MailService
                 dbCursor.reset()
-                print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+                print("AuthenticationServer.addUser - Terminazione procedura")
                 return {"success": True, "message": "User successfully created and added to database"}
             else: # Caso - Errore nell'inserimento
                 print("AuthenticationServer.addUser - Creazione utente non completata")
                 dbCursor.reset()
-                print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+                print("AuthenticationServer.addUser - Terminazione procedura")
                 return {"success": False, "message": "Error, user creation and database addition not completed"}
             
         else: # Caso - Username già utilizzato
             print("AuthenticationServer.addUser - Username già registrato")
-            print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
+            print("AuthenticationServer.addUser - Terminazione procedura")
             return {"success": False, "message": "Error, Username already in use"}
 
     # TODO
@@ -169,24 +181,24 @@ print("AuthenticationServer - Online, in attesa di richieste ...~")
 
 @app.route("/login", methods=["POST"])
 def login():
-    print("AuthenticationServer - Inizio procedura 'login'")
+    print("AuthenticationServer - Richiesta ricevuta: 'login', inizio procedura")
     print("AuthenticationServer.login - Acquisizione dati ...")
     data = request.get_json()
     jsonUsername = data.get("username")
     jsonHasedPassword = data.get("password")
-    print("AuthenticationServer.login - Dati acquisiti")
+    print("AuthenticationServer.login - Acquisizione dati completata")
     server = AuthenticationServer()
     result = server.login(jsonUsername, jsonHasedPassword)
     return jsonify(result)
 
-@app.route("/otpValidationLogin", methods=["POST"])
+@app.route("/otpValidation", methods=["POST"])
 def otpValidation():
-    print("AuthenticationServer.login.2FA - Inizio procedura 'otpValidation'")
-    print("AuthenticationServer.login.2FA.otpValidation - Acquisizione dati ...")
+    print("\t2FA - Richiesta ricevuto: 'otpValidation', inizio sotto-procedura")
+    print("\t\totpValidation - Acquisizione dati ...")
     data = request.get_json()
     jsonUserOTP = int(data.get("otp"))
     jsonEmail = data.get("email")
-    print("AuthenticationServer.login.2FA.otpValidation - Dati acquisiti")
+    print("\t\totpValidation - Acquisizione dati completata")
     server = AuthenticationServer()
     result = server.otpValidator(jsonUserOTP, jsonEmail)
     return jsonify(result)
@@ -219,7 +231,7 @@ def getUserData():
 
 @app.route("/addUser", methods=["POST"])
 def addUser():
-    print("AuthenticationServer - Richiesta ricevuta :'addUser', inizio procedura")
+    print("AuthenticationServer - Richiesta ricevuta: 'addUser', inizio procedura")
     print("AuthenticationServer.addUser - Acquisizione dati ...")
     data = request.get_json()
     jsonName = data.get("name")
