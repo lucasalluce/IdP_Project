@@ -13,7 +13,7 @@ dbConnection = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="IdP_OAuth2_2FA"
+    database="idp_oauth2_2fa"
 )
 # Users (ID int PK, Name varchar(100), Surname varchar(100), Username varchar(100), Email varchar(200), HashedPassword varchar(300))
 dbCursor = dbConnection.cursor()
