@@ -3,70 +3,70 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Registrazione - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <title>Registration - IdP project with OAuth 2.0 and 2FA</title>
         <link rel="stylesheet" type="text/css" href="styleSheet.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
 
-        <div class="wrapper"> <!-- classe generale scheda register.html -->
+        <div class="wrapper"> 
             
-            <form id="register-form"> <!-- form per l'acquisizione dei dati del nuovo utente -->
+            <form id="register-form">
                 <h1>REGISTER</h1>
 
-                <div class="input-box"> <!-- Nome -->
+                <div class="input-box"> 
                     <input type="text" id="name" placeholder="Name" required>
-                    <i class='bx bxs-user-detail'></i> <!-- icona -->
+                    <i class='bx bxs-user-detail'></i> 
                 </div>
     
-                <div class="input-box"> <!-- Cognome -->
+                <div class="input-box"> 
                     <input type="text" id="surname" placeholder="Surname" required>
-                    <i class='bx bxs-user-detail'></i> <!-- icona -->
+                    <i class='bx bxs-user-detail'></i> 
                 </div>
         
-                <div class="input-box"> <!-- Username -->
+                <div class="input-box"> 
                     <input type="text" id="username" placeholder="Username" required>
-                    <i class='bx bxs-user'></i> <!-- icona -->
+                    <i class='bx bxs-user'></i> 
                 </div>
         
-                <div class="input-box"> <!-- Email -->
+                <div class="input-box"> 
                     <input type="email" id="email" placeholder="Email" required>
-                    <i class='bx bxs-envelope'></i> <!-- icona -->
+                    <i class='bx bxs-envelope'></i> 
                 </div>
         
-                <div class="input-box"> <!-- Password -->
+                <div class="input-box"> 
                     <input type="password" id="registerPassword" placeholder="Password" required>
-                    <i class='bx bx-low-vision' id="toggleRegisterPassword"></i> <!-- icona <-> funzione di visualizzaione -->
-                    <div id="errorPassword"> <!-- info box -->
-                        Sono necessari almeno 8 caratteri: 1 lettera maiuscola, 1 lettera minuscola, 1 numero ed 1 carattere speciale.
+                    <i class='bx bx-low-vision' id="toggleRegisterPassword"></i>
+                    <div id="errorPassword"> 
+                        At least 8 characters are required: 1 capital letter, 1 lower case letter, 1 number and 1 special character                    
                     </div>
                 </div>
                 
-                <div class="input-box"> <!-- Conferma password -->
+                <div class="input-box"> 
                     <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" required>
-                    <i class='bx bx-low-vision' id="toggleRegisterConfirmPassword"></i> <!-- icona <-> funzione di visualizzaizone -->
-                    <div id="errorConfirmPassword"> <!-- info box -->
-                        Le password non corrispondono.
+                    <i class='bx bx-low-vision' id="toggleRegisterConfirmPassword"></i> 
+                    <div id="errorConfirmPassword"> 
+                        The passwords do not match
                     </div>
                 </div>
         
-                <button type="submit" class="btn">Register</button> <!-- bottone -> processo di registrazione nuovo utente -->
+                <button type="submit" class="btn">Register</button> 
         
                 <div class="login-link">
-                    <p>Already have an account? <a href="home.html">Login</a></p> <!-- collegamento home.html -->
+                    <p>Already have an account? <a href="home.html">Login</a></p> 
                 </div>
             </form>
         </div>
 
-        <div class="barraSuperiore"> <!-- nav-bar -->
-            <a href="https://www.poliba.it/" target="_blank"> <!-- collegamento poliba.it -->
-                <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
+        <div class="topBar"> 
+            <a href="https://www.poliba.it/" target="_blank"> 
+                <img src="Immagini/logoPolitecnico.png" alt="Politecnico di Bari's logo">
             </a>
             
             <div class="about-us">
-                <a href="about.html" class="btn-aboutUs">CHI SIAMO</a> <!-- collegamento about.html -->
-                <a href="home.html" class="btn-aboutUs">HOME</a> <!-- collegamento home.html -->
+                <a href="about.html" class="btn-aboutUs">ABOUT US</a> 
+                <a href="home.html" class="btn-aboutUs">HOME</a> 
             </div>
         </div>
 

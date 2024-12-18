@@ -3,38 +3,38 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>OTP - Progetto IdP con OAuth 2.0 e 2FA</title>
+        <title>OTP - IdP project with OAuth 2.0 and 2FA</title>
         <link rel="stylesheet" type="text/css" href="styleSheet.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
 
-        <div class="wrapper"> <!-- classe generale scheda otp.html -->
+        <div class="wrapper">
         
-            <form id="otp-form"> <!-- form per l'acquisizione dei dati dell'otp -->
+            <form id="otp-form"> 
 
-                <div class="intestazione">
-                    <h2>Inserire l'OTP ricevuto per mail:</h2>
+                <div class="header">
+                    <h2>Insert the OTP received by mail:</h2>
                 </div>
 
-                <div class="input-box"> <!-- OTP -->
+                <div class="input-box"> 
                     <input type="number" id="otp" placeholder="OTP" min="100000" max="999999" required>
                 </div>
 
-                <button type="submit" class="btn">Invia Link</button> <!-- bottone -> processo 2FA di login -->
+                <button type="submit" class="btn">Send Link</button> 
 
             </form>
         </div>
 
-        <div class="barraSuperiore"> <!-- nav-bar -->
-            <a href="https://www.poliba.it/" target="_blank"> <!-- collegamento poliba.it -->
-                <img src="Immagini/logoPolitecnico.png" alt="Logo Politecnico di Bari">
+        <div class="topBar"> 
+            <a href="https://www.poliba.it/" target="_blank"> 
+                <img src="Immagini/logoPolitecnico.png" alt="Politecnico di Bari's logo">
             </a>
 
             <div class="about-us">
-                <a href="about.html" class="btn-aboutUs">CHI SIAMO</a> <!-- collegamento about.html -->
-                <a href="home.html" class="btn-aboutUs">HOME</a> <!-- collegamento home.html -->
+                <a href="about.html" class="btn-aboutUs">ABOUT US</a> 
+                <a href="home.html" class="btn-aboutUs">HOME</a> 
             </div>
         </div>
 
