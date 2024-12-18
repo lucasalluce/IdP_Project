@@ -157,7 +157,7 @@ class AuthenticationServer:
         else: # Caso - Username già utilizzato
             print("AuthenticationServer.addUser - Username già registrato")
             print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
-            return {"success": False, "message": "Error, Username already in use"} 
+            return {"success": False, "message": "Error, Username already in use"}
 
     # TODO
     def recoveryPassword(self, jsonUsername):
