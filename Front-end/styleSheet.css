@@ -19,7 +19,7 @@ body {
 
 /* HOME */
 .wrapper {
-    margin: 0 auto; /* Rimuove i margini della pagina */
+    margin: 0 auto; 
     padding: 30px 40px;
     width: 420px;
     background-color: transparent;
@@ -34,12 +34,6 @@ body {
     transition: transform 0.6s ease; /* Transizione più lenta */
     margin-top: 90px;                 /* Sposta il wrapper sotto la barra */
     max-width: 70%;
-}
-
-.wrapper * {
-    text-rendering: geometricPrecision; /* Migliora la nitidezza */
-    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
-    -font-smoothing: antialiased;
 }
 
 .wrapper h1{
@@ -134,7 +128,7 @@ body {
 }
 
 .wrapper .btn:hover {
-    background-color: #e6e6e6; /* Cambia colore del bottone al passaggio del mouse */
+    background-color: #e6e6e6; 
     transform: scale(1.05);
     transition: background-color 0.3s, transform 0.3s;
 }
@@ -158,33 +152,33 @@ body {
 
 .barraSuperiore {
     position: fixed;           /* Mantiene la barra fissa nella parte superiore */
-    top: 0;                    /* Posizionata in alto */
-    left: 0;                   /* Allineata al bordo sinistro */
-    width: 100%;               /* Occupa tutta la larghezza della finestra */
-    background-color: transparent  ; /* Colore di sfondo */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .1); /* Leggera ombra per effetto 3D */
-    display: flex;             /* Layout a griglia flessibile */
+    top: 0;                    
+    left: 0;                   
+    width: 100%;               
+    background-color: transparent  ; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    display: flex;             
     align-items: center;       /* Allinea elementi verticalmente */
     justify-content: space-between; /* Spazio tra logo e bottone */
-    padding: 10px 20px;        /* Spazi interni */
+    padding: 10px 20px;        
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
     backdrop-filter: blur(40px);
-    height: 80px;              /* Imposta un'altezza fissa */
+    height: 80px;              
 }
 
 .barraSuperiore .btn-aboutUs {
     background-color: transparent;
     font-weight: bold;
     font-size: 20px;
-    color: white;              /* Colore del testo bianco */
-    border: none;              /* Rimuove bordi */
-    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
-    text-decoration: none; /* Rimuove la sottolineatura */
+    color: white;              
+    border: none;              
+    cursor: pointer;          
+    text-decoration: none;  /* Rimuove la sottolineatura */
     margin-left: 30px;
 }
 
 .barraSuperiore img {
-    height: 60px;              /* Altezza fissa del logo */
+    height: 60px;              
     object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
     margin-left: 20px;
     margin-top: 0px;
@@ -193,16 +187,16 @@ body {
 
 .gruppo-text {
     position: absolute;        /* Posiziona l'elemento rispetto al suo contenitore */
-    left: 50%;                 /* Posiziona l'elemento a metà larghezza */
+    left: 50%;                 
     transform: translateX(-50%); /* Sposta indietro l'elemento di metà della sua larghezza */
-    font-size: 25px;           /* Dimensione del testo */
-    font-weight: bold;         /* Grassetto */
-    color: #000000;          /* Colore del testo */
+    font-size: 25px;           
+    font-weight: bold;         
+    color: #000000;          
 }
 
 .about-us {
-    margin-right: 20px;        /* Margine destro per distanziare */
-    position: relative; /* Posizione relativa per ancorare il menu */
+    margin-right: 20px;        
+    position: relative; 
     display: inline-block;
 }
 
@@ -210,9 +204,9 @@ body {
 /* ABOUT */
 .wrapper2 {
     display: flex;
-    justify-content: center; /* Centra il contenuto orizzontalmente */
-    flex-direction:row; /* Dispone i contenuti in colonna */
-    align-items: flex-start; /* Allinea le persone a sinistra */
+    justify-content: center;    /* Centra il contenuto orizzontalmente */
+    flex-direction:row;         /* Dispone i contenuti in colonna */
+    align-items: flex-start;    
     margin-top: 100px;
     padding: 10px;
     max-width: 90%;
@@ -220,23 +214,23 @@ body {
 
 .wrapper2 .contVert {
     padding: 10px;
-    display: flex; /* Usa Flexbox */
-    flex-direction: column; /* Allinea gli elementi verticalmente */
-    align-items: center; /* Centra gli elementi orizzontalmente */
-    justify-content: center; /* Centra gli elementi verticalmente (opzionale) */
+    display: flex;
+    flex-direction: column;     /* Allinea gli elementi verticalmente */
+    align-items: center;        /* Centra gli elementi orizzontalmente */
+    justify-content: center; 
 }
 
 .wrapper2 .contOrizz {
-    display: flex; /* Usa Flexbox per disporre gli elementi orizzontalmente */
-    gap: 10px; /* Spaziatura tra i div figli */
-    justify-content: center; /* Centra gli elementi orizzontalmente */
-    flex-wrap: wrap; /* Permetti che gli elementi vadano a capo se necessario */
+    display: flex; 
+    gap: 10px;                  /* Spaziatura tra i div */
+    justify-content: center;    /* Centra gli elementi orizzontalmente */
+    flex-wrap: wrap;            /* Permetti che gli elementi vadano a capo se necessario */
     padding: 10px;
 }
 
 .wrapper2 .contVert .paragrafo {
     padding: 10px;
-    text-align: center; /* Centra il testo nei paragrafi */
+    text-align: center; 
     width: 350px;
 }
 
@@ -245,15 +239,15 @@ body {
 }
 
 .wrapper2 .contVert .paragrafo img{
-    height: auto; /* Regola la larghezza dell'immagine */
-    width: 330px; /* Mantiene le proporzioni */
-    border-radius: 10%; /* Aggiunge un effetto cerchio, opzionale */
+    height: auto; 
+    width: 330px; 
+    border-radius: 10%; 
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
 .wrapper2 .contVert h1 {
-    text-align: center; /* Centra il testo */
-    margin-bottom: 20px; /* Spaziatura tra l'h1 e il contenitore sottostante */
+    text-align: center; 
+    margin-bottom: 20px; 
     font-size: 40px;
     color: white;
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
@@ -284,37 +278,49 @@ body {
 }
 
 .wrapper .input-box #togglePasswordRegister, .wrapper .input-box #toggleConfirmPasswordRegister {
-    cursor: pointer; /* Cambia il cursore per far sembrare l'icona cliccabile */
+    cursor: pointer; 
 }
 
 .input-box {
-    position: relative; /* Necessario per posizionare il messaggio sopra il campo */
+    position: relative; 
 }
 
 .wrapper .input-box #errorConfirmPassword, .wrapper .input-box #errorPassword {
     font-size: 0.9em;
     color: black;
-    display: none; /* Messaggi nascosti di default */
+    display: none;      /* Messaggi nascosti di default */
     position: absolute;
-    top: 50%;  /* Centra verticalmente rispetto al campo di input */
-    left: 105%;  /* Posiziona la nuvoletta a destra rispetto al campo di input */
+    top: 50%;  
+    left: 105%;  
     transform: translateY(-50%);  /* Allinea verticalmente la nuvoletta al centro */
     background-color: lightblue;
     padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     width: max-content;
-    max-width: 230px; /* Limita la larghezza della nuvoletta */
+    max-width: 230px; 
 }
 
-/* Quando il messaggio è visibile */
+.wrapper .input-box #toggleRegisterPassword {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wrapper .input-box #toggleRegisterPassword:hover {
+    color: #fff;
+}
+
+.wrapper .input-box #toggleRegisterConfirmPassword {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wrapper .input-box #toggleRegisterConfirmPassword:hover {
+    color: #fff;
+}
+
 .wrapper .input-box #errorConfirmPassword.error-visible, .wrapper .input-box #errorPassword.error-visible {
     display: block;
-}
-
-/* Aggiungiamo un bordo rosso al campo quando c'è un errore */
-input:invalid {
-    border-color: red;
 }
 
 
@@ -349,13 +355,13 @@ input:invalid {
     padding: 0;
     min-height: 100vh; /* Per garantire che la pagina riempia almeno l'altezza dello schermo */
     display: flex;
-    justify-content: center; /* Centra orizzontalmente il contenuto */
-    align-items: flex-start; /* Allinea al top, così che si "appoggi" */
+    justify-content: center; 
+    align-items: flex-start; 
     overflow-x: hidden; /* Evita scorrimento orizzontale */
     position: relative;
     background: -webkit-linear-gradient(top, #f8a3a3, #ff3535); /* Per Safari */
     background: linear-gradient(top, #f8a3a3, #ff3535); /* Standard */
-    z-index: 3; /* Lo sfondo rimane dietro */
+    z-index: 3; 
 }
 
 .bodyCart .background {
@@ -364,11 +370,11 @@ input:invalid {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Lo sfondo rimane dietro */
+    z-index: -1; 
     overflow: hidden;
 }
 
-.bubble {   /* Bolle */
+.bubble {   
     position: absolute;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -448,19 +454,19 @@ input:invalid {
     animation-delay: 8s;
 }
 
-@keyframes float {  /* Animazione */
+@keyframes float {  
     0% {
         transform: translateY(0) translateX(0);
         opacity: 0.7;
     }
     100% {
-        transform: translateY(-100vh) translateX(-20px); /* Ridotto da -50px */
+        transform: translateY(-100vh) translateX(-20px); 
         opacity: 0.2;
     }
 }
 
 .wrapper3 {
-    margin: 0 auto; /* Centra il wrapper orizzontalmente */
+    margin: 0 auto; 
     padding: 30px 40px;
     width: 1150px;
     max-width: 80%;
@@ -468,7 +474,7 @@ input:invalid {
     background-color: #ffb6b69f;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: black;
-    margin-top: 100px;                 /* Sposta il wrapper sotto la barra */
+    margin-top: 100px;                
     margin-bottom: 20px;
     border-radius: 20px;
     border: none;
@@ -484,18 +490,18 @@ input:invalid {
 
 .barraSuperiore2 {
     position: fixed;           /* Mantiene la barra fissa nella parte superiore */
-    top: 0;                    /* Posizionata in alto */
-    left: 0;                   /* Allineata al bordo sinistro */
-    width: 100%;               /* Occupa tutta la larghezza della finestra */
-    background-color: white; /* Colore di sfondo */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .1); /* Leggera ombra per effetto 3D */
+    top: 0;                    
+    left: 0;                   
+    width: 100%;              
+    background-color: white; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1); 
     display: flex;             /* Layout a griglia flessibile */
     align-items: center;       /* Allinea elementi verticalmente */
-    justify-content: space-between; /* Spazio tra logo e bottone */
-    padding: 10px;        /* Spazi interni */
+    justify-content: space-between; 
+    padding: 10px;             
     z-index: 1000;             /* Assicura che la barra rimanga sopra altri contenuti */
     backdrop-filter: blur(40px);
-    height: 80px;              /* Imposta un'altezza fissa */
+    height: 80px;              
 }
 
 .barraSuperiore2 .btn-aboutUs {
@@ -503,15 +509,15 @@ input:invalid {
     font-weight: bold;
     font-size: 20px;
     color: black;              
-    border: none;              /* Rimuove bordi */
-    cursor: pointer;           /* Cambia il cursore al passaggio del mouse */
-    text-decoration: none; /* Rimuove la sottolineatura */
+    border: none;              
+    cursor: pointer;           
+    text-decoration: none; 
     margin-left: 30px;
 }
 
 .barraSuperiore2 img {
-    height: 60px;              /* Altezza fissa del logo */
-    object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
+    height: 60px;              
+    object-fit: contain;       
     margin-left: 20px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -523,29 +529,23 @@ input:invalid {
     margin-right: 0px;
     font-size: 40px;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
-    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
-    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
-    transition: transform 0.6s ease; /* Transizione più lenta */
-}
-
-.barraSuperiore2 i* {
-    text-rendering: geometricPrecision; /* Migliora la nitidezza */
-    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
-    -font-smoothing: antialiased;
+    transform-origin: center;           /* Assicura che l'elemento si ingrandisca dal centro */
+    will-change: transform;             /* Avvisa il browser di prepararsi per il cambio */
+    transition: transform 0.6s ease; 
 }
 
 .barraSuperiore2 i:hover {
     cursor: pointer;
-    transform: scale(1.2) translateZ(0); /* Ingrandisce il riquadro del 10% */
+    transform: scale(1.2) translateZ(0); 
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 40px; /* Sotto l'icona */
-    right: -20px; /* Allineamento a destra */
+    top: 40px; 
+    right: -20px; 
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: none; /* Nascosto di default */
+    display: none; 
     z-index: 999;
     width: auto;
     min-width: 200px;
@@ -575,7 +575,7 @@ input:invalid {
 }
 
 .dropdown-menu div:last-child {
-    border-bottom: none; /* Rimuove linea finale */
+    border-bottom: none; 
 }
 
 .about-us:hover .dropdown-menu {
@@ -599,8 +599,8 @@ input:invalid {
 
 .wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale {
     display: flex;
-    align-items: center; /* Allinea verticalmente al centro */
-    gap: 20px; /* Spaziatura tra gli elementi */
+    align-items: center; 
+    gap: 20px; 
 }
 
 .wrapper3 h2, .wrapper3 p, .wrapper3 li, .wrapper3 table {
@@ -617,13 +617,13 @@ input:invalid {
 }
 
 .wrapper3 .risultatiEsami h2{
-    text-align: left; /* H2 allineato a sinistra (predefinito) */
+    text-align: left; 
 }
 
 .wrapper3 .risultatiEsami table, .wrapper3 .esamiPrenotati table, .wrapper3 .interventiSubiti table, .wrapper3 .interventiPrenotati table {
     width: 80%;
-    margin: 0 auto; /* Centra la tabella orizzontalmente */
-    border-collapse: collapse; /* Unisce i bordi delle celle */
+    margin: 0 auto; 
+    border-collapse: collapse; 
     margin-top: 5px;
 }
 
@@ -643,8 +643,8 @@ input:invalid {
 
 /*PROFILO*/
 .wrapper4 {
-    margin: 0; /* Rimuove i margini della pagina */
-    padding: 0; /* Rimuove il padding della pagina */
+    margin: 0; 
+    padding: 0; 
     width: 60%;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
@@ -654,13 +654,7 @@ input:invalid {
     border-radius: 10px;
     padding: 30px 40px;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
-    transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
-    will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
-    transition: transform 0.6s ease; /* Transizione più lenta */
-}
-
-.wrapper4 * {
-    text-rendering: geometricPrecision; /* Migliora la nitidezza */
-    -webkit-font-smoothing: antialiased; /* Disabilita il rendering liscio del font */
-    -font-smoothing: antialiased;
-}
+    transform-origin: center;           /* Assicura che l'elemento si ingrandisca dal centro */
+    will-change: transform;             /* Avvisa il browser di prepararsi per il cambio */
+    transition: transform 0.6s ease; 
+}   
