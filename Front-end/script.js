@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    
+
     // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
         console.log("\thashingPassword - Acquisizione clearPassword: ", clearPassword);
@@ -237,7 +237,6 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
         window.location.href = "home.html";
     }
 }
-
 
         // Processo - Registrazione nuovo utente
     const registerForm = document.getElementById("register-form"); // Acquisizione register-form
