@@ -154,6 +154,7 @@ class AuthenticationServer:
                 dbCursor.reset()
                 print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
                 return {"success": False, "message": "Error, user creation and database addition not completed"}
+            
         else: # Caso - Username già utilizzato
             print("AuthenticationServer.addUser - Username già registrato")
             print("AuthenticationServer.addUser - Terminazione procedura 'addUser'")
