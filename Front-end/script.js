@@ -81,6 +81,30 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
+    // TODO Edit
+    // Caricamento dei dati utente nella cartella sanitaria
+    if (window.location.href === "cartellaSanitaria.html") {
+        console.log("Cartella Sanitaria - Caricamento dati utente...");
+
+        // Recupero dati dal localStorage
+        const userName = localStorage.getItem("userName");
+        const userSurname = localStorage.getItem("userSurname");
+        const userUsername = localStorage.getItem("userUsername");
+        const userEmail = localStorage.getItem("userEmail");
+
+        if (userName && userSurname && userUsername && userEmail) {
+            // Inserimento dei dati nei campi HTML
+            document.querySelector(".surname p").textContent = userSurname;
+            document.querySelector(".name p").textContent = userName;
+            document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
+            document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
+        } else {
+            console.error("Dati utente non trovati nel localStorage!");
+            alert("Errore: Accesso non autorizzato!");
+            window.location.href = "home.html";
+        }
+    }
+
     // ~~ Funzionalità principali ~~
         // Processo di login utente
     const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
@@ -213,30 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
-// TODO Edit
-// Caricamento dei dati utente nella cartella sanitaria
-if (window.location.href.includes("cartellaSanitaria.html")) {
-    console.log("Cartella Sanitaria - Caricamento dati utente...");
-
-    // Recupero dati dal localStorage
-    const userName = localStorage.getItem("userName");
-    const userSurname = localStorage.getItem("userSurname");
-    const userUsername = localStorage.getItem("userUsername");
-    const userEmail = localStorage.getItem("userEmail");
-
-    if (userName && userSurname && userUsername && userEmail) {
-        // Inserimento dei dati nei campi HTML
-        document.querySelector(".surname p").textContent = userSurname;
-        document.querySelector(".name p").textContent = userName;
-        document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
-        document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
-    } else {
-        console.error("Dati utente non trovati nel localStorage!");
-        alert("Errore: Accesso non autorizzato!");
-        window.location.href = "home.html";
-    }
-}
 
         // Processo - Registrazione nuovo utente
     const registerForm = document.getElementById("register-form"); // Acquisizione register-form
