@@ -176,9 +176,6 @@ class AuthenticationServer:
     def recoveryPassword(self, jsonUsername):
         pass
 
-print("AuthenticationServer - Loading ...")
-print("AuthenticationServer - Online, in attesa di richieste ...~")
-
 @app.route("/login", methods=["POST"])
 def login():
     print("AuthenticationServer - Richiesta ricevuta: 'login', inizio procedura")
@@ -251,3 +248,6 @@ def recoveryPassword():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+print("AuthenticationServer - Loading ...")
+print("AuthenticationServer - Online, in attesa di richieste ...~")
