@@ -34,35 +34,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
-    const formPassword = document.getElementById("registerPassword");
-    const formConfirmPassword = document.getElementById("registerConfirmPassword");
-    const formErrorPassword = document.getElementById("errorPassword");
-    const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
+    if(window.location.href === "register.html") {
+        // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
+        const formPassword = document.getElementById("registerPassword");
+        const formConfirmPassword = document.getElementById("registerConfirmPassword");
+        const formErrorPassword = document.getElementById("errorPassword");
+        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
 
-    const validatedPassword = (password) => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-        return passwordRegex.test(password);
-    }
-    const validateConfirmPassword = () => {
-        return formPassword.value === formConfirmPassword.value;
-    }
-        // Visualizzaione finestra informativa - password
-    formPassword.addEventListener("input", () => {
-        if(!validatedPassword(formPassword.value)) {
-            formErrorPassword.classList.add("error-visible");
-        } else {
-            formErrorPassword.classList.remove("error-visible");
+        const validatedPassword = (password) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+            return passwordRegex.test(password);
         }
-    });
-        // Visualizzaione finestra informativa - confermaPassword
-    formConfirmPassword.addEventListener("input", () => {
-        if (!validateConfirmPassword()) {
-            formErrorConfirmPassword.classList.add("error-visible");
-        } else {
-            formErrorConfirmPassword.classList.remove("error-visible");
+        const validateConfirmPassword = () => {
+            return formPassword.value === formConfirmPassword.value;
         }
-    });
+            // Visualizzaione finestra informativa - password
+        formPassword.addEventListener("input", () => {
+            if(!validatedPassword(formPassword.value)) {
+                formErrorPassword.classList.add("error-visible");
+            } else {
+                formErrorPassword.classList.remove("error-visible");
+            }
+        });
+            // Visualizzaione finestra informativa - confermaPassword
+        formConfirmPassword.addEventListener("input", () => {
+            if (!validateConfirmPassword()) {
+                formErrorConfirmPassword.classList.add("error-visible");
+            } else {
+                formErrorConfirmPassword.classList.remove("error-visible");
+            }
+        });
+    }
 
     // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
@@ -235,7 +237,6 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
     }
 }
 
-
         // Processo - Registrazione nuovo utente
     const registerForm = document.getElementById("register-form"); // Acquisizione register-form
     if (registerForm) {
@@ -279,14 +280,10 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
                         password: hashedPasswrod
                     })
                 })
-                .then((response) => {
-                    // Acquisizione risposta AuthenticationServer.addUser()
-                    console.log("addUser - Ricezione risposta dell'AuthenticationServer.addUser() ...");
-                    response.json();
-                })
+                .then((response) => response.json())
                 .then((data) => {                                       // Analisi risposta
                     console.log("addUser - Risposta ricevuta, analisi ...");
-                    if (data.success) {     // Caso - True, registrazione avvenuta
+                    if (data) {     // Caso - True, registrazione avvenuta
                         console.log("addUser - Risposta positiva, messaggio: ", data.message);
                         alert(data.message);
                         window.location.href = "home.html";
