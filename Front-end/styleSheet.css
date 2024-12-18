@@ -27,7 +27,7 @@ body {
     backdrop-filter: blur(30px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
-    border-radius: 10px;
+    border-radius: 20px;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
     transform-origin: center; /* Assicura che l'elemento si ingrandisca dal centro */
     will-change: transform; /* Avvisa il browser di prepararsi per il cambio */
@@ -150,7 +150,7 @@ body {
     text-decoration: underline;
 }
 
-.barraSuperiore {
+.topBar {
     position: fixed;           /* Mantiene la barra fissa nella parte superiore */
     top: 0;                    
     left: 0;                   
@@ -166,7 +166,7 @@ body {
     height: 80px;              
 }
 
-.barraSuperiore .btn-aboutUs {
+.topBar .btn-aboutUs {
     background-color: transparent;
     font-weight: bold;
     font-size: 20px;
@@ -177,7 +177,7 @@ body {
     margin-left: 30px;
 }
 
-.barraSuperiore img {
+.topBar img {
     height: 60px;              
     object-fit: contain;       /* Mantiene le proporzioni dell'immagine */
     margin-left: 20px;
@@ -212,7 +212,7 @@ body {
     max-width: 90%;
 }
 
-.wrapper2 .contVert {
+.wrapper2 .verticalWrapper {
     padding: 10px;
     display: flex;
     flex-direction: column;     /* Allinea gli elementi verticalmente */
@@ -220,7 +220,7 @@ body {
     justify-content: center; 
 }
 
-.wrapper2 .contOrizz {
+.wrapper2 .orizzontalWrapper {
     display: flex; 
     gap: 10px;                  /* Spaziatura tra i div */
     justify-content: center;    /* Centra gli elementi orizzontalmente */
@@ -228,24 +228,24 @@ body {
     padding: 10px;
 }
 
-.wrapper2 .contVert .paragrafo {
+.wrapper2 .verticalWrapper .paragraph {
     padding: 10px;
     text-align: center; 
     width: 350px;
 }
 
-.wrapper2 .contVert .paragrafo .info {
+.wrapper2 .verticalWrapper .paragraph .info {
     padding: 10px;
 }
 
-.wrapper2 .contVert .paragrafo img{
+.wrapper2 .verticalWrapper .paragraph img{
     height: auto; 
     width: 330px; 
     border-radius: 10%; 
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
-.wrapper2 .contVert h1 {
+.wrapper2 .verticalWrapper h1 {
     text-align: center; 
     margin-bottom: 20px; 
     font-size: 40px;
@@ -253,7 +253,7 @@ body {
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
 }
 
-.wrapper2 .contVert .contOrizz .paragrafo .info p {
+.wrapper2 .verticalWrapper .orizzontalWrapper .paragraph .info p {
     font-size: 22px;
     color: white;
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
@@ -329,21 +329,38 @@ body {
 /*OTP*/
 /*RECOVERY_CRED*/
 /*RECOVERY_OTP*/
-.wrapper .intestazione {
+.wrapper .header {
     text-align: center;
 }
 
-.wrapper .intestazione h2 {
+.wrapper .header h2 {
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
     font-size: 28px;
     font-weight: bold;    
     padding: 10px;
 }
 
-.wrapper .intestazione p {
+.wrapper .header p {
     text-shadow: 0 0 10px rgba(0, 0, 0, .2) ;
     font-size: 20px;
     margin-top: 20px;
+}
+
+
+/* OTP */
+
+.wrapper #otp-form .input-box input[type="number"]::-webkit-inner-spin-button,  /* Rimuove le freccette nei browser basati su WebKit (es. Chrome, Safari, Edge) */
+.wrapper #otp-form .input-box input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.wrapper #otp-form .input-box input[type="number"] {    /* Rimuove le freccette nei browser Firefox */
+    -moz-appearance: textfield;
+}
+
+.wrapper #otp-form .input-box input[type="number"] {    /* Stile generico per il campo input (opzionale) */
+    appearance: none;
 }
 
 
@@ -488,7 +505,7 @@ body {
     border-bottom: 2px solid black;
 }
 
-.barraSuperiore2 {
+.topBar2 {
     position: fixed;           /* Mantiene la barra fissa nella parte superiore */
     top: 0;                    
     left: 0;                   
@@ -504,7 +521,7 @@ body {
     height: 80px;              
 }
 
-.barraSuperiore2 .btn-aboutUs {
+.topBar2 .btn-aboutUs {
     background-color: transparent;
     font-weight: bold;
     font-size: 20px;
@@ -515,7 +532,7 @@ body {
     margin-left: 30px;
 }
 
-.barraSuperiore2 img {
+.topBar2 img {
     height: 60px;              
     object-fit: contain;       
     margin-left: 20px;
@@ -523,7 +540,7 @@ body {
     margin-bottom: 0px;
 }
 
-.barraSuperiore2 i {
+.topBar2 i {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-right: 0px;
@@ -534,7 +551,7 @@ body {
     transition: transform 0.6s ease; 
 }
 
-.barraSuperiore2 i:hover {
+.topBar2 i:hover {
     cursor: pointer;
     transform: scale(1.2) translateZ(0); 
 }
@@ -593,11 +610,11 @@ body {
     }
 }
 
-.wrapper3 .patologie .first {
+.wrapper3 .diseases .first {
     margin-top: 5px;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale {
+.wrapper3 .bloodType, .wrapper3 .name, .wrapper3 .surname, .wrapper3 .sexuality, .wrapper3 .nationality, .wrapper3 .birthDate, .wrapper3 .fiscalCode {
     display: flex;
     align-items: center; 
     gap: 20px; 
@@ -608,34 +625,34 @@ body {
     font-size: 24px;
 }
 
-.wrapper3 .gruppoSang, .wrapper3 .patologie, .wrapper3 .risultatiEsami, .wrapper3 .esamiPrenotati, .wrapper3 .nome, .wrapper3 .cognome, .wrapper3 .sesso, .wrapper3 .nazionalità, .wrapper3 .dataNascita, .wrapper3 .codiceFiscale, .wrapper3 .interventiSubiti, .wrapper3 .interventiPrenotati {
+.wrapper3 .bloodType, .wrapper3 .diseases, .wrapper3 .testResult, .wrapper3 .bookedText, .wrapper3 .name, .wrapper3 .surname, .wrapper3 .sexuality, .wrapper3 .nationality, .wrapper3 .birthDate, .wrapper3 .fiscalCode, .wrapper3 .carriedWorks, .wrapper3 .bookedWorks {
     margin-top: 20px;
 }
 
-.wrapper3 .patologie li {
+.wrapper3 .diseases li {
     margin-left: 20px;
 }
 
-.wrapper3 .risultatiEsami h2{
+.wrapper3 .testResult h2{
     text-align: left; 
 }
 
-.wrapper3 .risultatiEsami table, .wrapper3 .esamiPrenotati table, .wrapper3 .interventiSubiti table, .wrapper3 .interventiPrenotati table {
+.wrapper3 .testResult table, .wrapper3 .bookedText table, .wrapper3 .carriedWorks table, .wrapper3 .bookedWorks table {
     width: 80%;
     margin: 0 auto; 
     border-collapse: collapse; 
     margin-top: 5px;
 }
 
-.wrapper3 .risultatiEsami .esame, .wrapper3 .esamiPrenotati .esame, .wrapper3 .esamiPrenotati .data, .wrapper3 .interventiSubiti .intervento, .wrapper3 .interventiPrenotati .intervento {
+.wrapper3 .testResult .test, .wrapper3 .bookedText .test, .wrapper3 .bookedText .date, .wrapper3 .carriedWorks .work, .wrapper3 .bookedWorks .work {
     width: 50%;
 }
 
-.wrapper3 .risultatiEsami .data, .wrapper3 .risultatiEsami .risultato {
+.wrapper3 .testResult .date, .wrapper3 .testResult .result {
     width: 25%;
 }
 
-.wrapper3 .risultatiEsami table, .wrapper3 .risultatiEsami th, .wrapper3 .risultatiEsami tr,  .wrapper3 .risultatiEsami td, .wrapper3 .esamiPrenotati table, .wrapper3 .esamiPrenotati th, .wrapper3 .esamiPrenotati tr,  .wrapper3 .esamiPrenotati td, .wrapper3 .interventiSubiti table, .wrapper3 .interventiSubiti th, .wrapper3 .interventiSubiti tr, .wrapper3 .interventiSubiti td, .wrapper3 .interventiPrenotati table, .wrapper3 .interventiPrenotati th, .wrapper3 .interventiPrenotati td, .wrapper3 .interventiPrenotati tr {
+.wrapper3 .testResult table, .wrapper3 .testResult th, .wrapper3 .testResult tr,  .wrapper3 .testResult td, .wrapper3 .bookedText table, .wrapper3 .bookedText th, .wrapper3 .bookedText tr,  .wrapper3 .bookedText td, .wrapper3 .carriedWorks table, .wrapper3 .carriedWorks th, .wrapper3 .carriedWorks tr, .wrapper3 .carriedWorks td, .wrapper3 .bookedWorks table, .wrapper3 .bookedWorks th, .wrapper3 .bookedWorks td, .wrapper3 .bookedWorks tr {
     border: 2px solid black;
     padding: 5px;
 }
@@ -651,7 +668,7 @@ body {
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 30px 40px;
     transform: scale(1) translateZ(0);  /* Forza il rendering GPU */
     transform-origin: center;           /* Assicura che l'elemento si ingrandisca dal centro */
