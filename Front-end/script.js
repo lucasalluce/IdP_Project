@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const validateConfirmPassword = () => {
         return formPassword.value === formConfirmPassword.value;
     }
+
+    
         // Visualizzaione finestra informativa - password
     formPassword.addEventListener("input", () => {
         if(!validatedPassword(formPassword.value)) {
@@ -63,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
             formErrorConfirmPassword.classList.remove("error-visible");
         }
     });
+
+    
 
     // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
@@ -224,8 +228,8 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
 
     if (userName && userSurname && userUsername && userEmail) {
         // Inserimento dei dati nei campi HTML
-        document.querySelector(".cognome p").textContent = userSurname;
-        document.querySelector(".nome p").textContent = userName;
+        document.querySelector(".surname p").textContent = userSurname;
+        document.querySelector(".name p").textContent = userName;
         document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
         document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
     } else {
