@@ -35,39 +35,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
-    const formPassword = document.getElementById("registerPassword");
-    const formConfirmPassword = document.getElementById("registerConfirmPassword");
-    const formErrorPassword = document.getElementById("errorPassword");
-    const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
+    if (window.location.href === "register.html") {
+        const formPassword = document.getElementById("registerPassword");
+        const formConfirmPassword = document.getElementById("registerConfirmPassword");
+        const formErrorPassword = document.getElementById("errorPassword");
+        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
 
-    const validatedPassword = (password) => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-        return passwordRegex.test(password);
-    }
-    const validateConfirmPassword = () => {
-        return formPassword.value === formConfirmPassword.value;
-    }
-
-    
-        // Visualizzaione finestra informativa - password
-    formPassword.addEventListener("input", () => {
-        if(!validatedPassword(formPassword.value)) {
-            formErrorPassword.classList.add("error-visible");
-        } else {
-            formErrorPassword.classList.remove("error-visible");
+        const validatedPassword = (password) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+            return passwordRegex.test(password);
         }
-    });
-        // Visualizzaione finestra informativa - confermaPassword
-    formConfirmPassword.addEventListener("input", () => {
-        if (!validateConfirmPassword()) {
-            formErrorConfirmPassword.classList.add("error-visible");
-        } else {
-            formErrorConfirmPassword.classList.remove("error-visible");
+        const validateConfirmPassword = () => {
+            return formPassword.value === formConfirmPassword.value;
         }
-    });
 
+            // Visualizzaione finestra informativa - password
+        formPassword.addEventListener("input", () => {
+            if(!validatedPassword(formPassword.value)) {
+                formErrorPassword.classList.add("error-visible");
+            } else {
+                formErrorPassword.classList.remove("error-visible");
+            }
+        });
+            // Visualizzaione finestra informativa - confermaPassword
+        formConfirmPassword.addEventListener("input", () => {
+            if (!validateConfirmPassword()) {
+                formErrorConfirmPassword.classList.add("error-visible");
+            } else {
+                formErrorConfirmPassword.classList.remove("error-visible");
+            }
+        });
+    }
     
-
     // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
         console.log("\thashingPassword - Acquisizione clearPassword: ", clearPassword);
