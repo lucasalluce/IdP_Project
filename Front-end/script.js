@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify({                                                          // Compilazione file Json
-                    otp: formOTP,
+                    otp: formOTP.value,
                     email: dataEmail
                 })
             })
