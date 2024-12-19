@@ -292,8 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         })
     }
-
-        // TODO Processo di recupero password utente
+    
         // Processo - Password utente dimenticata
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
@@ -325,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     console.log("forgotPassword - Risposta negativa, messaggio: ", data.message);
                     console.log("forgotPassword - Terminazione processo");
-                    alert(data.massage);
+                    alert(data.message);
                     formUsername.value = "";
                 }
             })
