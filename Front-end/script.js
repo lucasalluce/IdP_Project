@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ~~ Gestione visibilità campi password (home.html, register.html) ~~
+    // ~~ Gestione visibilità campi password (home.html, register.html, resetPassword.html) ~~
         // Funzione per cambiare tipo (password <-> text)
     async function togglePasswordVisibility (formPassword, toggleIcon) {
         if (formPassword.type === "password") {
@@ -33,8 +33,31 @@ document.addEventListener("DOMContentLoaded", () => {
             togglePasswordVisibility(registerConfirmPassword, toggleRegisterConfirmPassword);       // Funzione togglePasswordVisibility()
         });
     }
+        // resetPassword.html
+    const resetTmpPassword = document.getElementById("resetTmpPassword");
+    const resetNewPassword = document.getElementById("resetNewPassword");
+    const resetConfirmPassword = document.getElementById("resetConfirmPassword");
+    const toggleResetTmpPassword = document.getElementById("toggleResetTmpPassword");
+    const toggleResetNewPassword = document.getElementById("toggleResetNewPassword");
+    const toggleResetConfirmPassword = document.getElementById("toggleResetConfirmPassword");
+    if (toggleResetTmpPassword && resetTmpPassword) {
+        toggleResetTmpPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetTmpPassword, toggleResetTmpPassword);     // Funzione togglePasswordVisibility()
+        });
+    }
+    if (toggleResetNewPassword && resetNewPassword) {
+        toggleResetNewPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetNewPassword, toggleResetNewPassword);     // Funzione togglePasswordVisibility()
+        });
+    }
+    if (toggleResetConfirmPassword && resetConfirmPassword) {
+        toggleResetConfirmPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetConfirmPassword, toggleResetNewPassword);     // Funzione togglePasswordVisibility()
+        });
+    }
 
-    // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
+    // ~~ Gestione conformità campi password, confirmPassword (register.html, resetPassword.html) ~~
+        // register.html
     if (window.location.href.includes("register.html")) {
         const formPassword = document.getElementById("registerPassword");
         const formConfirmPassword = document.getElementById("registerConfirmPassword");
@@ -48,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const validateConfirmPassword = () => {
             return formPassword.value === formConfirmPassword.value;
         }
-
             // Visualizzaione finestra informativa - password
         formPassword.addEventListener("input", () => {
             if(!validatedPassword(formPassword.value)) {
@@ -63,6 +85,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 formErrorConfirmPassword.classList.add("error-visible");
             } else {
                 formErrorConfirmPassword.classList.remove("error-visible");
+            }
+        });
+    }
+        // resetPassword.html
+    if (window.location.href.includes("resetPassword.html")) {
+        const formNewPassword = document.getElementById("resetNewPassword");
+        const formConfirmPassword = document.getElementById("resetConfirmPassword");
+        const formErrorResetNewPassword = document.getElementById("errorResetNewPassword");
+        const formErrorResetConfirmPassword = document.getElementById("errorResetConfirmPassword");
+
+        const validatedPassword = (password) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+            return passwordRegex.test(password);
+        }
+        const validateConfirmPassword = () => {
+            return formNewPassword.value === formConfirmPassword.value;
+        }
+            // Visualizzaione finestra informativa - password
+        formNewPassword.addEventListener("input", () => {
+            if(!validatedPassword(formNewPassword.value)) {
+                formErrorResetNewPassword.classList.add("error-visible");
+            } else {
+                formErrorResetNewPassword.classList.remove("error-visible");
+            }
+        });
+            // Visualizzaione finestra informativa - confermaPassword
+        formConfirmPassword.addEventListener("input", () => {
+            if (!validateConfirmPassword()) {
+                formErrorResetConfirmPassword.classList.add("error-visible");
+            } else {
+                formErrorResetConfirmPassword.classList.remove("error-visible");
             }
         });
     }
@@ -333,4 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         });
     }
+
+        // Processo - Reset della password
+    const resetPassword = document.getElementById("");
 });
