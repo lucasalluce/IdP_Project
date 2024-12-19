@@ -86,7 +86,3 @@ ___Back-end___
         √       - otpMail()                         √ Test
         √       - addUserMail()                     √ Test
         √       - tmpPasswordMail()                 √ Test
-
-    ~~Steps recupero password~~
-        6. Ritorno al Front - Back -> Front
-        7. Ritorno alla Home
