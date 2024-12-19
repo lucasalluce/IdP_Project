@@ -57,7 +57,7 @@ class AuthenticationServer:
         return ''.join(tmpPass)
 
     def login (self, jsonUsername, jsonHashedPassword):
-        # TODO controllo tmpPassword
+        # TODO controllo tmpPassword -> return Username
         
             # Acquisizione risconti Username - database
         print("AuthenticationServer.login - Interrogazione database ...")
@@ -202,6 +202,60 @@ class AuthenticationServer:
             print("AuthenticationServer.forgotPassword - Terminazione procedura")
             return {"success": True, "message": "Temporary password created, check email"}    
         
+    def resetPassword (self, jsonTmpPassword, jsonNewHashedPassword, jsonUsername):
+        print("AuthenticationServer.resetPassword - Controllo corrispondenza tmpPassword ...")
+            # Verifica esistenza tmpPassword in attesa di controllo
+        if len(tmpPasswordData) == 0: # Caso - tmpPasswordData vuoto -> nessuna tmpPassword da controllarre
+            print("AuthenticationServer.resetPassword - Errore - Nessun elemento di confronto")
+            print("AuthenticationServer.resetPassword - Terminazione procedura")
+            return {"success": False, "message": "Temporary password already used", "case": 0}
+        else: # Caso - tmpPasswordData non vuoto -> ricerca tmpPassword da controllarre
+                # Scorrimento tmpPassword in attesa di controllo
+            for element in tmpPasswordData:
+                    # Controllo corrispondenza username-tmpPassword
+                if element["username"] == jsonUsername and element["tmpPassword"] == jsonTmpPassword: # Caso - tmpPassword valida -> aggiornamento password utente
+                    print("AuthenticationServer.resetPassword - tmpPassword trovata e valida -> aggiornamento password")
+                    hashedPassword = bcrypt.hashpw(jsonNewHashedPassword.encode('utf-8'), bcrypt.gensalt())    # Hashing password (secondo)
+                    hashedPassword = hashedPassword.decode('utf-8')
+                    print("AuthenticationServer.resetPassword - Aggiornamento tmpPasswordData")
+                    index = tmpPasswordData.index(element)
+                    tmpPasswordData.pop(index)
+                    
+                    
+                    print("AuthenticationServer.resetPassword - Aggiornamento password utente ...")
+                    query = """
+                    UPDATE Users
+                    SET HashedPassword = %s
+                    WHERE Username = %s
+                    """
+                    data = (hashedPassword, jsonUsername, )
+                    dbCursor.execute(query, data)
+                    dbConnection.commit()
+                    print("AuthenticationServer.resetPassword - Invio query ...")
+                    
+                    if dbCursor.rowcount == 1: # Caso - Aggiornamento password utente conmpletato
+                        print("AuthenticatioServer.resetPassword - Aggiornamento password completato")
+                        print("AuthenticatioServer.resetPassword - Invio dati al MailService ...")
+                        dbCursor.reset()
+                        query = "SELECT Email FROM Users WHERE Username = %s"
+                        dbCursor.execute(query, (jsonUsername, ))
+                        dbReturn = dbCursor.fetchall()
+                        userEmail = dbReturn[0][0]
+                        dbCursor.reset()
+                        dbReturn.clear()
+                        self.mailService.updatePasswordMail(userEmail)
+                        print("AuthenticationServer.resetPassword - Terminazione procedura")
+                        return {"success": True, "message": "tmpPassword valid, user password successfully updated"}
+                    else: # Caso - Errore nell'aggiornamento della password utente
+                        print("AuthenticationServer.addUser - Creazione nuovo utente non completata")
+                        dbCursor.reset()
+                        print("AuthenticationServer.addUser - Terminazione procedura")
+                        return {"success": False, "message": "Error, user creation and database addition not completed"}
+            # Caso - Nessuna corrispondenza, tmpPassword errata
+            print("AuthenticationServer.resetPassword - tmpPassword non trovata")
+            print("AuthenticationServer.resetPassword - Terminazione procedura")
+            return {"success": False, "message": "Wrong tmpPassword", "case": 1}
+
 
 print("AuthenticationServer - Loading ...")
 print("AuthenticationServer - Online, in attesa di richieste ...~")
@@ -280,6 +334,19 @@ def forgotPassword():
     print("AuthenticationServer.forgotPassword - Acquisizione dati completata")
     server = AuthenticationServer()
     result = server.forgotPassword(jsonUsername)
+    return jsonify(result)
+
+@app.route("/resetPassword", methods=["POST"])
+def resetPassword():
+    print("AuthenticationServer - Richiesta ricevuto: 'resetPassword', inizio procedura")
+    print("AuthenticationServer.resetPassword - Acquisizione dati ...")
+    data = request.get_json()
+    jsonTmpPassword = data.get("tmpPassword")
+    jsonNewHashedPassword = data.get("newPassword")
+    jsonUsername = data.get("username")
+    print("AuthenticationServer.resetPassword - Acquisizione dati completata")
+    server = AuthenticationServer()
+    result = server.resetPassword(jsonTmpPassword, jsonNewHashedPassword, jsonUsername)
     return jsonify(result)
 
 if __name__ == "__main__":

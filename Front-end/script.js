@@ -357,8 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const formUsername = forgotPasswordForm.querySelector("input[id='username']");
             console.log("forgotPassword - Acquisizione dati completata");
 
-            console.log("forgorPassword - Inzio richiesta all'AuthenticationServer.forgotPassword() ...")
-                //
+            console.log("forgorPassword - Inizio richiesta all'AuthenticationServer.forgotPassword() ...");
+                // Chiamata http -> AuthenticationServer.forgotPassword()
             fetch("http://127.0.0.1:5000/forgotPassword", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -387,6 +387,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-        // Processo - Reset della password
-    const resetPassword = document.getElementById("");
+        // Processo - Reset della password utente
+    const resetPasswordForm = document.getElementById("reset-password-form");
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("\t~Inizio processo 'resetPassword'~");
+            console.log("resetPassword - Acquisizione dati reset-password-form ...");
+                // Collegamento ai campi del reset-password-form
+            const formTmpPassword = resetPasswordForm.querySelector("input[id='resetTmpPassword'");
+            const formNewPassword = resetPasswordForm.querySelector("input[id='resetNewPassword'");
+            const formConfirmPassword = resetPasswordForm.querySelector("input[id='resetConfirmPassword'");
+            const dataUsername = localStorage.getItem("userUsername");
+            console.log("resetPassword - Acquisizione dati completata");
+
+            console.log("resetPassword - Inizio sotto-processo 'hashingPassword'")
+                // Hashing formPassword    
+            hashPassword(formNewPassword.value).then((hashedPasswrod) => {
+                console.lof("resetPassword - Inizio richiesta all'AuthenticationServer.resetPassword() ...");
+                    // Chiamata http -> AuthenticationServer.resetPassword()
+                fetch("http://127.0.0.1:5000/resetPassword", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({                                          // Compilazione file Json
+                        tmpPassword: formTmpPassword.value,
+                        newPassword: hashedPasswrod,
+                        username: dataUsername
+                    })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("resetPassword - Risposta ricevuto, analisi ...");
+                    if (data.success) {
+                        
+                    } else {
+
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error: ", error);
+                })
+            });
+        });
+    }
 });
