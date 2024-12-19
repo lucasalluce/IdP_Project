@@ -39,9 +39,8 @@ class AuthenticationServer:
         print("\t2FA - OTP generato: " + str(otp))
         return otp
 
-    # TODO
     def tmpPasswordGenerator (self):
-        print("AuthenticationServer.recoveryPassword.tmpPasswordGeneration - Generazione password temporanea ...")
+        print("\ttmpPasswordGeneration - Generazione password temporanea ...")
         lenght = 12                                                                 # Lunghezza minima della password
         lowChar = random.choice(string.ascii_lowercase)
         uppChar = random.choice(string.ascii_uppercase)
@@ -53,10 +52,13 @@ class AuthenticationServer:
         ))
         tmpPass = list(uppChar + lowChar + nr + specialChar + fill)
         random.shuffle(tmpPass)
-        print("AuthenticationServer.recoveryPassword.tmpPasswordGeneration - Password generata: " + ''.join(tmpPass))
+        print("\ttmpPasswordGeneration - Password generata: " + ''.join(tmpPass))
+        print("\ttmpPasswordGeneration - Terminazione sotto-procedura")
         return ''.join(tmpPass)
 
     def login (self, jsonUsername, jsonHashedPassword):
+        # TODO controllo tmpPassword
+        
             # Acquisizione risconti Username - database
         print("AuthenticationServer.login - Interrogazione database ...")
         query = "SELECT HashedPassword, Email FROM Users WHERE Username = %s;"
@@ -79,11 +81,11 @@ class AuthenticationServer:
                 print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato")              
                 print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
                 otp = self.otpGenerator()                                                               # Generazioni OTP
+                otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
+                print("\t2FA - OTP salvato per la verifica")
                 
                 print("\t2FA - Invio dati al MailService ...")
                 self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
-                otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
-                print("\t2FA - OTP salvato per la verifica")
                 return {"success": True, "message": "Verified user, OTP submitted", "email": dbEmail}
             else: # Caso - Credenziali sbagliate
                 print("AuthenticationServer.login - Riscontro parziale, account utente non autenticato")
@@ -143,7 +145,7 @@ class AuthenticationServer:
         dbReturn = dbCursor.fetchall()
         dbCursor.reset()
 
-        # Controllo preesistenza Username
+            # Controllo preesistenza Username
         if len(dbReturn) == 0: # Caso - Utente da aggiungere            
             print("AuthenticationServer.addUser - Nessun riscontro -> Creazione nuovo utente ...")
             query = "INSERT INTO Users (Name, Surname, Username, Email, HashedPassword) VALUES (%s, %s, %s, %s, %s)"
@@ -155,14 +157,14 @@ class AuthenticationServer:
             print("AuthenticationServer.addUser - Invio query ...")
             
             if dbCursor.rowcount == 1: # Caso - Inserimento di un nuovo utente completato
-                print("AuthenticationServer.addUser - Nessun riscontro -> Creazione utente completata")
+                print("AuthenticationServer.addUser - Creazione nuovo utente completata")
                 print("AuthenticationServer.addUser - Invio dati al MailService ...")
                 self.mailService.addUserMail(data)                                                  # Invio addUserMail - MailService
                 dbCursor.reset()
                 print("AuthenticationServer.addUser - Terminazione procedura")
                 return {"success": True, "message": "User successfully created and added to database"}
             else: # Caso - Errore nell'inserimento
-                print("AuthenticationServer.addUser - Creazione utente non completata")
+                print("AuthenticationServer.addUser - Creazione nuovo utente non completata")
                 dbCursor.reset()
                 print("AuthenticationServer.addUser - Terminazione procedura")
                 return {"success": False, "message": "Error, user creation and database addition not completed"}
@@ -172,9 +174,34 @@ class AuthenticationServer:
             print("AuthenticationServer.addUser - Terminazione procedura")
             return {"success": False, "message": "Error, Username already in use"}
 
-    # TODO
-    def recoveryPassword(self, jsonUsername):
-        pass
+    def forgotPassword (self, jsonUsername):
+            # Acquisizione riscontri Username - database
+        print("AuthenticationServer.forgotPassword - Controllo esistenza utente con stesso Username")
+        print("AuthenticationServer.forgotPassword - Interrogazione database ...")
+        query = "SELECT Email FROM Users WHERE Username = %s"
+        dbCursor.execute(query, (jsonUsername, ))
+        dbReturn = dbCursor.fetchall()
+        dbCursor.reset()
+        
+            # Controllo riscontro
+        if len(dbReturn) == 0: # Caso - Nessun riscontro, Username errato
+            print("AuthenticationServer.forgotPassword - Nessun riscontro, Username errato")
+            print("AuthenticationServer.forgotPassword - Terminazione procedura")
+            return {"success": False, "message": "No user is registered with this username"}           
+        else: # Caso - Utente identificato
+            print("AuthenticationServer.forgotPassword - Riscontro trovato per questo Username")
+            print("AuthenticationServer.forgotPassword - Inizio sotto-procedura 'tmpPasswordGeneration'")
+            tmpPassword = self.tmpPasswordGenerator()
+            tmpPasswordData.append({"username": jsonUsername, "tmpPassword": tmpPassword})
+            print("AuthenticationServer.forgotPassword - tmpPassword salvata per la verifica'")
+            
+            print("AuthenticationServer.forgotPassword - Invio dati al MailService ...")
+            data = (jsonUsername, dbReturn[0][3], tmpPassword)
+            self.mailService.tmpPasswordMail(data)
+            
+            print("AuthenticationServer.forgotPassword - Terminazione procedura")
+            return {"success": True, "message": "Temporary password created, check email"}    
+        
 
 print("AuthenticationServer - Loading ...")
 print("AuthenticationServer - Online, in attesa di richieste ...~")
@@ -244,10 +271,16 @@ def addUser():
     result = server.addUser(jsonName, jsonSurname, jsonUsername, jsonEmail, jsonHashedPassword)
     return jsonify(result)
 
-# TODO
-@app.route("/recoveryPassword", methods=["POST"])
-def recoveryPassword():
-    pass
+@app.route("/forgotPassword", methods=["POST"])
+def forgotPassword():
+    print("AuthenticationServer - Richiesta ricevuta: 'forgotPassword', inizio procedura")
+    print("AuthenticationServer.forgotPassword - Acquisizione dati ...")
+    data = request.get_json()
+    jsonUsername = data.get("username")
+    print("AuthenticationServer.forgotPassword - Acquisizione dati completata")
+    server = AuthenticationServer()
+    result = server.forgotPassword(jsonUsername)
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True)

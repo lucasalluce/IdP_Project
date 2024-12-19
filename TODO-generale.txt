@@ -48,12 +48,18 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
         **  Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed bcrypt-4.2.1
 
 ___Front-end___
+    ~ HTML/CSS ~
+TODO    forgotPassword.html
+    Allineamento titolo
+
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
             √       passwordHashing         √ Test
             √       verifyOTP               √ Test
         √       registration                √ Test
-        TODO    forgotPassword
+        √    forgotPassword                 //TODO Test -> implementare login
+
+        TODO    Controllo nr cifre OTP
 
 ___Back-end___
     ~ AutenticationServer ~
@@ -70,8 +76,8 @@ ___Back-end___
         √       - addUser()                         √ Test
             √       - addUserMail() -> MailService  √ Test
             √       + app Flask                     √ Test
-        TODO    - recoveryPassword()
-                    - tmpPasswordGenerator()
+        TODO    - recoveryPassword()                //TODO Test
+            √       - tmpPasswordGenerator()        √ Test
 
     ~ MailService ~
         √       - __init__
@@ -79,11 +85,9 @@ ___Back-end___
         √       - sendMail()                        √ Test
         √       - otpMail()                         √ Test
         √       - addUserMail()                     √ Test
-        TODO    - tmpPasswordMail()
+        TODO    - tmpPasswordMail()                 // TODO Test
 
     ~~Steps recupero password~~
-        1. Acquisizione Username - Front forgotPassword.html
-        2. Chiamata HTML - Front script.js
         3. Interrogazione database - Back AuthenticationServer.py
         4. Generazione e salvataggio tmpPassword - Back tmpPasswordGenerator()
         5. Generazione mail - Back MailService

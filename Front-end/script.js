@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         password: hashedPassword
                     })
                 })
-                .then((response) => response.json())                        // Acqisizione file JSON di risposta
+                .then((response) => response.json())                        // Acqisizione file Json di risposta
                 .then((data) => {                                           // Analisi risposta
                     console.log("login - Risposta ricevuta, analisi ...");
                     if (data.success) {     // Caso - True, login avvenuto
@@ -164,6 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const dataEmail = localStorage.getItem("userEmail");
             console.log("\t2FA - Acquisizione dati completata");
             
+            // TODO Controllo sul formOTP - nr esatto di caratteri numerici
+
             console.log("\t2FA - Controllo corretta acquisizione dataEmail");
             if (!dataEmail) {
                 console.log("\t2FA - Errore, dataEmail non trovata nel localStorage");
@@ -289,37 +291,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
         // TODO Processo di recupero password utente
+        // Processo - Password utente dimenticata
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
             e.preventDefault();
+            console.log("\t~Inizio processo 'forgotPassword'~");
+            console.log("forgotPassword - Acquisizione dati forgot-password-form ...");
+                // Collegamento ai campi del forgot-password-form
+            const formUsername = forgotPasswordForm.querySelector("input[id='username']");
+            console.log("forgotPassword - Acquisizione dati completata");
 
-            console.log("~ Inzio proceduta 'forgotPassword'");
-            console.log("forgotPassword - Acquisizione parametri forgot-password-form");
-            const formUsername = forgotPasswordForm.querySelector("input[id='username']").value;
-
-            console.log("forgorPassword - Controllo effettivo inserimento dati forgot-password-form")
-            if (!formUsername) {
-                alert("Campo username non inserito!");
-                return;
-            }
-
-            console.log("forgorPassword - Inzio richiesta AuthenticationServer")
-            fetch("http://127.0.0.1:5000/recoveryPassword", {
+            console.log("forgorPassword - Inzio richiesta all'AuthenticationServer.forgotPassword() ...")
+                //
+            fetch("http://127.0.0.1:5000/forgotPassword", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({                                  // Compilazione file JSON
-                    username: formUsername
+                body: JSON.stringify({                                  // Compilazione file Json
+                    username: formUsername.value
                 })
             })
-            .then((response) => response.json())                        // Acqisizione file JSON di risposta
-            .then((data) => {                                           
-                console.log("forgorPassword - Ricezione risposta AuthenticationServer");
-                if (data.success) {                                     // Verifica
-                    // TODO
-                    window.location.href = "";                          // Reindirizzamento
+            .then((response) => response.json())                        // Acqisizione file Json di risposta
+            .then((data) => {
+                console.log("forgorPassword - Risposta ricevuta, analisi ...");
+                if (data.success) {
+                    
                 } else {
-                    alert("Credenziali errate!! Riprovare")             // Allert di errore
+                
                 }
             })
             .catch((error) => {
