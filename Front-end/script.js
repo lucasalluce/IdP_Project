@@ -141,8 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         alert(data.message);
                         window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
                     } else {                // Caso - False, login non avvenuto
+                        console.log("login - Risposta negativa, messaggio: ", data.message);
+                            // TODO switch case
                         console.log("login - Terminazione processo");
                         alert(data.message);
+                        formUsername.value = "";
                         formPassword.value = "";
                     }
                 })
@@ -315,9 +318,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((data) => {
                 console.log("forgorPassword - Risposta ricevuta, analisi ...");
                 if (data.success) {
-                    
+                    console.log("forgotPassword - Risposta positiva, messaggio: ", data.message);
+                    console.log("forgotPassword - Terminazione processo");
+                    alert(data.message);
+                    window.location.href = "home.html";
                 } else {
-                
+                    console.log("forgotPassword - Risposta negativa, messaggio: ", data.message);
+                    console.log("forgotPassword - Terminazione processo");
+                    alert(data.massage);
+                    formUsername.value = "";
                 }
             })
             .catch((error) => {

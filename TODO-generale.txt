@@ -49,17 +49,15 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 
 ___Front-end___
     ~ HTML/CSS ~
-TODO    forgotPassword.html
-    Allineamento titolo
+        √   forgotPassword.html
+            Allineamento titolo
 
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
             √       passwordHashing         √ Test
             √       verifyOTP               √ Test
         √       registration                √ Test
-        √    forgotPassword                 //TODO Test -> implementare login
-
-        TODO    Controllo nr cifre OTP
+        √    forgotPassword                 √ Test -> implementare login
 
 ___Back-end___
     ~ AutenticationServer ~
@@ -76,8 +74,10 @@ ___Back-end___
         √       - addUser()                         √ Test
             √       - addUserMail() -> MailService  √ Test
             √       + app Flask                     √ Test
-        TODO    - recoveryPassword()                //TODO Test
+        √       - forgotPassword()                  √ Test
             √       - tmpPasswordGenerator()        √ Test
+            TODO    - resetPassword()               // TODO Test
+                √   + app Flask                     √ Test
 
     ~ MailService ~
         √       - __init__
@@ -85,11 +85,8 @@ ___Back-end___
         √       - sendMail()                        √ Test
         √       - otpMail()                         √ Test
         √       - addUserMail()                     √ Test
-        TODO    - tmpPasswordMail()                 // TODO Test
+        √       - tmpPasswordMail()                 √ Test
 
     ~~Steps recupero password~~
-        3. Interrogazione database - Back AuthenticationServer.py
-        4. Generazione e salvataggio tmpPassword - Back tmpPasswordGenerator()
-        5. Generazione mail - Back MailService
         6. Ritorno al Front - Back -> Front
         7. Ritorno alla Home

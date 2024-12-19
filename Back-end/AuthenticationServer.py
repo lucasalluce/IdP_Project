@@ -196,7 +196,7 @@ class AuthenticationServer:
             print("AuthenticationServer.forgotPassword - tmpPassword salvata per la verifica'")
             
             print("AuthenticationServer.forgotPassword - Invio dati al MailService ...")
-            data = (jsonUsername, dbReturn[0][3], tmpPassword)
+            data = (jsonUsername, dbReturn[0][0], tmpPassword)
             self.mailService.tmpPasswordMail(data)
             
             print("AuthenticationServer.forgotPassword - Terminazione procedura")
