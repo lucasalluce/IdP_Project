@@ -58,7 +58,7 @@ ___Front-end___
             √       verifyOTP               √ Test
         √       registration                √ Test
         √       forgotPassword              √ Test -> implementare login
-        TODO    
+        TODO    resetPassword               // TODO Test
 
 ___Back-end___
     ~ AutenticationServer ~
