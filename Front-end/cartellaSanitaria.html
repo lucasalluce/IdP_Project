@@ -1,192 +1,199 @@
 <!DOCTYPE html>
 <html lang="it">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>medical record - IdP project with OAuth 2.0 and 2FA</title>
-        <link rel="stylesheet" type="text/css" href="styleSheet.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    </head>
+  <head>
+      <meta charset="UTF-8">
+      <title>medical record - IdP project with OAuth 2.0 and 2FA</title>
+      <link rel="stylesheet" type="text/css" href="styleSheet.css">
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </head>
 
-    <body class="bodyCart">
+  <body class="bodyCart">
 
-      <div class="background">
+    <div class="background">
 
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+    </div>
+
+    <div class="wrapper3">  
+    
+      <h1>CARTELLA SANITARIA</h1>
+
+      <div class="surname">
+          <h2>COGNOME:</h2>
+          <p></p>
       </div>
-
-      <div class="wrapper3">  
       
-        <h1>CARTELLA SANITARIA</h1>
+      <div class="name">
+          <h2>NOME:</h2>
+          <p></p>
+      </div>
 
-        <div class="surname">
-            <h2>COGNOME:</h2>
-            <p></p>
-        </div>
-        
-        <div class="name">
-            <h2>NOME:</h2>
-            <p></p>
-        </div>
+      <div class="sexuality">
+          <h2>SESSO:</h2>
+          <p>M</p>
+      </div>
 
-        <div class="sexuality">
-            <h2>SESSO:</h2>
-            <p>M</p>
-        </div>
+      <div class="nationality">
+          <h2>NAZIONALITÀ:</h2>
+          <p>Italia</p>
+      </div>
 
-        <div class="nationality">
-            <h2>NAZIONALITÀ:</h2>
-            <p>Italia</p>
-        </div>
+      <div class="birthDate">
+        <h2>DATA DI NASCITA:</h2>
+        <p>27/09/1997</p>
+      </div>
 
-        <div class="birthDate">
-          <h2>DATA DI NASCITA:</h2>
-          <p>04/05/2003</p>
-        </div>
+      <div class="fiscalCode">
+        <h2>CODICE FISCALE:</h2>
+        <p>RSSMRA97P27F376M</p>
+      </div>
+      
+      <div class="bloodType">
+          <h2>GRUPPO SANGUIGNO:</h2>
+          <p>A-</p>
+      </div>
 
-        <div class="fiscalCode">
-          <h2>CODICE FISCALE:</h2>
-          <p>TRLSFN03E04F376F</p>
-        </div>
-        
-        <div class="bloodType">
-            <h2>GRUPPO SANGUIGNO:</h2>
-            <p>B+</p>
-        </div>
+      <div class="diseases">
+          <h2>PATOLOGIE:</h2>
+          <li class="first">Rinite allergica</li>
+          <li>Asma allergico</li>
+          <li>Dislipidemie</li>
+      </div>
 
-        <div class="diseases">
-            <h2>PATOLOGIE:</h2>
-            <li class="first">Allergia agli acari della polvere</li>
-            <li>Asma</li>
-        </div>
-
-        <div class="testResult">
-            <h2>RISULTATI DEGLI ESAMI EFFETTUATI:</h2>
-            <table>
-                <thead>
-                  <tr>
-                    <th class="test">Esame</th>
-                    <th class="date">Data</th>
-                    <th class="result">Risultato</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Escherichia coli</td>
-                    <td>10/11/2024</td>
-                    <td>Negativo</td>
-                  </tr>
-                  <tr>
-                    <td>QI</td>
-                    <td>01/12/2024</td>
-                    <td>104</td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>
-
-        <div class="bookedText">
-            <h2>ESAMI PRENOTATI:</h2>
-            <table>
-                <thead>
-                  <tr>
-                    <th class="test">Esame</th>
-                    <th class="date">Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Prostata</td>
-                    <td>21/01/2025</td>
-                  </tr>
-                  <tr>
-                    <td>Reni</td>
-                    <td>06/02/2025</td>
-                  </tr>
-                  <tr>
-                    <td>Otorino</td>
-                    <td>15/05/2025</td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>
-
-        <div class="carriedWorks">
-          <h2>INTERVENTI CHIRURGICI SUBITI:</h2>
+      <div class="testResult">
+          <h2>RISULTATI DEGLI ESAMI EFFETTUATI:</h2>
           <table>
               <thead>
                 <tr>
-                  <th class="work">Intervento</th>
+                  <th class="test">Esame</th>
                   <th class="date">Data</th>
+                  <th class="result">Risultato</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Appendicite</td>
-                  <td>22/02/2017</td>
+                  <td>Emocromo completo</td>
+                  <td>10/11/2024</td>
+                  <td class="link">file PDF</td>
                 </tr>
                 <tr>
-                  <td>Trapianto di capelli</td>
-                  <td>30/01/2022</td>
+                  <td>Dosaggio del PSA</td>
+                  <td>01/03/2021</td>
+                  <td>3.2 ng/mL</td>
+                </tr>
+                <tr>
+                  <td>Misurazione della pressione arteriosa</td>
+                  <td>22/02/2022</td>
+                  <td class="link">file PDF</td>
+                </tr>
+                <tr>
+                  <td>Profilo lipidico</td>
+                  <td>30/09/2023</td>
+                  <td class="link">file PDF</td>
                 </tr>
               </tbody>
             </table>
-        </div>
-
-        <div class="bookedWorks">
-          <h2>INTERVENTI CHIRURGICI PRENOTATI:</h2>
-          <table>
-              <thead>
-                <tr>
-                  <th class="work">Intervento</th>
-                  <th class="date">Data</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>X</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>X</td>
-                  <td>X</td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-
       </div>
 
-      <div class="topBar2">    
-        <a href="https://www.poliba.it/" target="_blank">    
-            <img src="Immagini/logoPolitecnico.jpg" alt="Politecnico di Bari's logo">
-        </a>
-
-        <div class="about-us">
-          <i class='bx bx-menu'></i>
-          <div class="dropdown-menu">
-              <div></div>
-              <div class="informations"></div>
-              <a href="home.html">Disconnect</a>
-          </div>
-        </div>
+      <div class="bookedText">
+        <h2>ESAMI PRENOTATI:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th class="test">Esame</th>
+              <th class="date">Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tiroide</td>
+              <td>21/01/2025</td>
+            </tr>
+            <tr>
+              <td>Glicemia</td>
+              <td>06/02/2025</td>
+            </tr>
+            <tr>
+              <td>ECG</td>
+              <td>15/05/2025</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <script src="script.js"></script>
+      <div class="carriedWorks">
+        <h2>INTERVENTI CHIRURGICI SUBITI:</h2>
+        <table>
+            <thead>
+              <tr>
+                <th class="work">Intervento</th>
+                <th class="date">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Appendicectomia</td>
+                <td>22/02/2017</td>
+              </tr>
+              <tr>
+                <td>Artroscopia</td>
+                <td>30/01/2020</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
 
-    </body>
+      <div class="bookedWorks">
+        <h2>INTERVENTI CHIRURGICI PRENOTATI:</h2>
+        <table>
+            <thead>
+              <tr>
+                <th class="work">Intervento</th>
+                <th class="date">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Settoplastica</td>
+                <td>06/05/2025</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+    </div>
+
+    <div class="topBar2">    
+      <a href="https://www.poliba.it/" target="_blank">    
+          <img src="Immagini/logoPolitecnico.jpg" alt="Politecnico di Bari's logo">
+      </a>
+
+      <div class="about-us">
+        <i class='bx bx-menu'></i>
+        <div class="dropdown-menu">
+            <div></div>
+            <div class="informations"></div>
+            <a href="home.html">Disconnect</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+
+  </body>
 </html>
