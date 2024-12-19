@@ -49,8 +49,8 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 
 ___Front-end___
     ~ HTML/CSS ~
-        √   forgotPassword.html
-            Allineamento titolo
+        √       forgotPassword.html
+        TODO    resetPassword.html
 
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
