@@ -203,7 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("login - Risposta ricevuta, analisi ...");
                     if (data.success) {     // Caso - True, login avvenuto
                         console.log("login - Risposta positiva, messaggio: ", data.message);
-                        localStorage.setItem("userEmail", data.email);      // Salvataggio dati -> processo '2FA'
+                        localStorage.setItem("userEmail", data.email);                  // Salvataggio dati -> processo '2FA'
+                        localStorage.setItem("userUsername", formUsername.value);       // Salvataggio dati -> processo 'getUserData'
+                        console.log("login - Username salvato: ", localStorage.getItem("userUsername"));
                         console.log("login - Inizio sotto-processo '2FA'");
                         alert(data.message);
                         window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
@@ -267,8 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("\t2FA - Risposta positiva, messaggio: ", data.message);
                     console.log("\t2FA - Terminazione sotto-processo");
                     console.log("login - Terminazione processo");
+                    localStorage.removeItem("userEmail");
                     alert(data.message);
-                    localStorage.clear();
+                    
                     switch (data.case) {
                         case 0:
                             window.location.href = "resetPassword.html";
@@ -398,8 +401,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.success) {
                     console.log("forgotPassword - Risposta positiva, messaggio: ", data.message);
                     console.log("forgotPassword - Terminazione processo");
-                    alert(data.message);
                     localStorage.setItem("userUsername", formUsername.value);
+                    console.log("Username salvato: ", localStorage.getItem("userUsername"));
+                    alert(data.message);
                     window.location.href = "home.html";
                 } else {
                     console.log("forgotPassword - Risposta negativa, messaggio: ", data.message);
@@ -467,6 +471,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("resetPassword - Risposta ricevuta, analisi ...");
                     if (data.success) {
                         console.log("resetPassword - Risposta positiva, messaggio: ", data.message);
+                        console.log("resetPassword - Terminazione processo");
+                        localStorage.clear();
+                        alert(data.message);
+                        window.location.href = "home.html";
                     } else {
                         console.log("resetPassword - Risposta negativa, messaggio: ", data.message);
                         console.log("resetPassword - Terminazione processo");
