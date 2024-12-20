@@ -7,7 +7,7 @@ class MailService:
     def __init__(self):
         self.senderEmail = "idp.mailservice@gmail.com"
         self.senderPassword = "kohi grli ueyn rupb"
-        print("\tMailService - Online")
+        print("\tMailService - Online, in attesa ...")
     
     def generateMessage (self, reciverMail, subject, body):
         print("\tMailService - Generazione mail ...")
