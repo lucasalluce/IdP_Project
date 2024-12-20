@@ -49,8 +49,9 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 
 ___Front-end___
     ~ HTML/CSS ~
-        √       forgotPassword.html
-        √    resetPassword.html             √ Test
+    TODO    register.html - aggiornameno nuvoletta nel caso: password sbagliata, confirmPassword corretta
+        √   forgotPassword.html             √ Test
+        √   resetPassword.html              √ Test
 
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
