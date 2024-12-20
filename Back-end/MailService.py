@@ -52,7 +52,7 @@ class MailService:
         userUsername = data[0]
         reciverMail = data[1]
         tmpPassowrd = data[2]
-        body = f"Ecco le tue credenziali per effettuare l'accesso\nUsername: {userUsername}\nPassword temporanea: {tmpPassowrd}\nEffettuando l'accesso con queste credenziali ti verrà chiesto di reimpostare la password\nSe non sei stato tu a chiedere una password temporanea, accedi con le tue credenziali, e la password temporanea verrà automaticamente eliminata\n\nA presto!"
+        body = f"Ecco le tue credenziali per effettuare l'accesso\nUsername: {userUsername}\nPassword temporanea: {tmpPassowrd}\nEffettuando l'accesso con queste credenziali ti verrà chiesto di reimpostare la password\nSe non sei stato tu a chiedere una password temporanea, accedi con le tue credenziali e la password temporanea verrà automaticamente eliminata\n\nA presto!"
         mailMessage = self.generateMessage(reciverMail, "Password temporanea", body)
         print("\tMailService - tmpPasswordMail pronta per l'invio")
         self.sendMail(mailMessage, reciverMail)
