@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
     // ~~ Gestione visibilità campi password (home.html, register.html, resetPassword.html) ~~
         // Funzione per cambiare tipo (password <-> text)
     async function togglePasswordVisibility (formPassword, toggleIcon) {
@@ -134,28 +135,41 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    // TODO Edit
-    // Caricamento dei dati utente nella cartella sanitaria
+    // ~~ Caricamento dei dati utente (cartellaSanitaria.html) ~~
     if (window.location.href.includes("cartellaSanitaria.html")) {
-        console.log("Cartella Sanitaria - Caricamento dati utente...");
+        console.log("\t~Inizio processo 'cartellaSanitaria'~");
+        console.log("cartellaSanitaria - Caricamento dati utente...");
 
-        // Recupero dati dal localStorage
-        const userName = localStorage.getItem("userName");
-        const userSurname = localStorage.getItem("userSurname");
-        const userUsername = localStorage.getItem("userUsername");
-        const userEmail = localStorage.getItem("userEmail");
+        const dataUsername = localStorage.getItem("userUsername");
 
-        if (userName && userSurname && userUsername && userEmail) {
-            // Inserimento dei dati nei campi HTML
-            document.querySelector(".surname p").textContent = userSurname;
-            document.querySelector(".name p").textContent = userName;
-            document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
-            document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
-        } else {
-            console.error("Dati utente non trovati nel localStorage!");
-            alert("Errore: Accesso non autorizzato!");
-            window.location.href = "home.html";
-        }
+        // Chiamata http -> AuthenticationServer.getUserData()
+        fetch("http://127.0.0.1:5000/getUserData", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({                                  // Compilazione file Json
+                username: dataUsername
+            })
+        })
+        .then((response) => response.json())                        // Acqisizione file Json di risposta
+        .then((data) => {                                           // Analisi risposta
+            if (data.success) {
+                console.log("cartellaSanitaria - Risposta positiva, message: ", data.message);
+                console.log("cartellaSanitaria - Terminazione processo");
+                document.querySelector(".surname p").textContent = data.surname;
+                document.querySelector(".name p").textContent = data.name;
+                document.querySelector(".dropdown-menu div:nth-child(1)").textContent = dataUsername
+                document.querySelector(".dropdown-menu div.informations").textContent = data.email;
+            } else {
+                console.log("cartellaSanitaria - Risposta negativa, message: ", data.message);
+                console.log("cartellaSanitaria - Terminazione processo");;
+                localStorage.clear();
+                alert(data.message);
+                window.location.href = "home.html";
+            }
+        })
+        .catch((error) => {
+            console.error("Errore: ", error);
+        })
     }
 
     // ~~ Funzionalità principali ~~
@@ -254,11 +268,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("\t2FA - Terminazione sotto-processo");
                     console.log("login - Terminazione processo");
                     alert(data.message);
-                    
-                    
-                    // TODO Recupero dati utente per cartella sanitaria
-
-                    window.location.href = "cartellaSanitaria.html";
+                    localStorage.clear();
+                    switch (data.case) {
+                        case 0:
+                            window.location.href = "resetPassword.html";
+                            break;
+                        case 1:
+                            window.location.href = "cartellaSanitaria.html";
+                            break;
+                        default:
+                            break;
+                    }
                 } else {                // Caso - False, OTP non valido/scaduto
                     console.log("\t2FA - Risposta negativa, messaggio: ", data.message);
                     alert(data.message);
@@ -379,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("forgotPassword - Risposta positiva, messaggio: ", data.message);
                     console.log("forgotPassword - Terminazione processo");
                     alert(data.message);
+                    localStorage.setItem("userUsername", formUsername.value);
                     window.location.href = "home.html";
                 } else {
                     console.log("forgotPassword - Risposta negativa, messaggio: ", data.message);
@@ -407,10 +428,30 @@ document.addEventListener("DOMContentLoaded", () => {
             const dataUsername = localStorage.getItem("userUsername");
             console.log("resetPassword - Acquisizione dati completata");
 
-            console.log("resetPassword - Inizio sotto-processo 'hashingPassword'")
+            console.log("resetPassword - Controllo corrispondenza newPassword e confirmPassword ...");
+            if (formNewPassword.value !== formConfirmPassword.value) {
+                console.log("resetPassword - Errore, newPassword e confirmPassword non corrispondono");
+                console.log("resetPassword - Terminazione processo");
+                formConfirmPassword.value = "";
+                alert("Password and confimPassword do not match, check them!");
+                return;
+            }
+            console.log("resetPassword - Controllo completato")
+
+            console.log("resetPassword - Controllo corretta acquisizione dataUsername");
+            if (!dataUsername) {
+                console.log("resetPassword - Errore, dataUsername non trovata nel localStorage");
+                console.log("resetPassword - Terminazione processo");
+                localStorage.removeItem("userUsername");
+                alert("Error - An error occurred in the process, please login again");
+                window.location.href = "home.html";
+            }
+            console.log("resetPassword - Controllo completato, dataUsername: ", dataUsername);
+
+            console.log("resetPassword - Inizio sotto-processo 'hashingPassword'");
                 // Hashing formPassword    
             hashPassword(formNewPassword.value).then((hashedPasswrod) => {
-                console.lof("resetPassword - Inizio richiesta all'AuthenticationServer.resetPassword() ...");
+                console.log("resetPassword - Inizio richiesta all'AuthenticationServer.resetPassword() ...");
                     // Chiamata http -> AuthenticationServer.resetPassword()
                 fetch("http://127.0.0.1:5000/resetPassword", {
                     method: "POST",
@@ -432,6 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         alert(data.message);
                         switch (data.case) {
                             case 0:
+                                localStorage.removeItem("userUsername");    
                                 window.location.href = "home.html";
                                 break;
                             case 1:
