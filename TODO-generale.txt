@@ -50,7 +50,7 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
 ___Front-end___
     ~ HTML/CSS ~
         √       forgotPassword.html
-        TODO    resetPassword.html          // TODO Test
+        √    resetPassword.html             √ Test
 
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
@@ -58,7 +58,7 @@ ___Front-end___
             √       verifyOTP               √ Test
         √       registration                √ Test
         √       forgotPassword              √ Test -> implementare login
-        TODO    resetPassword               // TODO Test
+        √    resetPassword               √ Test
 
 ___Back-end___
     ~ AutenticationServer ~
@@ -77,8 +77,8 @@ ___Back-end___
             √       + app Flask                     √ Test
         √       - forgotPassword()                  √ Test
             √       - tmpPasswordGenerator()        √ Test
-            TODO    - resetPassword()               // TODO Test
-            TODO        +app Flask                  // TODO Test
+            √       - resetPassword()               √ Test
+            √           +app Flask                  √ Test
                 √   + app Flask                     √ Test
 
     ~ MailService ~
@@ -88,4 +88,4 @@ ___Back-end___
         √       - otpMail()                         √ Test
         √       - addUserMail()                     √ Test
         √       - tmpPasswordMail()                 √ Test
-        TODO    - resetPasswordMail()               // TODO Test
+        √    - resetPasswordMail()                  √ Test
