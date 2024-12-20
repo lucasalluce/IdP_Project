@@ -2,7 +2,7 @@ ___Settings Python____
 
 ! NOTA IMPORTANTE !
 Tra MacOs e Windows i pattern delle directory differiscono nello slash, quelli mostrati sotto utilizzano
-la notazione di MacOs, quindi per Windows prestare attenzione agli \
+la notazione di MacOs, quindi per Windows prestare attenzione ai \
 
 1. Creazione e configurazione environment
     -   Utilizzando il terminale, raggiungere la directory -> /Back-end/Environment
@@ -16,7 +16,7 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
     (mac)       >>  source bin/activate
     **  Ci si accorge che tutto ha funzionato se la stringa del terminale che precede l'inserimento dei comandi
         presenta - (IdP_Project_Nome)
-    :)  Ottimo lavoro, environment configurato con successo, WELL DONE !!!
+:)  Ottimo lavoro, environment configurato con successo, WELL DONE !!!
 
 2. Installazione moduli Python
     ~ MySQL connection ~
@@ -46,3 +46,4 @@ la notazione di MacOs, quindi per Windows prestare attenzione agli \
         (windows)   >>  python -m pip install bcrypt
         (mac)       >>  python3 -m pip install bcrypt
         **  Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed bcrypt-4.2.1
+:)  Ottimo lavoro, configurazione ambiente Python completata con successo, WELL DONE !!!
