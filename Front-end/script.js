@@ -254,7 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("\t2FA - Terminazione sotto-processo");
                     console.log("login - Terminazione processo");
                     alert(data.message);
-
+                    
+                    
                     // TODO Recupero dati utente per cartella sanitaria
 
                     window.location.href = "cartellaSanitaria.html";

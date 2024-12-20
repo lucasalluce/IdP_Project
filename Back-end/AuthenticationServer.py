@@ -92,19 +92,25 @@ class AuthenticationServer:
             if len(tmpPasswordData) != 0:
                 for element in tmpPasswordData:
                     if element["username"] == jsonUsername: # Caso - Riscontro di possibile accesso con tmpPassword
+                        print("AuthenticationServer.login - Possibile accesso con tmpPasswrod, controllo credenziali ...")
                         elementHashedPassword = self.hashPassword(element["tmpPassword"])
+                        hashedPassword = bcrypt.hashpw(elementHashedPassword.encode('utf-8'), bcrypt.gensalt())    # Hashing password (secondo)
+                        hashedPassword = hashedPassword.decode('utf-8')
+                        
                             # Controllo credenziali
-                        if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), elementHashedPassword.encode('utf-8')): # Caso - Accesso con tmpPassword -> resetPassword
+                        if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), hashedPassword.encode('utf-8')): # Caso - Accesso con tmpPassword -> resetPassword
                             print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato con tmpPassword")              
                             print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
                             otp = self.otpGenerator()                                                               # Generazioni OTP
-                            otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time(), "case": 0})                # Salvataggio dati dell'OTP per la verifica
+                            index = tmpPasswordData.index(element)
+                            otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time(), "case": 0, "tmpPasswordIndex": index})                # Salvataggio dati dell'OTP per la verifica
                             print("\t2FA - OTP salvato per la verifica")
                             
                             print("\t2FA - Invio dati al MailService ...")
                             self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
                             return {"success": True, "message": "Verified user with tmpPasswod, OTP submitted", "email": dbEmail}
                         else:
+                            print("AuthenticationServer.login - Riscontro parziale, accoutn utente non autenticato con tmpPassword, tmpPassword spagliata")
                             break
                 pass
             
@@ -149,8 +155,7 @@ class AuthenticationServer:
                         print("\t2FA - Terminazione sotto-procedura")
                         if element["case"] == 0:
                             print("AuthenticationServer.login - Aggiornamento tmpPasswordData")
-                            index = tmpPasswordData.index(jsonEmail)
-                            tmpPasswordData.pop(index)
+                            tmpPasswordData.pop(element["tmpPasswordIndex"])
                             print("AuthenticationServer.login - Terminazione procedura")
 
                         return {"success": True, "message": "OTP verified, login completed"}
