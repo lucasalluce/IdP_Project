@@ -195,11 +195,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
                     } else {                // Caso - False, login non avvenuto
                         console.log("login - Risposta negativa, messaggio: ", data.message);
-                            // TODO switch case
                         console.log("login - Terminazione processo");
                         alert(data.message);
-                        formUsername.value = "";
-                        formPassword.value = "";
+                        switch (data.case) {
+                            case 0:
+                                formUsername.value = "";
+                                break;
+                            case 1:
+                                formPassword.value = "";
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 })
                 .catch((error) => {
@@ -219,8 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const formOTP = otpForm.querySelector("input[id='otp']");
             const dataEmail = localStorage.getItem("userEmail");
             console.log("\t2FA - Acquisizione dati completata");
-            
-            // TODO Controllo sul formOTP - nr esatto di caratteri numerici
 
             console.log("\t2FA - Controllo corretta acquisizione dataEmail");
             if (!dataEmail) {
@@ -417,11 +422,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log("resetPassword - Risposta ricevuto, analisi ...");
+                    console.log("resetPassword - Risposta ricevuta, analisi ...");
                     if (data.success) {
-                        
+                        console.log("resetPassword - Risposta positiva, messaggio: ", data.message);
                     } else {
-
+                        console.log("resetPassword - Risposta negativa, messaggio: ", data.message);
+                        console.log("resetPassword - Terminazione processo");
+                        alert(data.message);
+                        switch (data.case) {
+                            case 0:
+                                window.location.href = "home.html";
+                                break;
+                            case 1:
+                                formTmpPassword.value = "";
+                                break;
+                            case 2:
+                                formTmpPassword.value = "";
+                                formNewPassword.value = "";
+                                formConfirmPassword.value = "";
+                                break;
+                            default:
+                                window.location.href = "home.html";
+                                break;
+                        }
                     }
                 })
                 .catch((error) => {

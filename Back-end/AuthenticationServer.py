@@ -3,8 +3,9 @@
 # random - utile per la generazione dell'OTP
 # time - utile per la validazione dell'OTP
 # string - utile per la generazione della tmpPassword
+# hashlib - utile per l'hashing SHA-256
 # MailService - utile per l'invio di mail agli utenti
-import bcrypt, random, time, string
+import bcrypt, random, time, string, hashlib
 from MailService import MailService
 
 # Connessione al database MySQL - IdP_OAuth2_2FA (localhost)
@@ -32,6 +33,18 @@ tmpPasswordData = []
 class AuthenticationServer:
     def __init__(self):
         self.mailService = MailService() # Inizializzaione MailService
+
+    def hashPassword(self, clearPassword):
+        print("\thashingPassword - Acquisizione clearPassword:", clearPassword)
+        # Encoding della password come byte
+        data = clearPassword.encode('utf-8')
+        print("\thashingPassword - Encoding:", data)
+        # Calcolo dell'hash SHA-256
+        hashObject = hashlib.sha256(data)
+        hashHex = hashObject.hexdigest()
+        print("\thashingPassword - Hashing SHA-256:", hashHex)
+        print("\thashingPassword - Terminazione sotto-processo")
+        return hashHex
     
     def otpGenerator (self):
         print("\t2FA - Generazione OTP ...")
@@ -57,8 +70,6 @@ class AuthenticationServer:
         return ''.join(tmpPass)
 
     def login (self, jsonUsername, jsonHashedPassword):
-        # TODO controllo tmpPassword -> return Username
-        
             # Acquisizione risconti Username - database
         print("AuthenticationServer.login - Interrogazione database ...")
         query = "SELECT HashedPassword, Email FROM Users WHERE Username = %s;"
@@ -70,18 +81,39 @@ class AuthenticationServer:
         if len(dbReturn) == 0: # Caso - Nessun riscontro
             print("AuthenticationServer.login - Nessun riscontro trovato per questo Username")
             print("AuthenticationServer.login - Terminazione procedura")
-            return {"success": False, "message": "Wrong username/unregistered user"}
+            return {"success": False, "message": "Wrong username/unregistered user", "case": 0}
         else: # Caso - Utente esistente
             print("AuthenticationServer.login - Riscontro trovato per questo Username")
             dbHashedPassword = dbReturn[0][0]
             dbEmail = dbReturn[0][1]            
             dbReturn.clear()
+            
+                # Controllo esistenza tmpPassword per l'username
+            if len(tmpPasswordData) != 0:
+                for element in tmpPasswordData:
+                    if element["username"] == jsonUsername: # Caso - Riscontro di possibile accesso con tmpPassword
+                        elementHashedPassword = self.hashPassword(element["tmpPassword"])
+                            # Controllo credenziali
+                        if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), elementHashedPassword.encode('utf-8')): # Caso - Accesso con tmpPassword -> resetPassword
+                            print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato con tmpPassword")              
+                            print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
+                            otp = self.otpGenerator()                                                               # Generazioni OTP
+                            otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time(), "case": 0})                # Salvataggio dati dell'OTP per la verifica
+                            print("\t2FA - OTP salvato per la verifica")
+                            
+                            print("\t2FA - Invio dati al MailService ...")
+                            self.mailService.otpMail(otp, dbEmail)                                                  # Invio otpMail - MailService
+                            return {"success": True, "message": "Verified user with tmpPasswod, OTP submitted", "email": dbEmail}
+                        else:
+                            break
+                pass
+            
                 # Controllo credenziali
             if bcrypt.checkpw(jsonHashedPassword.encode('utf-8'), dbHashedPassword.encode('utf-8')): # Caso - Credenziali corrette
                 print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato")              
                 print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
                 otp = self.otpGenerator()                                                               # Generazioni OTP
-                otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time()})                # Salvataggio dati dell'OTP per la verifica
+                otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time(), "case": 1})                # Salvataggio dati dell'OTP per la verifica
                 print("\t2FA - OTP salvato per la verifica")
                 
                 print("\t2FA - Invio dati al MailService ...")
@@ -90,7 +122,7 @@ class AuthenticationServer:
             else: # Caso - Credenziali sbagliate
                 print("AuthenticationServer.login - Riscontro parziale, account utente non autenticato")
                 print("AuthenticationServer.login - Terminazione procedura")
-                return {"success": False, "message": "Wrong password"}
+                return {"success": False, "message": "Wrong password", "case": 1}
 
     def otpValidator (self, jsonUserOTP, jsonEmail):
         print("\t\totpValidation - Controllo corrispondeza OTP ...")
@@ -115,10 +147,12 @@ class AuthenticationServer:
                         otpData.pop(index)
                         print("\t\totpValidation - Terminazione sotto-procedura")
                         print("\t2FA - Terminazione sotto-procedura")
-                        print("AuthenticationServer.login - Terminazione procedura")
-                        
-                        # TODO Recupero dati utente per cartella sanitaria
-                        
+                        if element["case"] == 0:
+                            print("AuthenticationServer.login - Aggiornamento tmpPasswordData")
+                            index = tmpPasswordData.index(jsonEmail)
+                            tmpPasswordData.pop(index)
+                            print("AuthenticationServer.login - Terminazione procedura")
+
                         return {"success": True, "message": "OTP verified, login completed"}
                     else: # Caso - OTP scaduto, accesso negato
                         print("\t\totpValidation - OTP non valido, accesso negato")
@@ -192,7 +226,7 @@ class AuthenticationServer:
             print("AuthenticationServer.forgotPassword - Riscontro trovato per questo Username")
             print("AuthenticationServer.forgotPassword - Inizio sotto-procedura 'tmpPasswordGeneration'")
             tmpPassword = self.tmpPasswordGenerator()
-            tmpPasswordData.append({"username": jsonUsername, "tmpPassword": tmpPassword})
+            tmpPasswordData.append({"username": jsonUsername, "email": dbReturn[0][0], "tmpPassword": tmpPassword})
             print("AuthenticationServer.forgotPassword - tmpPassword salvata per la verifica'")
             
             print("AuthenticationServer.forgotPassword - Invio dati al MailService ...")
@@ -250,7 +284,7 @@ class AuthenticationServer:
                         print("AuthenticationServer.addUser - Creazione nuovo utente non completata")
                         dbCursor.reset()
                         print("AuthenticationServer.addUser - Terminazione procedura")
-                        return {"success": False, "message": "Error, user creation and database addition not completed"}
+                        return {"success": False, "message": "Error, user creation and database addition not completed", "case": 2}
             # Caso - Nessuna corrispondenza, tmpPassword errata
             print("AuthenticationServer.resetPassword - tmpPassword non trovata")
             print("AuthenticationServer.resetPassword - Terminazione procedura")
