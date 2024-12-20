@@ -60,7 +60,7 @@ class MailService:
     
     def updatePasswordMail (self, reciverMail):
         print("\tMailService - Dati ricevuti, compilazione updatePasswordMail ...")
-        boby = f"Password utente modificata con successo, ora può effettuale l'accesso utilizzando il tuo username e la nuova password\n\nA presto!"
+        body = f"Password utente modificata con successo, ora può effettuale l'accesso utilizzando il tuo username e la nuova password\n\nA presto!"
         mailMessage = self.generateMessage(reciverMail, "Modifica password utente", body)
         print("\tMailService - updatePasswordMail pronta per l'invio")
         self.sendMail(mailMessage, reciverMail)
