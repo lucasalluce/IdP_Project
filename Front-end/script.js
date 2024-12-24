@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (toggleResetConfirmPassword && resetConfirmPassword) {
         toggleResetConfirmPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
-            togglePasswordVisibility(resetConfirmPassword, toggleResetNewPassword);     // Funzione togglePasswordVisibility()
+            togglePasswordVisibility(resetConfirmPassword, toggleResetConfirmPassword);     // Funzione togglePasswordVisibility()
         });
     }
 
