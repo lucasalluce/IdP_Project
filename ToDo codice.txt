@@ -51,8 +51,6 @@ ___Front-end___
     ~ HTML/CSS ~
     TODO    register.html - aggiornameno nuvoletta nel caso: password sbagliata, confirmPassword corretta
         √   forgotPassword.html             √ Test
-    TODO    resetPassword.html - toggle confirmPassword
-    
 
     ~ Javascript ~
         √       login                       √ Test -> implementare registration
@@ -60,7 +58,7 @@ ___Front-end___
             √       verifyOTP               √ Test
         √       registration                √ Test
         √       forgotPassword              √ Test -> implementare login
-        √    resetPassword               √ Test
+        √       resetPassword               √ Test
 
 ___Back-end___
     ~ AutenticationServer ~
