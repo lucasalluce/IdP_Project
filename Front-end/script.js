@@ -1,8 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+    // ~~ Gestione sessioni ~~
+    function setSession(userData) {
+        sessionStorage.setItem('userSession', JSON.stringify({
+            username: userData.username,
+            email: userData.email,
+            timestamp: Date.now()
+        }));
+    }
+
+    function getSession() {
+        const session = sessionStorage.getItem('userSession');
+        if (!session)
+            return null;
+        
+        const sessionData = JSON.parse(session);
+        // Controlla se la sessione è scaduta (esempio: 30 minuti)
+        if (Date.now() - sessionData.timestamp > 30 * 60 * 1000) {
+            clearSession();
+            return null;
+        }
+
+        return sessionData;
+    }
+
+    function clearSession() {
+        sessionStorage.removeItem('userSession');
+        localStorage.clear();
+    }
+
+    function checkSession() {
+        const session = getSession();
+        if (!session) {
+            alert("Session expired. Login again.");
+            window.location.href = "home.html";
+            return false;
+        }
+        return true;
+    }
+
     // ~~ Gestione visibilità campi password (home.html, register.html, resetPassword.html) ~~
         // Funzione per cambiare tipo (password <-> text)
-    async function togglePasswordVisibility (formPassword, toggleIcon) {
+    function togglePasswordVisibility (formPassword, toggleIcon) {
         if (formPassword.type === "password") {
             formPassword.type = "text";
             toggleIcon.classList.replace('bx-low-vision', 'bx-show');
@@ -137,10 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ~~ Caricamento dei dati utente (cartellaSanitaria.html) ~~
     if (window.location.href.includes("cartellaSanitaria.html")) {
+        if (!checkSession())
+            return;
+        
         console.log("\t~Inizio processo 'cartellaSanitaria'~");
         console.log("cartellaSanitaria - Caricamento dati utente...");
 
-        const dataUsername = localStorage.getItem("userUsername");
+        const dataUsername = getSession().username;
 
         // Chiamata http -> AuthenticationServer.getUserData()
         fetch("http://127.0.0.1:5000/getUserData", {
@@ -203,12 +244,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("login - Risposta ricevuta, analisi ...");
                     if (data.success) {     // Caso - True, login avvenuto
                         console.log("login - Risposta positiva, messaggio: ", data.message);
-                        localStorage.setItem("userEmail", data.email);                  // Salvataggio dati -> processo '2FA'
-                        localStorage.setItem("userUsername", formUsername.value);       // Salvataggio dati -> processo 'getUserData'
-                        console.log("login - Username salvato: ", localStorage.getItem("userUsername"));
+                        setSession({
+                            username: formUsername.value,                               // Salvataggio dati -> processo '2FA'
+                            email: data.email                                           // Salvataggio dati -> processo 'getUserData'
+                        });
                         console.log("login - Inizio sotto-processo '2FA'");
                         alert(data.message);
-                        window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
+                        window.location.href = "otp.html";                              // Reindirizzamento alla scheda di conferma OTP
                     } else {                // Caso - False, login non avvenuto
                         console.log("login - Risposta negativa, messaggio: ", data.message);
                         console.log("login - Terminazione processo");
@@ -240,19 +282,22 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("\t2FA - Acquisizione dati otp-form ...");
                 // Collegamento ai campi dell'otp-form
             const formOTP = otpForm.querySelector("input[id='otp']");
-            const dataEmail = localStorage.getItem("userEmail");
+            const dataEmail = getSession().email;
             console.log("\t2FA - Acquisizione dati completata");
 
+            // Controllo corretta acquisizione dataEmail
             console.log("\t2FA - Controllo corretta acquisizione dataEmail");
             if (!dataEmail) {
                 console.log("\t2FA - Errore, dataEmail non trovata nel localStorage");
-                localStorage.removeItem("userEmail");
+                console.log("\t2FA - Terminazione processo");
+                console.log("login - Terminazione processo");
+                clearSession();
                 alert("Error - An error occurred in the process, please login again");
                 window.location.href = "home.html";
             }
-            console.log("\t2FA - Controllo completato")
+            console.log("\t2FA - Controllo completato, dataEmail: ", dataEmail);
 
-            console.log("addUser - Invio richiesta all'AuthenticationServer.otpValidation() ...")
+            console.log("\t2FA - Invio richiesta all'AuthenticationServer.otpValidation() ...")
                 // Chiamata http -> AuthenticationServer.otpValidation()
             fetch("http://127.0.0.1:5000/otpValidation", {
                 method: "POST",
@@ -269,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("\t2FA - Risposta positiva, messaggio: ", data.message);
                     console.log("\t2FA - Terminazione sotto-processo");
                     console.log("login - Terminazione processo");
-                    localStorage.removeItem("userEmail");
                     alert(data.message);
                     
                     switch (data.case) {
@@ -290,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         case 0:
                             console.log("\t2FA - Terminazione sotto-processo");
                             console.log("login - Terminazione processo");
-                            localStorage.removeItem("userEmail");
+                            clearSession();
                             window.location.href = "home.html";
                             break;
                         case 1:
@@ -299,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         default:
                             console.log("\t2FA - Terminazione sotto-processo");
                             console.log("login - Terminazione processo");
-                            localStorage.removeItem("userEmail");
+                            clearSession();
                             window.location.href = "home.html";
                             break;
                     }
@@ -401,8 +445,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.success) {
                     console.log("forgotPassword - Risposta positiva, messaggio: ", data.message);
                     console.log("forgotPassword - Terminazione processo");
-                    localStorage.setItem("userUsername", formUsername.value);
-                    console.log("Username salvato: ", localStorage.getItem("userUsername"));
                     alert(data.message);
                     window.location.href = "home.html";
                 } else {
@@ -429,7 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formTmpPassword = resetPasswordForm.querySelector("input[id='resetTmpPassword'");
             const formNewPassword = resetPasswordForm.querySelector("input[id='resetNewPassword'");
             const formConfirmPassword = resetPasswordForm.querySelector("input[id='resetConfirmPassword'");
-            const dataUsername = localStorage.getItem("userUsername");
+            const dataUsername = getSession().username;
             console.log("resetPassword - Acquisizione dati completata");
 
             console.log("resetPassword - Controllo corrispondenza newPassword e confirmPassword ...");
@@ -446,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!dataUsername) {
                 console.log("resetPassword - Errore, dataUsername non trovata nel localStorage");
                 console.log("resetPassword - Terminazione processo");
-                localStorage.removeItem("userUsername");
+                clearSession();
                 alert("Error - An error occurred in the process, please login again");
                 window.location.href = "home.html";
             }
@@ -472,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (data.success) {
                         console.log("resetPassword - Risposta positiva, messaggio: ", data.message);
                         console.log("resetPassword - Terminazione processo");
-                        localStorage.clear();
+                        clearSession();
                         alert(data.message);
                         window.location.href = "home.html";
                     } else {
@@ -481,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         alert(data.message);
                         switch (data.case) {
                             case 0:
-                                localStorage.removeItem("userUsername");    
+                                clearSession();  
                                 window.location.href = "home.html";
                                 break;
                             case 1:
@@ -502,6 +544,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.error("Error: ", error);
                 })
             });
+        });
+    }
+
+    // Gestione logout
+    const logoutButton = document.querySelector(".dropdown-menu a");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            clearSession();
+            alert("Logout successful");
+            window.location.href = "home.html";
         });
     }
 });
