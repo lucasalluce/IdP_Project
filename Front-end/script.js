@@ -1,7 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ~~ Gestione visibilità campi password (home.html, register.html) ~~
+    // ~~ Gestione sessioni ~~
+    function setSession(userData) {
+        sessionStorage.setItem('userSession', JSON.stringify({
+            username: userData.username,
+            email: userData.email,
+            timestamp: Date.now()
+        }));
+    }
+
+    function getSession() {
+        const session = sessionStorage.getItem('userSession');
+        if (!session)
+            return null;
+        
+        const sessionData = JSON.parse(session);
+        // Controlla se la sessione è scaduta (esempio: 30 minuti)
+        if (Date.now() - sessionData.timestamp > 30 * 60 * 1000) {
+            clearSession();
+            return null;
+        }
+
+        return sessionData;
+    }
+
+    function clearSession() {
+        sessionStorage.removeItem('userSession');
+        localStorage.clear();
+    }
+
+    function checkSession() {
+        const session = getSession();
+        if (!session) {
+            alert("Session expired. Login again.");
+            window.location.href = "home.html";
+            return false;
+        }
+        return true;
+    }
+
+    // ~~ Gestione visibilità campi password (home.html, register.html, resetPassword.html) ~~
         // Funzione per cambiare tipo (password <-> text)
-    async function togglePasswordVisibility (formPassword, toggleIcon) {
+    function togglePasswordVisibility (formPassword, toggleIcon) {
         if (formPassword.type === "password") {
             formPassword.type = "text";
             toggleIcon.classList.replace('bx-low-vision', 'bx-show');
@@ -33,40 +72,92 @@ document.addEventListener("DOMContentLoaded", () => {
             togglePasswordVisibility(registerConfirmPassword, toggleRegisterConfirmPassword);       // Funzione togglePasswordVisibility()
         });
     }
-
-    // ~~ Gestione conformità campi password, confirmPassword (register.html) ~~
-    const formPassword = document.getElementById("registerPassword");
-    const formConfirmPassword = document.getElementById("registerConfirmPassword");
-    const formErrorPassword = document.getElementById("errorPassword");
-    const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
-
-    const validatedPassword = (password) => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-        return passwordRegex.test(password);
+        // resetPassword.html
+    const resetTmpPassword = document.getElementById("resetTmpPassword");
+    const resetNewPassword = document.getElementById("resetNewPassword");
+    const resetConfirmPassword = document.getElementById("resetConfirmPassword");
+    const toggleResetTmpPassword = document.getElementById("toggleResetTmpPassword");
+    const toggleResetNewPassword = document.getElementById("toggleResetNewPassword");
+    const toggleResetConfirmPassword = document.getElementById("toggleResetConfirmPassword");
+    if (toggleResetTmpPassword && resetTmpPassword) {
+        toggleResetTmpPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetTmpPassword, toggleResetTmpPassword);     // Funzione togglePasswordVisibility()
+        });
     }
-    const validateConfirmPassword = () => {
-        return formPassword.value === formConfirmPassword.value;
+    if (toggleResetNewPassword && resetNewPassword) {
+        toggleResetNewPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetNewPassword, toggleResetNewPassword);     // Funzione togglePasswordVisibility()
+        });
+    }
+    if (toggleResetConfirmPassword && resetConfirmPassword) {
+        toggleResetConfirmPassword.addEventListener("click", () => {                    // Acquisizione evento -> cambio di visibilità
+            togglePasswordVisibility(resetConfirmPassword, toggleResetConfirmPassword);     // Funzione togglePasswordVisibility()
+        });
     }
 
-    
-        // Visualizzaione finestra informativa - password
-    formPassword.addEventListener("input", () => {
-        if(!validatedPassword(formPassword.value)) {
-            formErrorPassword.classList.add("error-visible");
-        } else {
-            formErrorPassword.classList.remove("error-visible");
-        }
-    });
-        // Visualizzaione finestra informativa - confermaPassword
-    formConfirmPassword.addEventListener("input", () => {
-        if (!validateConfirmPassword()) {
-            formErrorConfirmPassword.classList.add("error-visible");
-        } else {
-            formErrorConfirmPassword.classList.remove("error-visible");
-        }
-    });
+    // ~~ Gestione conformità campi password, confirmPassword (register.html, resetPassword.html) ~~
+        // register.html
+    if (window.location.href.includes("register.html")) {
+        const formPassword = document.getElementById("registerPassword");
+        const formConfirmPassword = document.getElementById("registerConfirmPassword");
+        const formErrorPassword = document.getElementById("errorPassword");
+        const formErrorConfirmPassword = document.getElementById("errorConfirmPassword");
 
-    
+        const validatedPassword = (password) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+            return passwordRegex.test(password);
+        }
+        const validateConfirmPassword = () => {
+            return formPassword.value === formConfirmPassword.value;
+        }
+            // Visualizzaione finestra informativa - password
+        formPassword.addEventListener("input", () => {
+            if(!validatedPassword(formPassword.value)) {
+                formErrorPassword.classList.add("error-visible");
+            } else {
+                formErrorPassword.classList.remove("error-visible");
+            }
+        });
+            // Visualizzaione finestra informativa - confermaPassword
+        formConfirmPassword.addEventListener("input", () => {
+            if (!validateConfirmPassword()) {
+                formErrorConfirmPassword.classList.add("error-visible");
+            } else {
+                formErrorConfirmPassword.classList.remove("error-visible");
+            }
+        });
+    }
+        // resetPassword.html
+    if (window.location.href.includes("resetPassword.html")) {
+        const formNewPassword = document.getElementById("resetNewPassword");
+        const formConfirmPassword = document.getElementById("resetConfirmPassword");
+        const formErrorResetNewPassword = document.getElementById("errorResetNewPassword");
+        const formErrorResetConfirmPassword = document.getElementById("errorResetConfirmPassword");
+
+        const validatedPassword = (password) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+            return passwordRegex.test(password);
+        }
+        const validateConfirmPassword = () => {
+            return formNewPassword.value === formConfirmPassword.value;
+        }
+            // Visualizzaione finestra informativa - password
+        formNewPassword.addEventListener("input", () => {
+            if(!validatedPassword(formNewPassword.value)) {
+                formErrorResetNewPassword.classList.add("error-visible");
+            } else {
+                formErrorResetNewPassword.classList.remove("error-visible");
+            }
+        });
+            // Visualizzaione finestra informativa - confermaPassword
+        formConfirmPassword.addEventListener("input", () => {
+            if (!validateConfirmPassword()) {
+                formErrorResetConfirmPassword.classList.add("error-visible");
+            } else {
+                formErrorResetConfirmPassword.classList.remove("error-visible");
+            }
+        });
+    }
 
     // ~~ Hashing password ~~
     async function hashPassword(clearPassword) {
@@ -82,59 +173,103 @@ document.addEventListener("DOMContentLoaded", () => {
         return hashHex
     }
 
-    // ~~ Funzionalità principali ~~
-        // Processo di login utente
-    const loginForm = document.getElementById("login-form");     // Creazione e collegamento al login-form
-    if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {               // Predisposizione all'evento
-            e.preventDefault();                                     // Gestione annullamento dell'evento defautl
-            
-            console.log("~ Inzio proceduta 'login'");
-            console.log("login - Acquisizione parametri login-form");
-            // Acquisizione campi del login-form
-            const formUsername = loginForm.querySelector("input[id='username']").value;
-            const formPassword = loginForm.querySelector("input[id='password']").value;
+    // ~~ Caricamento dei dati utente (cartellaSanitaria.html) ~~
+    if (window.location.href.includes("cartellaSanitaria.html")) {
+        if (!checkSession())
+            return;
+        
+        console.log("\t~Inizio processo 'cartellaSanitaria'~");
+        console.log("cartellaSanitaria - Caricamento dati utente...");
 
-            console.log("login - Controllo effettivo inserimento dati login-form");
-            // Controllo riempimento campi login-form 
-            if (!formUsername || !formPassword) {
-                console.log("login - Errore parametri login-form");
-                alert("Inserire correttamente Username e Password");
-                return
+        const dataUsername = getSession().username;
+
+        // Chiamata http -> AuthenticationServer.getUserData()
+        fetch("http://127.0.0.1:5000/getUserData", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({                                  // Compilazione file Json
+                username: dataUsername
+            })
+        })
+        .then((response) => response.json())                        // Acqisizione file Json di risposta
+        .then((data) => {                                           // Analisi risposta
+            if (data.success) {
+                console.log("cartellaSanitaria - Risposta positiva, message: ", data.message);
+                console.log("cartellaSanitaria - Terminazione processo");
+                document.querySelector(".surname p").textContent = data.surname;
+                document.querySelector(".name p").textContent = data.name;
+                document.querySelector(".dropdown-menu div:nth-child(1)").textContent = dataUsername
+                document.querySelector(".dropdown-menu div.informations").textContent = data.email;
+            } else {
+                console.log("cartellaSanitaria - Risposta negativa, message: ", data.message);
+                console.log("cartellaSanitaria - Terminazione processo");;
+                localStorage.clear();
+                alert(data.message);
+                window.location.href = "home.html";
             }
+        })
+        .catch((error) => {
+            console.error("Errore: ", error);
+        })
+    }
 
-            console.log("login - Inizio procedura 'hashingPassword'");
-            // Hasing password
-            hashPassword(formPassword).then((hashedPassword) => {           // Acquisizione risposta funzione hashPassword - password cifrata con SHA-256
-                // Chiamata POST HTTP per la creazione del file JSON con i dati del login-forn
-                console.log("login.hashingPassword - HashedPassword ", hashedPassword)
-                console.log("login.hashingPassword - Fine procedura 'hashingPassword'");
-                console.log("login - Richiesta server ...");
+    // ~~ Funzionalità principali ~~
+        // Processo - Login utente
+    const loginForm = document.getElementById("login-form");    // Acquisizione login-form
+    if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {           // Predisposizione evento
+            e.preventDefault();
+            console.log("\t~Inizio processo 'login'~");
+            console.log("login - Acquisizione dati login-form ...");
+                // Collegamento ai campi del login-form
+            const formUsername = loginForm.querySelector("input[id='username']")
+            const formPassword = loginForm.querySelector("input[id='password']")
+            console.log("login - Acquisizione dati completata");
+
+            console.log("login - Inizio sotto-processo 'hashingPassword'");
+                // Hasing formPassword
+            hashPassword(formPassword.value).then((hashedPassword) => {
+                console.log("login - Invio richietsa all'AuthenticationServer.login() ...");
+                    // Chiamata http -> AuthenticationServer.login()
                 fetch("http://127.0.0.1:5000/login", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({                                  // Compilazione file JSON
-                        username: formUsername,
+                    body: JSON.stringify({                                  // Compilazione file Json
+                        username: formUsername.value,
                         password: hashedPassword
                     })
                 })
-                .then((response) => response.json())                        // Acqisizione file JSON di risposta
-                .then((data) => {                                           
-                    console.log("login - Risposta server ricevuta");
-                    if (data.success) {                                     // Verifica del corretto login
-                        console.log("login - Acquisizione dati di risposta");
-                        localStorage.setItem("userEmail", data.email);      // Acquisizione dei dati nel file di risposta JSON
-                        console.log("login - Dati di risposta: ", localStorage.getItem("userEmail"));
-
-                        window.location.href = "otp.html";                  // Reindirizzamento alla scheda di conferma OTP
-                    } else {
-                        alert("Credenziali errate!! Riprovare")             // Allert di errore nel login - Credenziali inserite non correte
+                .then((response) => response.json())                        // Acqisizione file Json di risposta
+                .then((data) => {                                           // Analisi risposta
+                    console.log("login - Risposta ricevuta, analisi ...");
+                    if (data.success) {     // Caso - True, login avvenuto
+                        console.log("login - Risposta positiva, messaggio: ", data.message);
+                        setSession({
+                            username: formUsername.value,                               // Salvataggio dati -> processo '2FA'
+                            email: data.email                                           // Salvataggio dati -> processo 'getUserData'
+                        });
+                        console.log("login - Inizio sotto-processo '2FA'");
+                        alert(data.message);
+                        window.location.href = "otp.html";                              // Reindirizzamento alla scheda di conferma OTP
+                    } else {                // Caso - False, login non avvenuto
+                        console.log("login - Risposta negativa, messaggio: ", data.message);
+                        console.log("login - Terminazione processo");
+                        alert(data.message);
+                        switch (data.case) {
+                            case 0:
+                                formUsername.value = "";
+                                break;
+                            case 1:
+                                formPassword.value = "";
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 })
                 .catch((error) => {
                     console.error("Errore: ", error);
                 })
-                console.log("login - Inzio proceduta '2FA'");
             });
         });
     }
@@ -144,110 +279,90 @@ document.addEventListener("DOMContentLoaded", () => {
     if (otpForm) {
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            console.log("login.2FA - Acquisizione parametro form ...");
+            console.log("\t2FA - Acquisizione dati otp-form ...");
+                // Collegamento ai campi dell'otp-form
+            const formOTP = otpForm.querySelector("input[id='otp']");
+            const dataEmail = getSession().email;
+            console.log("\t2FA - Acquisizione dati completata");
 
-            const formOTP = otpForm.querySelector("input[id='otp']").value;
-            const dataEmail = localStorage.getItem("userEmail");
-
-            if (!formOTP) {
-                console.log("login - Errore parametri otp-form");
-                alert("Inserire correttamente OTP");
-                return;
-            }
+            // Controllo corretta acquisizione dataEmail
+            console.log("\t2FA - Controllo corretta acquisizione dataEmail");
             if (!dataEmail) {
-                console.log("login - Errore parametro localStorage");
-                alert("Errore dati: email utente non trovata nel localStorage");
+                console.log("\t2FA - Errore, dataEmail non trovata nel localStorage");
+                console.log("\t2FA - Terminazione processo");
+                console.log("login - Terminazione processo");
+                clearSession();
+                alert("Error - An error occurred in the process, please login again");
                 window.location.href = "home.html";
-                return;
             }
+            console.log("\t2FA - Controllo completato, dataEmail: ", dataEmail);
 
-            // Chiamata al server Flask per verificare OTP
-            fetch("http://127.0.0.1:5000/otpValidationLogin", {
+            console.log("\t2FA - Invio richiesta all'AuthenticationServer.otpValidation() ...")
+                // Chiamata http -> AuthenticationServer.otpValidation()
+            fetch("http://127.0.0.1:5000/otpValidation", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    otp: formOTP,
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({                                                          // Compilazione file Json
+                    otp: formOTP.value,
                     email: dataEmail
                 })
             })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    console.log("login.2FA - OTP verificato con successo!");
-
-                    // TODO Edit
-                    // Recupero dati utente dopo verifica OTP
-                    fetch("http://127.0.0.1:5000/getUserData", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ email: dataEmail })
-                    })
-                    .then((response) => response.json())
-                    .then((userData) => {
-                        if (userData.success) {
-                            console.log("login.2FA - Dati utente ricevuti:", userData);
-
-                            // Salvataggio dati nel localStorage per utilizzarli nella cartella sanitaria
-                            localStorage.setItem("userName", userData.name);
-                            localStorage.setItem("userSurname", userData.surname);
-                            localStorage.setItem("userUsername", userData.username);
-                            localStorage.setItem("userEmail", userData.email);
-
-                            // Reindirizzamento alla cartella sanitaria
-                            alert("Accesso avvenuto con successo!");
-                            window.location.href = "cartellaSanitaria.html";
-                        } else {
-                            console.error("Errore nel recupero dei dati utente:", userData.message);
-                            alert("Errore nel caricamento dei dati utente!");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Errore nella richiesta dati utente:", error);
-                    });
-                } else {
-                    console.log("login.2FA - Errore OTP");
+            .then((response) => response.json())                            // Acquisizione file Json di risposta
+            .then((data) => {                                               // Analisi risposta
+                console.log("\t2FA - Risposta ricevuta, analisi ...");
+                if (data.success) {     // Caso - True, OTP valido
+                    console.log("\t2FA - Risposta positiva, messaggio: ", data.message);
+                    console.log("\t2FA - Terminazione sotto-processo");
+                    console.log("login - Terminazione processo");
                     alert(data.message);
+                    
+                    switch (data.case) {
+                        case 0:
+                            window.location.href = "resetPassword.html";
+                            break;
+                        case 1:
+                            window.location.href = "cartellaSanitaria.html";
+                            break;
+                        default:
+                            break;
+                    }
+                } else {                // Caso - False, OTP non valido/scaduto
+                    console.log("\t2FA - Risposta negativa, messaggio: ", data.message);
+                    alert(data.message);
+                    
+                    switch (data.case) {
+                        case 0:
+                            console.log("\t2FA - Terminazione sotto-processo");
+                            console.log("login - Terminazione processo");
+                            clearSession();
+                            window.location.href = "home.html";
+                            break;
+                        case 1:
+                            formOTP.value = "";
+                            break;
+                        default:
+                            console.log("\t2FA - Terminazione sotto-processo");
+                            console.log("login - Terminazione processo");
+                            clearSession();
+                            window.location.href = "home.html";
+                            break;
+                    }
                 }
             })
             .catch((error) => {
-                console.error("Errore nella verifica OTP:", error);
+                console.error("Errore - ", error);
             });
         });
     }
 
-// TODO Edit
-// Caricamento dei dati utente nella cartella sanitaria
-if (window.location.href.includes("cartellaSanitaria.html")) {
-    console.log("Cartella Sanitaria - Caricamento dati utente...");
-
-    // Recupero dati dal localStorage
-    const userName = localStorage.getItem("userName");
-    const userSurname = localStorage.getItem("userSurname");
-    const userUsername = localStorage.getItem("userUsername");
-    const userEmail = localStorage.getItem("userEmail");
-
-    if (userName && userSurname && userUsername && userEmail) {
-        // Inserimento dei dati nei campi HTML
-        document.querySelector(".surname p").textContent = userSurname;
-        document.querySelector(".name p").textContent = userName;
-        document.querySelector(".dropdown-menu div:nth-child(1)").textContent = userUsername;
-        document.querySelector(".dropdown-menu div.informations").textContent = userEmail;
-    } else {
-        console.error("Dati utente non trovati nel localStorage!");
-        alert("Errore: Accesso non autorizzato!");
-        window.location.href = "home.html";
-    }
-}
-
-
         // Processo - Registrazione nuovo utente
-    const registerForm = document.getElementById("register-form"); // Acquisizione register-form
+    const registerForm = document.getElementById("register-form");      // Acquisizione register-form
     if (registerForm) {
-        registerForm.addEventListener("submit", (e) => {
+        registerForm.addEventListener("submit", (e) => {                // Predisposizione evento
             e.preventDefault();
             console.log("\t~Inizio processo 'addUser'~");
             console.log("addUser - Acquisizione dati register-form ...");
-                // Collegamento ai campi del register-fotm al submit
+                // Collegamento ai campi del register-form
             const formName = registerForm.querySelector("input[id='name']");
             const formSurname = registerForm.querySelector("input[id='surname']");
             const formUsername = registerForm.querySelector("input[id='username']");
@@ -275,7 +390,7 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
                 fetch("http://127.0.0.1:5000/addUser", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({                              // Compilazione Json
+                    body: JSON.stringify({                              // Compilazione file Json
                         name: formName.value,
                         surname: formSurname.value,
                         username: formUsername.value,
@@ -283,15 +398,12 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
                         password: hashedPasswrod
                     })
                 })
-                .then((response) => {
-                    // Acquisizione risposta AuthenticationServer.addUser()
-                    console.log("addUser - Ricezione risposta dell'AuthenticationServer.addUser() ...");
-                    response.json();
-                })
+                .then((response) => response.json())                    // Acquisizione file Json di risposta
                 .then((data) => {                                       // Analisi risposta
                     console.log("addUser - Risposta ricevuta, analisi ...");
                     if (data.success) {     // Caso - True, registrazione avvenuta
                         console.log("addUser - Risposta positiva, messaggio: ", data.message);
+                        console.log("addUser - Terminazione processo");
                         alert(data.message);
                         window.location.href = "home.html";
                     } else {                // Caso - False, registrazione non avvenuta / errore
@@ -306,44 +418,143 @@ if (window.location.href.includes("cartellaSanitaria.html")) {
             })
         })
     }
-
-        // TODO Processo di recupero password utente
+    
+        // Processo - Password utente dimenticata
     const forgotPasswordForm = document.getElementById("forgot-password-form");
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener("submit", (e) => {
             e.preventDefault();
+            console.log("\t~Inizio processo 'forgotPassword'~");
+            console.log("forgotPassword - Acquisizione dati forgot-password-form ...");
+                // Collegamento ai campi del forgot-password-form
+            const formUsername = forgotPasswordForm.querySelector("input[id='username']");
+            console.log("forgotPassword - Acquisizione dati completata");
 
-            console.log("~ Inzio proceduta 'forgotPassword'");
-            console.log("forgotPassword - Acquisizione parametri forgot-password-form");
-            const formUsername = forgotPasswordForm.querySelector("input[id='username']").value;
-
-            console.log("forgorPassword - Controllo effettivo inserimento dati forgot-password-form")
-            if (!formUsername) {
-                alert("Campo username non inserito!");
-                return;
-            }
-
-            console.log("forgorPassword - Inzio richiesta AuthenticationServer")
-            fetch("http://127.0.0.1:5000/recoveryPassword", {
+            console.log("forgorPassword - Inizio richiesta all'AuthenticationServer.forgotPassword() ...");
+                // Chiamata http -> AuthenticationServer.forgotPassword()
+            fetch("http://127.0.0.1:5000/forgotPassword", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({                                  // Compilazione file JSON
-                    username: formUsername
+                body: JSON.stringify({                                  // Compilazione file Json
+                    username: formUsername.value
                 })
             })
-            .then((response) => response.json())                        // Acqisizione file JSON di risposta
-            .then((data) => {                                           
-                console.log("forgorPassword - Ricezione risposta AuthenticationServer");
-                if (data.success) {                                     // Verifica
-                    // TODO
-                    window.location.href = "";                          // Reindirizzamento
+            .then((response) => response.json())                        // Acqisizione file Json di risposta
+            .then((data) => {
+                console.log("forgorPassword - Risposta ricevuta, analisi ...");
+                if (data.success) {
+                    console.log("forgotPassword - Risposta positiva, messaggio: ", data.message);
+                    console.log("forgotPassword - Terminazione processo");
+                    alert(data.message);
+                    window.location.href = "home.html";
                 } else {
-                    alert("Credenziali errate!! Riprovare")             // Allert di errore
+                    console.log("forgotPassword - Risposta negativa, messaggio: ", data.message);
+                    console.log("forgotPassword - Terminazione processo");
+                    alert(data.message);
+                    formUsername.value = "";
                 }
             })
             .catch((error) => {
                 console.error("Errore: ", error);
             })
+        });
+    }
+
+        // Processo - Reset della password utente
+    const resetPasswordForm = document.getElementById("reset-password-form");
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("\t~Inizio processo 'resetPassword'~");
+            console.log("resetPassword - Acquisizione dati reset-password-form ...");
+                // Collegamento ai campi del reset-password-form
+            const formTmpPassword = resetPasswordForm.querySelector("input[id='resetTmpPassword'");
+            const formNewPassword = resetPasswordForm.querySelector("input[id='resetNewPassword'");
+            const formConfirmPassword = resetPasswordForm.querySelector("input[id='resetConfirmPassword'");
+            const dataUsername = getSession().username;
+            console.log("resetPassword - Acquisizione dati completata");
+
+            console.log("resetPassword - Controllo corrispondenza newPassword e confirmPassword ...");
+            if (formNewPassword.value !== formConfirmPassword.value) {
+                console.log("resetPassword - Errore, newPassword e confirmPassword non corrispondono");
+                console.log("resetPassword - Terminazione processo");
+                formConfirmPassword.value = "";
+                alert("Password and confimPassword do not match, check them!");
+                return;
+            }
+            console.log("resetPassword - Controllo completato")
+
+            console.log("resetPassword - Controllo corretta acquisizione dataUsername");
+            if (!dataUsername) {
+                console.log("resetPassword - Errore, dataUsername non trovata nel localStorage");
+                console.log("resetPassword - Terminazione processo");
+                clearSession();
+                alert("Error - An error occurred in the process, please login again");
+                window.location.href = "home.html";
+            }
+            console.log("resetPassword - Controllo completato, dataUsername: ", dataUsername);
+
+            console.log("resetPassword - Inizio sotto-processo 'hashingPassword'");
+                // Hashing formPassword    
+            hashPassword(formNewPassword.value).then((hashedPasswrod) => {
+                console.log("resetPassword - Inizio richiesta all'AuthenticationServer.resetPassword() ...");
+                    // Chiamata http -> AuthenticationServer.resetPassword()
+                fetch("http://127.0.0.1:5000/resetPassword", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({                                          // Compilazione file Json
+                        tmpPassword: formTmpPassword.value,
+                        newPassword: hashedPasswrod,
+                        username: dataUsername
+                    })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("resetPassword - Risposta ricevuta, analisi ...");
+                    if (data.success) {
+                        console.log("resetPassword - Risposta positiva, messaggio: ", data.message);
+                        console.log("resetPassword - Terminazione processo");
+                        clearSession();
+                        alert(data.message);
+                        window.location.href = "home.html";
+                    } else {
+                        console.log("resetPassword - Risposta negativa, messaggio: ", data.message);
+                        console.log("resetPassword - Terminazione processo");
+                        alert(data.message);
+                        switch (data.case) {
+                            case 0:
+                                clearSession();  
+                                window.location.href = "home.html";
+                                break;
+                            case 1:
+                                formTmpPassword.value = "";
+                                break;
+                            case 2:
+                                formTmpPassword.value = "";
+                                formNewPassword.value = "";
+                                formConfirmPassword.value = "";
+                                break;
+                            default:
+                                window.location.href = "home.html";
+                                break;
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error: ", error);
+                })
+            });
+        });
+    }
+
+    // Gestione logout
+    const logoutButton = document.querySelector(".dropdown-menu a");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            clearSession();
+            alert("Logout successful");
+            window.location.href = "home.html";
         });
     }
 });

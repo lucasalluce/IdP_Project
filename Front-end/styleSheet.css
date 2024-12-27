@@ -324,11 +324,7 @@ body {
 }
 
 
-/*FORGOT_PASSWORD*/
-/*CONFIRM_REG*/
 /*OTP*/
-/*RECOVERY_CRED*/
-/*RECOVERY_OTP*/
 .wrapper .header {
     text-align: center;
 }
@@ -346,9 +342,6 @@ body {
     margin-top: 20px;
 }
 
-
-/* OTP */
-
 .wrapper #otp-form .input-box input[type="number"]::-webkit-inner-spin-button,  /* Rimuove le freccette nei browser basati su WebKit (es. Chrome, Safari, Edge) */
 .wrapper #otp-form .input-box input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -363,8 +356,57 @@ body {
     appearance: none;
 }
 
+/* RESET_PASSWORD */
 
-/*CARTELLA SANITARIA*/
+.wrapper .input-box #toggleResetNewPassword, .wrapper .input-box #toggleResetConfirmPassword {
+    cursor: pointer; 
+}
+
+.input-box {
+    position: relative; 
+}
+
+.wrapper .input-box #errorResetConfirmPassword, .wrapper .input-box #errorResetNewPassword {
+    font-size: 0.9em;
+    color: black;
+    display: none;      /* Messaggi nascosti di default */
+    position: absolute;
+    top: 50%;  
+    left: 105%;  
+    transform: translateY(-50%);  /* Allinea verticalmente la nuvoletta al centro */
+    background-color: lightblue;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: max-content;
+    max-width: 230px; 
+}
+
+.wrapper .input-box #toggleResetNewPassword {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wrapper .input-box #toggleResetNewPassword:hover {
+    color: #fff;
+}
+
+.wrapper .input-box #toggleResetConfirmPassword {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wrapper .input-box #toggleResetConfirmPassword:hover {
+    color: #fff;
+}
+
+.wrapper .input-box #errorResetNewPassword.error-visible, .wrapper .input-box #errorResetConfirmPassword.error-visible {
+    display: block;
+}
+
+
+
+/* CARTELLA SANITARIA */
 
 .bodyCart {
     background-image: none; /* Rimuove la foto */
@@ -657,6 +699,14 @@ body {
     padding: 5px;
 }
 
+.wrapper3 .testResult .link {
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.wrapper3 .testResult .link:hover {
+    cursor: pointer;
+}
 
 /*PROFILO*/
 .wrapper4 {
