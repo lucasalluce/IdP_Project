@@ -70,11 +70,6 @@ Per effettuare l'accesso sono richieste le _credenziali utente_ - Username e Pas
 
     Ci si accorge che tutto ha funzionato se si visualizza come ultimo messaggio - Successfully installed mysql-connector-python-9.1.0
 
-    > [!WARNING]
-    > Potrebbere essere sollevato dal terminale, la possibilità di aggiornare il pip, in tal caso eseguire il seguente comando\
-    > `pip install --upgrade pip`\
-    > Ci si accorge che tutto ha funzionato se si visualizza - Successfully installed pip-24.3.1
-
     ~ **Flask e Flask-Cors** ~\
     Dopo aver correttamente creato e configurato l'environment, procediamo con l'installazione di Flask\
     Eseguire il seguente comando nel terminale
