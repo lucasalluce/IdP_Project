@@ -1,7 +1,7 @@
 ### Italian
 > [English version](#english)
 # IdP con protocollo OAuth 2.0 e 2FA
-Team - Gianluca Putignano, Federico Raimondi, Luca Salluce, Stefano Troilo, Antonio Volpe
+Team - Gianluca Putignano, Federico Raimondi, Luca Salluce, Stefano Troilo, Antonio Volpe\
 Questo progetto è stato realizzato da studenti del [Politecnico di Bari](https://www.poliba.it) di Ingegneria Informatica e dell'Automazione, per il corso di Ingegneria del Software a cura del docente Prof.ssa Marina Mongiello.
 
 ## Progetto
