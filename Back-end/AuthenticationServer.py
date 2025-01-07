@@ -102,7 +102,6 @@ class AuthenticationServer:
                             print("AuthenticationServer.login - Riscontro totale, accoutn utente autenticato con tmpPassword")              
                             print("AuthenticationServer.login - Inizio sotto-procedura '2FA'")
                             otp = self.otpGenerator()                                                               # Generazioni OTP
-                            index = tmpPasswordData.index(element)
                             otpData.append({"email": dbEmail, "otp": otp, "timestamp": time.time(), "case": 0})                # Salvataggio dati dell'OTP per la verifica
                             print("\t2FA - OTP salvato per la verifica")
                             
